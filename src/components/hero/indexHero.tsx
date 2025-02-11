@@ -10,13 +10,13 @@ interface IndexHeroProps {}
 export const IndexHero: FC<IndexHeroProps> = (props) => {
   return (
     <div>
-      <Header  isAuthenticated={false}/>
+      <Header isAuthenticated={false} />
       <HeroContainer className="relative overflow-hidden">
         <div className="flex items-center gap-4 h-screen">
           <div className="w-full   space-y-6">
             <DefaultTypography
               variant="h1"
-              className=" text-6xl lg:text-[120px]  leading-[100px] font-extrabold text-white"
+              className=" text-6xl lg:text-[120px]  2xl:text-[155px] leading-[100px] 2xl:leading-[135px] font-extrabold text-white"
             >
               Support your creative work
             </DefaultTypography>
