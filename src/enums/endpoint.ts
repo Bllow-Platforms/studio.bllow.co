@@ -1,5 +1,4 @@
 export enum ENDPOINT_ENUM {
-
   // Auth 🔐
   SOCIAL_SIGN_IN = "/sign-in/social",
   EMAIL_SIGN_IN = "/sign-in/email",
