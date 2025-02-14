@@ -45,9 +45,11 @@ export const Header: FC<IHeaderProps> = ({ isAuthenticated = false }) => {
           <div className="flex items-center gap-3">
             {!isAuthenticated ? (
               <>
-                <Button className="bg-white text-primary hover:bg-white/90">
-                  Sign Up
-                </Button>
+                <Link href={'/auth'}>
+                  <Button className="bg-white text-primary hover:bg-white/90">
+                    Sign Up
+                  </Button>
+                </Link>
 
                 <Button
                   variant="outline"
