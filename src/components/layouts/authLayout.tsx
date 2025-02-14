@@ -15,7 +15,7 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
 }) => {
   return (
     <>
-      <div className="container h-[90vh] mt-10">
+      <div className="container lg:h-[90vh] mt-10">
         <div className="w-full lg:w-[400px] mx-auto ">
           <Progress color="" value={30} className="mb-[2em]" />
           <DefaultTypography
