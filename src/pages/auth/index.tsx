@@ -70,21 +70,21 @@ const IndexAuth = () => {
       title: 'Complete your account ',
       description: 'Choose your account type to get started',
       component: SetUpAccountStepper,
-      note: '',
+      note: 'This details is visitors to your profile would see first 👊🏽',
     },
 
     {
       title: 'Just a few more details ',
       description: 'You’re almost there....',
       component: MoreUserDetailStepper,
-      note: '',
+      note: 'Just a few more details incase you Bllow 😌',
     },
 
     {
       title: 'Where should your tips be paid ',
       description: 'Tell us where you’d like to receive your payments',
       component: FinancialSetupStepper,
-      note: '',
+      note: 'We really don’t need to tell you what to do, do we? 💰',
     },
 
     {
