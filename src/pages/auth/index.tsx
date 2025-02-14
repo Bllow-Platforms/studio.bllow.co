@@ -1,82 +1,157 @@
 import { AuthLayout } from "@/components/layouts/authLayout";
+import { SelectAccountType } from "@/components/pages/auth/steps/select_account_type";
+import { EnterEmailStepper } from "@/components/pages/auth/steps/enter_email_stepper";
+import { PickerUsernameStepper } from "@/components/pages/auth/steps/choose_user_name";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-interface ISelectProps {
+interface StepConfig {
   title: string;
   description: string;
-  image: string;
-  path: string;
+  component: React.ComponentType<StepProps>;
+  note: string;
 }
 
-const ACCOUNT_TYPE: ISelectProps[] = [
-  {
-    title: "Creator",
-    description:
-      "I want to receive donations, sell products and offer memberships",
-    image: "/svgs/creator_type.svg",
-    path: "/auth/creator",
-  },
-  {
-    title: "Fan",
-    description: "I want to support and discover creators",
-    image: "/svgs/fan_type.svg",
-    path: "/auth/fan",
-  },
-];
+interface StepProps {
+  onNext: () => void;
+  onBack: () => void;
+  isFirstStep: boolean;
+  isLastStep: boolean;
+}
+
+interface AuthState {
+  accountType: string;
+  username: string;
+  email: string;
+}
 
 const IndexAuth = () => {
-  const [selectedType, setSelectedType] = useState<ISelectProps | {}>({});
-  const router = useRouter();
+  const [currentStep, setCurrentStep] = useState(0);
+  const [authState, setAuthState] = useState<AuthState>({
+    accountType: '',
+    username: '',
+    email: '',
+  });
 
-  const handleAccountType = (item: ISelectProps) => {
-    setSelectedType(item);
+  const STEPS: StepConfig[] = [
+    {
+      title: "How would you like to create an account",
+      description: "Choose your account type to get started",
+      component: SelectAccountType,
+      note: 'This is something you’d be uniquely addressed as, so you’d want to use something that stands out 🔥'
+    },
+    {
+      title: "Choose a username",
+      description: "Choose your account type to get started",
+      component: PickerUsernameStepper,
+      note: 'This is something you’d be uniquely addressed as, so you’d want to use something that stands out 🔥'
+    },
+    {
+      title: "What's your email?",
+      description: "Tell us your email address",
+      component: EnterEmailStepper,
+      note: 'Has to be unique 👋🏽'
+    },
+
+    {
+      title: "You're almost there!, let's make it official! ✅ 🌟",
+      description: "Verify your Bllow account to dive into a world of creators. It just takes a moment",
+      component: EnterEmailStepper,
+      note: 'We sent you a  temporary sign-in code sent to your mail or Please paste (or type) your 6-digit code 👀'
+    },
+
+    {
+      title: "Complete your account ",
+      description: "Choose your account type to get started",
+      component: EnterEmailStepper,
+      note: ''
+    },
+
+    {
+      title: "Just a few more details ",
+      description: "You’re almost there....",
+      component: EnterEmailStepper,
+      note: ''
+    },
+
+    {
+      title: "Where should your tips be paid ",
+      description: "Tell us where you’d like to receive your payments",
+      component: EnterEmailStepper, 
+      note: ''
+    },
+
+    {
+      title: "Lastly, Setup withdrawal pin ",
+      description: "You’d use this to authorize your withdrawals",
+      component: EnterEmailStepper,
+      note: ''
+    },
+
+  ];
+
+  const handleNext = () => {
+    if (currentStep < STEPS.length - 1) {
+      setCurrentStep(prev => prev + 1);
+    }
   };
 
-  const handleRoute = (path: string) => router.push(path);
+  const handleBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep(prev => prev - 1);
+    }
+  };
+
+  const updateAuthState = (key: keyof AuthState, value: string) => {
+    setAuthState(prev => ({
+      ...prev,
+      [key]: value
+    }));
+  };
+
+  const CurrentStepComponent = STEPS[currentStep].component;
+
+  const progress = ((currentStep + 1) / STEPS.length) * 100;
 
   return (
     <AuthLayout
-      title="How would you like to create an account"
-      description="Choose your account type to get started"
+      title={STEPS[currentStep].title}
+      description={STEPS[currentStep].description}
+      progress={progress}
     >
-      <div className="w-full lg:w-[800px] flex justify-center flex-col items-center mx-auto">
-        <div className="flex items-center gap-4 mt-8">
-          {ACCOUNT_TYPE.map((item: ISelectProps, index) => {
-            const { title, description, image } = item || {};
-            const isSelected = selectedType.title === title;
-            return (
-              <div
-                key={index}
-                onClick={() => handleAccountType(item)}
-                className={`w-full lg:w-[350px] cursor-pointer border-2 rounded-xl p-[40px] transition-all duration-300 
-                                    ${
-                                      isSelected
-                                        ? "border border-background/30 "
-                                        : "border-gray-300/30"
-                                    }`}
+      <div className="w-full max-w-[800px] mx-auto">
+      
+        <div className="flex flex-col items-center gap-8">
+          <div className="w-full transition-all duration-300">
+            <CurrentStepComponent 
+              onNext={handleNext}
+              onBack={handleBack}
+              isFirstStep={currentStep === 0}
+              isLastStep={currentStep === STEPS.length - 1}
+              authState={authState}
+              updateAuthState={updateAuthState}
+            />
+          </div>
+
+          <div className="flex items-center gap-4">
+            {currentStep > 0 && (
+              <Button
+                variant="outline"
+                onClick={handleBack}
+                className="px-8 hover:bg-white/10"
               >
-                <div className="w-[220px] h-[220px] bg-white rounded-full flex items-center justify-center">
-                  <img src={image} alt="account type" />
-                </div>
-                <div className="text-center">
-                  <h4 className={`text-2xl font-semibold text-[#808080]`}>
-                    {title}
-                  </h4>
-                  <p className="text-sm text-gray-400">{description}</p>
-                </div>
-              </div>
-            );
-          })}
+                Back
+              </Button>
+            )}
+            <Button
+              onClick={handleNext}
+              className="px-8 bg-white text-background hover:bg-white/90"
+              //disabled={!authState[Object.keys(authState)[currentStep] as keyof AuthState]}
+            >
+              {currentStep === STEPS.length - 1 ? 'Get Started' : 'Continue'}
+            </Button>
+          </div>
         </div>
-        <Button
-          className="px-[40px] mt-10"
-          disabled={!selectedType}
-          onClick={() => handleRoute(selectedType.path)}
-        >
-          Continue
-        </Button>
       </div>
     </AuthLayout>
   );
