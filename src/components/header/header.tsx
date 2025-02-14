@@ -1,8 +1,8 @@
-import LogoSvg from "@/assets/svgs/logo";
-import { FC } from "react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import Link from "next/link";
+import LogoSvg from '@/assets/svgs/logo';
+import { FC } from 'react';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import Link from 'next/link';
 
 interface IHeaderProps {
   isAuthenticated?: boolean;

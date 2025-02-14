@@ -1,6 +1,6 @@
-import { AxiosError, AxiosResponse } from "axios";
-import { AXIOS_CONFIG } from "@/config/axios";
-import { IApiError, IApiResponse } from "@/interface/api.interface";
+import { AxiosError, AxiosResponse } from 'axios';
+import { AXIOS_CONFIG } from '@/config/axios';
+import { IApiError, IApiResponse } from '@/interface/api.interface';
 
 export class ApiClient {
   static async get<T>(url: string, params?: object): Promise<IApiResponse<T>> {
@@ -41,7 +41,7 @@ export class ApiClient {
 
   private static handleError(error: AxiosError): never {
     const apiError: ApiError = {
-      message: error.response?.data?.message || "An unexpected error occurred",
+      message: error.response?.data?.message || 'An unexpected error occurred',
       status: error.response?.status || 500,
       errors: error.response?.data?.errors,
     };
