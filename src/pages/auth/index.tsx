@@ -38,7 +38,7 @@ const IndexAuth = () => {
       title: "How would you like to create an account",
       description: "Choose your account type to get started",
       component: SelectAccountType,
-      note: ''
+      note: 'This is something you’d be uniquely addressed as, so you’d want to use something that stands out 🔥'
     },
     {
       title: "Choose a username",
