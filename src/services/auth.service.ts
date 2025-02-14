@@ -1,5 +1,5 @@
-import { ENDPOINT_ENUM } from "@/enums/endpoint";
-import { ApiClient } from "@/lib/api-client";
+import { ENDPOINT_ENUM } from '@/enums/endpoint';
+import { ApiClient } from '@/lib/api-client';
 
 interface LoginCredentials {
   email: string;
@@ -16,13 +16,10 @@ interface LoginResponse {
 }
 
 export class AuthService {
-  private static readonly BASE_PATH = "/auth";
+  private static readonly BASE_PATH = '/auth';
 
   static async login(credentials: LoginCredentials) {
-    return ApiClient.post<LoginResponse>(
-      ENDPOINT_ENUM.EMAIL_SIGN_IN,
-      credentials,
-    );
+    return ApiClient.post<LoginResponse>(ENDPOINT_ENUM.EMAIL_SIGN_IN, credentials);
   }
 
   static async signup(credentials: any) {

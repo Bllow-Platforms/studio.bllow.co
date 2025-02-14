@@ -1,13 +1,13 @@
-import { FC } from "react";
-import { HeroContainer } from "../layouts/container";
-import { DefaultTypography } from "../typography";
-import { Button } from "../ui/button";
-import { NotificationCard } from "./notification-card";
-import { Header } from "../header/header";
+import { FC } from 'react';
+import { HeroContainer } from '../layouts/container';
+import { DefaultTypography } from '../typography';
+import { Button } from '../ui/button';
+import { NotificationCard } from './notification-card';
+import { Header } from '../header/header';
 
 interface IndexHeroProps {}
 
-export const IndexHero: FC<IndexHeroProps> = (props) => {
+export const IndexHero: FC<IndexHeroProps> = props => {
   return (
     <div>
       <Header isAuthenticated={false} />
@@ -22,10 +22,7 @@ export const IndexHero: FC<IndexHeroProps> = (props) => {
             </DefaultTypography>
 
             <div className="w-full lg:w-[450px]">
-              <DefaultTypography
-                variant="p"
-                className="text-xl text-white/90 mb-8"
-              >
+              <DefaultTypography variant="p" className="text-xl text-white/90 mb-8">
                 ...accept support. Start a membership. Setup a shop. It's easier
                 than you think.
               </DefaultTypography>

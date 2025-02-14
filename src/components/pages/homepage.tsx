@@ -1,4 +1,4 @@
-import { IndexHero } from "../hero/indexHero";
+import { IndexHero } from '../hero/indexHero';
 
 const Homepage = () => {
   return (
