@@ -102,27 +102,16 @@ const IndexAuth = () => {
 
   const CurrentStepComponent = STEPS[currentStep].component;
 
+  const progress = ((currentStep + 1) / STEPS.length) * 100;
+
   return (
     <AuthLayout
       title={STEPS[currentStep].title}
       description={STEPS[currentStep].description}
+      progress={progress}
     >
       <div className="w-full max-w-[800px] mx-auto">
-        <div className="w-full mb-8">
-          <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-white rounded-full transition-all duration-700 ease-in-out"
-              style={{ width: `${((currentStep + 1) / STEPS.length) * 100}%` }}
-            />
-          </div>
-          
-          <div className="flex justify-between mt-2 text-xs text-white/50">
-            {STEPS.map((_, index) => (
-              <span key={index}>Step {index + 1}</span>
-            ))}
-          </div>
-        </div>
-
+      
         <div className="flex flex-col items-center gap-8">
           <div className="w-full transition-all duration-300">
             <CurrentStepComponent 
