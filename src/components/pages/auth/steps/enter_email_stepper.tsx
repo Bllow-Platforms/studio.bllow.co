@@ -23,7 +23,7 @@ export const EnterEmailStepper: FC<IEmailStepperProps> = props => {
   const handleRoute = (path: string) => router.push(path);
   return (
     <div className="w-full  flex justify-center flex-col items-center mx-auto">
-      <Input placeholder="eg. johndoe@gmail.com" />
+      <Input label="Email" placeholder="eg. johndoe@gmail.com" />
     </div>
   );
 };

@@ -31,7 +31,7 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
 }) => {
   return (
     <>
-      <div className="container lg:h-[90vh] mt-10">
+      <div className="container h-screen  my-8 ">
         <div className="w-full lg:w-[1000px] mx-auto">
           <Progress
             value={progress}
@@ -45,12 +45,12 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
           </div>
         </div>
 
-        <div className="flex flex-col gap-[4em] mt-[3em]">
+        <div className="flex flex-col gap-[2em] mt-[3em]">
           <div className=" w-full lg:w-[600px] mx-auto ">{children}</div>
 
           {note && (
             <div>
-              <p className="text-center w-full lg:w-[350px] mx-auto text-gray-400 my-4 text-lg font-light">
+              <p className="text-center w-full lg:w-[400px] mx-auto text-gray-400 my-4 text-lg font-light">
                 {note}
               </p>
             </div>
@@ -66,7 +66,11 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
                 Back
               </Button>
             )} */}
-            <Button onClick={onButtonClick} disabled={isButtonDisabled}>
+            <Button
+              onClick={onButtonClick}
+              className="px-[55px]"
+              disabled={isButtonDisabled}
+            >
               {buttonText}
             </Button>
           </div>
