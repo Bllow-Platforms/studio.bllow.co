@@ -9,6 +9,7 @@ interface StepConfig {
   title: string;
   description: string;
   component: React.ComponentType<StepProps>;
+  note: string;
 }
 
 interface StepProps {
@@ -36,47 +37,55 @@ const IndexAuth = () => {
     {
       title: "How would you like to create an account",
       description: "Choose your account type to get started",
-      component: SelectAccountType
+      component: SelectAccountType,
+      note: ''
     },
     {
       title: "Choose a username",
       description: "Choose your account type to get started",
-      component: PickerUsernameStepper
+      component: PickerUsernameStepper,
+      note: 'This is something you’d be uniquely addressed as, so you’d want to use something that stands out 🔥'
     },
     {
       title: "What's your email?",
       description: "Tell us your email address",
-      component: EnterEmailStepper
+      component: EnterEmailStepper,
+      note: 'Has to be unique 👋🏽'
     },
 
     {
       title: "You're almost there!, let's make it official! ✅ 🌟",
       description: "Verify your Bllow account to dive into a world of creators. It just takes a moment",
-      component: EnterEmailStepper
+      component: EnterEmailStepper,
+      note: 'We sent you a  temporary sign-in code sent to your mail or Please paste (or type) your 6-digit code 👀'
     },
 
     {
       title: "Complete your account ",
       description: "Choose your account type to get started",
-      component: EnterEmailStepper
+      component: EnterEmailStepper,
+      note: ''
     },
 
     {
       title: "Just a few more details ",
       description: "You’re almost there....",
-      component: EnterEmailStepper
+      component: EnterEmailStepper,
+      note: ''
     },
 
     {
       title: "Where should your tips be paid ",
       description: "Tell us where you’d like to receive your payments",
-      component: EnterEmailStepper
+      component: EnterEmailStepper, 
+      note: ''
     },
 
     {
       title: "Lastly, Setup withdrawal pin ",
       description: "You’d use this to authorize your withdrawals",
-      component: EnterEmailStepper
+      component: EnterEmailStepper,
+      note: ''
     },
 
   ];

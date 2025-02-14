@@ -8,6 +8,7 @@ interface IAuthLayoutProps {
   title?: string;
   description?: string;
   progress: number; 
+  bottomContent: string;
 }
 
 export const AuthLayout: FC<IAuthLayoutProps> = ({
@@ -15,6 +16,7 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
   description,
   children,
   progress, 
+  bottomContent
 }) => {
   return (
     <>
@@ -34,6 +36,12 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
         </div>
 
         <div className="my-4">{children}</div>
+
+        <div>
+          <p className="text-center text-gray-400 my-4">{bottomContent}</p>
+        </div>
+
+
       </div>
       <AuthFooter />
     </>
