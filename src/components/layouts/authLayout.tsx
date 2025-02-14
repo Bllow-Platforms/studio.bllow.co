@@ -38,7 +38,7 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
             className="mb-[2em] transition-all duration-700"
           />
           <div className="lg:w-[50%] mx-auto">
-            <DefaultTypography variant="h2" className="text-center mt-4 text-3xl">
+            <DefaultTypography variant="h2" className="text-center mt-4 text-2xl">
               {title}
             </DefaultTypography>
             <p className="my-2 text-center text-gray-400 text-sm">{description}</p>
