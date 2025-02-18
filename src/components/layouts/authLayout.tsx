@@ -3,6 +3,13 @@ import { DefaultTypography } from '../typography';
 import { AuthFooter } from '../footer/authFooter';
 import { Progress } from '../ui/progress';
 import { Button } from '../ui/button';
+import localFont from 'next/font/local';
+import { Plus_Jakarta_Sans } from 'next/font/google';
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 interface IAuthLayoutProps {
   children: ReactNode;
@@ -29,16 +36,20 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
   onBackClick,
   isButtonDisabled = false,
 }) => {
+
   return (
     <>
       <div className="container h-screen  my-8 ">
-        <div className="w-full lg:w-[1000px] mx-auto">
+        <div className="w-full lg:w-[850px] mx-auto">
           <Progress
             value={progress}
             className="mb-[2em] transition-all duration-700"
           />
           <div className="lg:w-[50%] mx-auto">
-            <DefaultTypography variant="h2" className="text-center mt-4 text-2xl">
+            <DefaultTypography 
+              variant="h2" 
+              className={`text-center mt-4 text-2xl lg:text-[37px] leading-10 ${plusJakartaSans.className} font-semibold`}
+            >
               {title}
             </DefaultTypography>
             <p className="my-2 text-center text-gray-400 text-sm">{description}</p>

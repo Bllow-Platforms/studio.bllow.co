@@ -39,7 +39,7 @@ export const SelectAccountType: FC<ISelectAccountTypeProps> = props => {
   const handleRoute = (path: string) => router.push(path);
   return (
     <div className="w-full flex justify-center flex-col items-center mx-auto">
-      <div className="flex flex-col lg:flex-row items-center gap-4 mt-8">
+      <div className="flex flex-col lg:flex-row items-center gap-8 mt-8">
         {ACCOUNT_TYPE.map((item: ISelectProps, index) => {
           const { title, description, image } = item || {};
           const isSelected = selectedType.title === title;

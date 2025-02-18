@@ -10,25 +10,40 @@ import { MoreUserDetailStepper } from '@/components/pages/auth/steps/more_detail
 import { FinancialSetupStepper } from '@/components/pages/auth/steps/financial_setup_stepper';
 import { PinSetupStepper } from '@/components/pages/auth/steps/pin_setup_stepper';
 
-interface StepConfig {
+interface BaseStep {
   title: string;
   description: string;
   component: React.ComponentType<StepProps>;
-  note: string;
 }
 
-interface StepProps {
+type StepConfig = BaseStep & Partial<{
+  note: string;
+  validation: (state: AuthState) => boolean;
+}>;
+
+type StepProps = {
   onNext: () => void;
   onBack: () => void;
+} & Pick<AuthState, 'authState' | 'updateAuthState'> & {
   isFirstStep: boolean;
   isLastStep: boolean;
-}
+};
 
-interface AuthState {
+type AuthState = {
   accountType: string;
   username: string;
   email: string;
-}
+  otp?: string;
+  profileImage?: File;
+  bio?: string;
+  firstName?: string;
+  lastName?: string;
+  bankAccounts?: Array<{
+    bankName: string;
+    accountNumber: string;
+  }>;
+  pin?: string;
+};
 
 const IndexAuth = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -43,7 +58,7 @@ const IndexAuth = () => {
       title: 'How would you like to create an account',
       description: 'Choose your account type to get started',
       component: SelectAccountType,
-      note: 'This is something you’d be uniquely addressed as, so you’d want to use something that stands out 🔥',
+      note: '',
     },
     {
       title: 'Choose a username',
@@ -123,7 +138,7 @@ const IndexAuth = () => {
       title={STEPS[currentStep].title}
       description={STEPS[currentStep].description}
       progress={progress}
-      buttonText={currentStep === STEPS.length - 1 ? 'Continue' : 'Next'}
+      buttonText={currentStep === STEPS.length - 1 ? 'Continue' : 'Coninue'}
       onButtonClick={handleNext}
       showBackButton={currentStep > 0}
       onBackClick={handleBack}
