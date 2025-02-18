@@ -59,33 +59,8 @@ export const SetUpAccountStepper: FC<StepProps> = ({ onNext, updateAuthState }) 
   };
 
   return (
-    <div className="w-full max-w-[600px] mx-auto ">
-      {/* Profile Image Upload */}
-      <div className="flex justify-center">
-        <div className="relative">
-          <div className="w-[120px] rounded-full border-2 border-dashed border-white/30 flex items-center justify-center overflow-hidden">
-            {profileImage ? (
-              <Image
-                src={profileImage}
-                alt="Profile"
-                fill
-                className="object-cover"
-              />
-            ) : (
-              <Camera className="w-8 h-8 text-white/50" />
-            )}
-          </div>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-          />
-          <p className="text-center mt-2 text-sm text-white/60">
-            Click to upload picture
-          </p>
-        </div>
-      </div>
+    <div className="w-full  max-w-[600px] mx-auto ">
+      
 
       <div
         className="flex items-center flex-col lg:flex-row gap-10 justify-center 

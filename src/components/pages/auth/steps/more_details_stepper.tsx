@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { SelectLabel } from '@radix-ui/react-select';
 
 interface StepProps {
   onNext: () => void;
@@ -59,21 +60,26 @@ export const MoreUserDetailStepper: FC<StepProps> = ({ updateAuthState }) => {
           onChange={e => handleChange('birthDate', e.target.value)}
           className="bg-white/5"
         />
-
-        <Select
-          value={formData.gender}
-          onValueChange={value => handleChange('gender', value)}
-        >
-          <SelectTrigger className="h-[48px] rounded-full bg-white/5">
-            <SelectValue placeholder="Select gender" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="male">Male</SelectItem>
-            <SelectItem value="female">Female</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
-            <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
-          </SelectContent>
-        </Select>
+        
+        <div className="space-y-2">
+          <label className="text-sm font-medium mb-2 text-gray-400">
+            Gender
+          </label>
+          <Select
+            value={formData.gender}
+            onValueChange={value => handleChange('gender', value)}
+          >
+            <SelectTrigger className="h-[48px] rounded-full bg-white/5">
+              <SelectValue placeholder="Select gender" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="male">Male</SelectItem>
+              <SelectItem value="female">Female</SelectItem>
+              <SelectItem value="other">Other</SelectItem>
+              <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </div>
   );

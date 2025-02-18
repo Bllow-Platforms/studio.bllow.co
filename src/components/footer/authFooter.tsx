@@ -4,7 +4,7 @@ interface IAuthFooterProps {}
 
 export const AuthFooter: FC<IAuthFooterProps> = props => {
   return (
-    <div className="flex items-center mt-[3em] lg:mt-0 border-t-2 py-8 justify-between ">
+    <div className="flex items-center mt-[4em] lg:mt-0 border-t-2 py-6 justify-between ">
       <div className="container flex items-center justify-between">
         <div className="logo">
           <SecondaryLogo />

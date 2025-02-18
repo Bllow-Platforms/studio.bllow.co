@@ -39,24 +39,27 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
 
   return (
     <>
-      <div className="container h-screen  my-8 ">
-        <div className="w-full lg:w-[850px] mx-auto">
+      <div className="container h-100  my-4 ">
+        <div className="w-full lg:w-[900px] mx-auto">
+          <div className='w-full my-[3em] flex items-center gap-2'>
+            <h3 onClick={onBackClick} className='cursor-pointer'>x</h3>
           <Progress
             value={progress}
-            className="mb-[2em] transition-all duration-700"
+            className=" transition-all duration-700"
           />
-          <div className="lg:w-[50%] mx-auto">
+          </div>
+          <div className="lg:w-[50%] mx-auto my-[2em]">
             <DefaultTypography 
               variant="h2" 
               className={`text-center mt-4 text-2xl lg:text-[37px] leading-10 ${plusJakartaSans.className} font-semibold`}
             >
               {title}
             </DefaultTypography>
-            <p className="my-2 text-center text-gray-400 text-sm">{description}</p>
+            <p className="my-4 text-center text-gray-400 text-sm ">{description}</p>
           </div>
         </div>
 
-        <div className="flex flex-col gap-[2em] mt-[3em]">
+        <div className="flex flex-col gap-[2em] ">
           <div className=" w-full lg:w-[600px] mx-auto ">{children}</div>
 
           {note && (
@@ -87,7 +90,10 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
           </div>
         </div>
       </div>
+      
+      <div className="fixed bottom-0 right-0 left-0 bg-white">
       <AuthFooter />
+      </div>
     </>
   );
 };
