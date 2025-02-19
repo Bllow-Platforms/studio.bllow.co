@@ -14,14 +14,14 @@ export const DefaultAuthLayout: NextPage<IDefaultAuthLayoutProps> = ({
 }) => {
   return (
     <div className="flex flex-col lg:flex-row  justify-between h-screen gap-2">
-      <div className="w-full lg:w-[500px]">{children}</div>
+      <div className="w-full lg:w-[500px] h-full items-center flex justify-center">{children}</div>
       <div
         className="bg-primary h-full w-full lg:w-[879px] flex flex-col items-center
                 justify-center "
-      >
+      >       
         <DefaultTypography
           variant="h1"
-          className="text-3xl lg:text-3xl text-white justify-center"
+          className="text-3xl lg:text-[35px] w-full lg:w-[600px] text-white justify-center"
         >
           {title}
         </DefaultTypography>
