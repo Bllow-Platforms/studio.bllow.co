@@ -60,11 +60,9 @@ export const MoreUserDetailStepper: FC<StepProps> = ({ updateAuthState }) => {
           onChange={e => handleChange('birthDate', e.target.value)}
           className="bg-white/5"
         />
-        
+
         <div className="space-y-2">
-          <label className="text-sm font-medium mb-2 text-gray-400">
-            Gender
-          </label>
+          <label className="text-sm font-medium mb-2 text-gray-400">Gender</label>
           <Select
             value={formData.gender}
             onValueChange={value => handleChange('gender', value)}

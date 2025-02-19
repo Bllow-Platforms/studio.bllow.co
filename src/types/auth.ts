@@ -6,18 +6,19 @@ export interface BaseStep {
   component: React.ComponentType<StepProps>;
 }
 
-export type StepConfig = BaseStep & Partial<{
-  note: string;
-  validation: (state: AuthState) => boolean;
-}>;
+export type StepConfig = BaseStep &
+  Partial<{
+    note: string;
+    validation: (state: AuthState) => boolean;
+  }>;
 
 export type StepProps = {
   onNext: () => void;
   onBack: () => void;
 } & Pick<AuthState, 'authState' | 'updateAuthState'> & {
-  isFirstStep: boolean;
-  isLastStep: boolean;
-};
+    isFirstStep: boolean;
+    isLastStep: boolean;
+  };
 
 export type AuthState = {
   accountType: string;

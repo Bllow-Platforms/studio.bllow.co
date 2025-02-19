@@ -1,3 +1,10 @@
+interface IAddBankProps {
+  bankName: string;
+  accountName: string;
+  accountNumber: string;
+  bankCode: string;
+}
+
 interface IBankResponse {
   id: number;
   name: string;
@@ -15,4 +22,4 @@ interface IBankResponse {
   updatedAt: string;
 }
 
-export type { IBankResponse };
+export type { IAddBankProps, IBankResponse };

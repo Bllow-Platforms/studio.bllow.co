@@ -60,8 +60,6 @@ export const SetUpAccountStepper: FC<StepProps> = ({ onNext, updateAuthState }) 
 
   return (
     <div className="w-full  max-w-[600px] mx-auto ">
-      
-
       <div
         className="flex items-center flex-col lg:flex-row gap-10 justify-center 
         "

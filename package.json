@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format":"prettier --write ./src"
+    "format": "prettier --write ./src"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.0.0",
@@ -23,6 +23,7 @@
     "@radix-ui/react-tooltip": "^1.1.8",
     "@tanstack/react-query": "^5.66.0",
     "axios": "^1.7.9",
+    "boring-avatars": "^1.11.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "input-otp": "^1.4.2",

@@ -64,13 +64,6 @@ export const SelectAccountType: FC<ISelectAccountTypeProps> = props => {
           );
         })}
       </div>
-      {/* <Button
-          className="px-[40px] mt-10"
-          disabled={!selectedType}
-          onClick={() => handleRoute(selectedType.path)}
-        >
-          Continue
-        </Button> */}
     </div>
   );
 };

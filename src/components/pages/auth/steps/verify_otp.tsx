@@ -25,7 +25,7 @@ export const OTPVerificationStepper: FC<StepProps> = ({ onNext }) => {
   return (
     <div className="w-full flex justify-center flex-col items-center mx-auto space-y-6">
       <div className="w-full max-w-[400px] mx-auto">
-        <InputOTP 
+        <InputOTP
           maxLength={6}
           value={otp}
           onChange={setOtp}
@@ -33,9 +33,9 @@ export const OTPVerificationStepper: FC<StepProps> = ({ onNext }) => {
         >
           <InputOTPGroup className="gap-4">
             {Array.from({ length: 6 }).map((_, index) => (
-              <InputOTPSlot 
-                key={index} 
-                index={index} 
+              <InputOTPSlot
+                key={index}
+                index={index}
                 className="!rounded-lg w-[60px] h-[60px] !shadow-none inset-0"
               />
             ))}
