@@ -8,6 +8,9 @@ export enum ENDPOINT_ENUM {
   FORGET_PASSWORD = '/forget-password',
   RESET_PASSWORD = '/reset-password',
   RESET_PASSWORD_TOKEN = '/reset-password/:token',
+  CHECK_EMAIL = '/auth/check-email',
+  EMAIL_VERIFICATION = '/auth/sign-in/email-otp',
+  
 
   // Email verification 📧
   VERIFY_EMAIL = '/verify-email',
@@ -30,6 +33,14 @@ export enum ENDPOINT_ENUM {
   LINK_SOCIAL = '/link-social',
   LIST_ACCOUNTS = '/list-accounts',
   UNLINK_ACCOUNT = '/unlink-account',
+
+  //BANK & ACCOUNT
+  LIST_BANK = '/bank/list',
+  ADD_BANK = '/account/bank-account',
+  RESOLVE_BANK = '/bank/resolve-account'
+
+  //MISC
+
 
   // Status ✅
   OK = '/ok',

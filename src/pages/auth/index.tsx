@@ -16,34 +16,12 @@ interface BaseStep {
   component: React.ComponentType<StepProps>;
 }
 
-type StepConfig = BaseStep & Partial<{
-  note: string;
-  validation: (state: AuthState) => boolean;
-}>;
-
-type StepProps = {
-  onNext: () => void;
-  onBack: () => void;
-} & Pick<AuthState, 'authState' | 'updateAuthState'> & {
-  isFirstStep: boolean;
-  isLastStep: boolean;
-};
-
-type AuthState = {
-  accountType: string;
-  username: string;
-  email: string;
-  otp?: string;
-  profileImage?: File;
-  bio?: string;
-  firstName?: string;
-  lastName?: string;
-  bankAccounts?: Array<{
-    bankName: string;
-    accountNumber: string;
+type StepConfig = BaseStep &
+  Partial<{
+    note: string;
+    validation: (state: AuthState) => boolean;
+    onStepComplete?: (state: AuthState) => Promise<boolean> | boolean;
   }>;
-  pin?: string;
-};
 
 const IndexAuth = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -59,6 +37,7 @@ const IndexAuth = () => {
       description: 'Choose your account type to get started',
       component: SelectAccountType,
       note: '',
+      onStepComplete: () => {},
     },
     {
       title: 'Choose a username',
@@ -71,6 +50,7 @@ const IndexAuth = () => {
       description: 'Tell us your email address',
       component: EnterEmailStepper,
       note: 'Has to be unique 👋🏽',
+      onStepComplete: () => {},
     },
 
     {
@@ -110,7 +90,19 @@ const IndexAuth = () => {
     },
   ];
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    const currentStepConfig = STEPS[currentStep];
+
+    if (currentStepConfig.onStepComplete) {
+      try {
+        const canProceed = await currentStepConfig.onStepComplete(authState);
+        if (!canProceed) return;
+      } catch (error) {
+        console.error('Step completion failed:', error);
+        return;
+      }
+    }
+
     if (currentStep < STEPS.length - 1) {
       setCurrentStep(prev => prev + 1);
     }

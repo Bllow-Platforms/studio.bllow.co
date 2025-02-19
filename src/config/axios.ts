@@ -1,7 +1,8 @@
+import { BASE_API_URL } from '@/constants';
 import axios, { AxiosError } from 'axios';
 
 export const AXIOS_CONFIG = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000',
+  baseURL: BASE_API_URL,
   timeout: 10000,
   timeoutErrorMessage: 'Request timeout. Please try again',
   headers: {
