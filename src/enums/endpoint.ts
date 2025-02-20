@@ -12,7 +12,7 @@ export enum ENDPOINT_ENUM {
   EMAIL_VERIFICATION = '/auth/sign-in/email-otp',
   
 
-  // Email verification 📧
+ // 📧
   VERIFY_EMAIL = '/verify-email',
   SEND_VERIFICATION_EMAIL = '/send-verification-email',
 
@@ -23,26 +23,23 @@ export enum ENDPOINT_ENUM {
   DELETE_USER = '/delete-user',
   DELETE_USER_CALLBACK = '/delete-user/callback',
 
-  // Sessions 🔑
+  //  🔑
   LIST_SESSIONS = '/list-sessions',
   REVOKE_SESSION = '/revoke-session',
   REVOKE_SESSIONS = '/revoke-sessions',
   REVOKE_OTHER_SESSIONS = '/revoke-other-sessions',
 
-  // Social accounts 🤙
+  // 🤙
   LINK_SOCIAL = '/link-social',
   LIST_ACCOUNTS = '/list-accounts',
   UNLINK_ACCOUNT = '/unlink-account',
 
-  //BANK & ACCOUNT
+  // 🏦
   LIST_BANK = '/bank/list',
   ADD_BANK = '/account/bank-account',
-  RESOLVE_BANK = '/bank/resolve-account'
+  RESOLVE_BANK = '/bank/resolve-account',
 
   //MISC
-
-
-  // Status ✅
   OK = '/ok',
   ERROR = '/error',
 }

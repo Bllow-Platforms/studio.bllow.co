@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { SecondaryLogo } from '../../../public/svgs/logo';
+import Link from 'next/link';
 interface IAuthFooterProps {}
 
 export const AuthFooter: FC<IAuthFooterProps> = props => {
@@ -12,7 +13,9 @@ export const AuthFooter: FC<IAuthFooterProps> = props => {
         <div>
           <p className="text-sm text-gray-500">
             Already have an account?{' '}
-            <span className="text-background font-semibold">Sign In</span>{' '}
+            <Link href={'/auth/signin'} className="text-background font-semibold">
+              Sign In
+            </Link>
           </p>
         </div>
       </div>

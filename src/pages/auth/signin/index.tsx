@@ -3,58 +3,86 @@ import { DefaultAuthLayout } from '@/components/layouts/default_auth_layout';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import Link from 'next/link';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signInSchema } from '@/schema';
+import { AuthService } from '@/services/auth.service';
+import { useMutation } from '@tanstack/react-query';
+
+type SignInSchema = z.infer<typeof signInSchema>;
 
 const SignInPage = () => {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<SignInSchema>({
+    resolver: zodResolver(signInSchema),
   });
 
-  const handleChange = (key: string, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
+  const { mutate: signIn, isLoading } = useMutation({
+    mutationFn: (data: SignInSchema) => AuthService.signIn(data),
+    onSuccess: response => {
+      localStorage.setItem('token', response.data.token);
+      toast.success('Signed in successfully');
+      router.push('/dashboard');
+    },
+    onError: (error: any) => {
+      if (error.response?.data?.errors) {
+        Object.entries(error.response.data.errors).forEach(([key, value]) => {
+          setError(key as keyof SignInSchema, {
+            message: value as string,
+          });
+        });
+      } else {
+        toast.error(error.response?.data?.message || 'Failed to sign in');
+      }
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (data: SignInSchema) => {
+    signIn(data);
   };
 
   return (
-    <DefaultAuthLayout>
+    <DefaultAuthLayout
+      title="Welcome back to Bllow"
+      note={`We've missed you! Sign in to unlock your creators rights`}
+    >
       <div className="w-full max-w-[400px] mx-auto space-y-6">
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <Input
             label="Email"
             type="email"
             placeholder="name@example.com"
-            value={formData.email}
-            onChange={e => handleChange('email', e.target.value)}
+            {...register('email')}
+            error={errors.email?.message}
           />
           <Input
-            label="Password"
-            type="password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={e => handleChange('password', e.target.value)}
+            label="Username"
+            type="text"
+            placeholder="username"
+            {...register('username')}
+            error={errors.username?.message}
           />
 
-          <Button type="submit" className="w-full">
-            Sign In
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading ? 'Signing in...' : 'Sign In'}
           </Button>
         </form>
 
-        <div className="text-center text-sm">
-          <span className="text-muted-foreground">Don't have an account? </span>
-          <Button
-            variant="link"
-            className="p-0 font-semibold"
-            onClick={() => router.push('/auth')}
-          >
+        <div className="text-sm">
+          <span className="text-muted-foreground">
+            Would you love to own an account?{' '}
+          </span>
+          <Link href={'/auth'} className="text-primary font-bold">
             Sign up
-          </Button>
+          </Link>
         </div>
       </div>
     </DefaultAuthLayout>
