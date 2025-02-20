@@ -10,9 +10,8 @@ export enum ENDPOINT_ENUM {
   RESET_PASSWORD_TOKEN = '/reset-password/:token',
   CHECK_EMAIL = '/auth/check-email',
   EMAIL_VERIFICATION = '/auth/sign-in/email-otp',
-  
 
- // 📧
+  // 📧
   VERIFY_EMAIL = '/verify-email',
   SEND_VERIFICATION_EMAIL = '/send-verification-email',
 

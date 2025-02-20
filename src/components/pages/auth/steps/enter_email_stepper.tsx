@@ -1,29 +1,59 @@
 import { FC } from 'react';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { Input } from '@/components/ui/input';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ContinueButton } from '../components/continue-button';
+import { toast } from 'sonner';
 
-interface ISelectProps {
-  title: string;
-  description: string;
-  image: string;
-  path: string;
+const emailSchema = z.object({
+  email: z.string().email('Please enter a valid email address'),
+});
+
+type EmailFormData = z.infer<typeof emailSchema>;
+
+interface IEmailStepperProps {
+  onNext: () => void;
+  note?: string;
 }
 
-interface IEmailStepperProps {}
+export const EnterEmailStepper: FC<IEmailStepperProps> = ({ onNext, note }) => {
+  const {
+    register,
+    getValues,
+    formState: { errors, isValid },
+    trigger,
+  } = useForm<EmailFormData>({
+    resolver: zodResolver(emailSchema),
+    mode: 'onChange',
+  });
 
-export const EnterEmailStepper: FC<IEmailStepperProps> = props => {
-  const [selectedType, setSelectedType] = useState<ISelectProps | {}>({});
-  const router = useRouter();
+  const handleContinue = async () => {
+    const isValid = await trigger('email');
+    if (!isValid) {
+      toast.error('Please enter a valid email');
+      return;
+    }
 
-  const handleAccountType = (item: ISelectProps) => {
-    setSelectedType(item);
+    try {
+      onNext();
+    } catch (error) {
+      toast.error('Failed to proceed');
+    }
   };
 
-  const handleRoute = (path: string) => router.push(path);
   return (
-    <div className="w-full  flex justify-center flex-col items-center mx-auto">
-      <Input label="Email" placeholder="eg. johndoe@gmail.com" />
+    <div className="w-full flex justify-center flex-col items-center mx-auto">
+      <div className="w-full">
+        <Input
+          label="Email"
+          placeholder="eg. johndoe@gmail.com"
+          {...register('email')}
+          error={errors.email?.message}
+        />
+      </div>
+
+      <ContinueButton note={note} onContinue={handleContinue} disabled={!isValid} />
     </div>
   );
 };

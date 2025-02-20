@@ -2,35 +2,26 @@ import { FC } from 'react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import { ContinueButton } from '../components/continue-button';
 
 interface StepProps {
   onNext: () => void;
-  onBack: () => void;
-  isFirstStep: boolean;
-  isLastStep: boolean;
+  note?: string;
 }
 
-export const OTPVerificationStepper: FC<StepProps> = ({ onNext }) => {
+export const OTPVerificationStepper: FC<StepProps> = ({ onNext, note }) => {
   const [otp, setOtp] = useState('');
 
-  const handleComplete = (value: string) => {
-    setOtp(value);
-    if (value.length === 6) {
-      setTimeout(() => {
-        onNext();
-      }, 500);
+  const handleContinue = () => {
+    if (otp.length === 6) {
+      onNext();
     }
   };
 
   return (
     <div className="w-full flex justify-center flex-col items-center mx-auto space-y-6">
       <div className="w-full max-w-[400px] mx-auto">
-        <InputOTP
-          maxLength={6}
-          value={otp}
-          onChange={setOtp}
-          onComplete={handleComplete}
-        >
+        <InputOTP maxLength={6} value={otp} onChange={setOtp}>
           <InputOTPGroup className="gap-4">
             {Array.from({ length: 6 }).map((_, index) => (
               <InputOTPSlot
@@ -42,10 +33,16 @@ export const OTPVerificationStepper: FC<StepProps> = ({ onNext }) => {
           </InputOTPGroup>
         </InputOTP>
       </div>
-      <p className="text-gray-400 text-sm mt-8">
+      <p className="text-gray-400 text-sm">
         Didn't receive code?{' '}
         <button className="text-primary hover:underline">Resend</button>
       </p>
+
+      <ContinueButton
+        note={note}
+        onContinue={handleContinue}
+        disabled={otp.length !== 6}
+      />
     </div>
   );
 };

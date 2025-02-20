@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Building2, Trash2 } from 'lucide-react';
+import { Building2 } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { ContinueButton } from '../components/continue-button';
 
 interface BankAccount {
   bankName: string;
@@ -19,14 +20,10 @@ interface BankAccount {
 
 interface StepProps {
   onNext: () => void;
-  onBack: () => void;
-  isFirstStep: boolean;
-  isLastStep: boolean;
-  authState: any;
-  updateAuthState: (key: string, value: any) => void;
+  note?: string;
 }
 
-export const FinancialSetupStepper: FC<StepProps> = ({ updateAuthState }) => {
+export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
   const [accounts, setAccounts] = useState<BankAccount[]>([]);
   const [newAccount, setNewAccount] = useState({
     bankName: '',
@@ -48,6 +45,12 @@ export const FinancialSetupStepper: FC<StepProps> = ({ updateAuthState }) => {
     const updatedAccounts = accounts.filter((_, i) => i !== index);
     setAccounts(updatedAccounts);
     updateAuthState('bankAccounts', updatedAccounts);
+  };
+
+  const handleContinue = () => {
+    if (accounts.length > 0) {
+      onNext();
+    }
   };
 
   return (
@@ -115,6 +118,11 @@ export const FinancialSetupStepper: FC<StepProps> = ({ updateAuthState }) => {
           </div>
         ))}
       </div>
+      <ContinueButton
+        note={note}
+        onContinue={handleContinue}
+        disabled={accounts.length === 0}
+      />
     </div>
   );
 };
