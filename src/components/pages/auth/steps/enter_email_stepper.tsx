@@ -5,6 +5,8 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ContinueButton } from '../components/continue-button';
 import { toast } from 'sonner';
+import { AuthService } from '@/services/auth.service';
+import { useMutation } from '@tanstack/react-query';
 
 const emailSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -18,6 +20,16 @@ interface IEmailStepperProps {
 }
 
 export const EnterEmailStepper: FC<IEmailStepperProps> = ({ onNext, note }) => {
+  const { mutateAsync: signIn, isPending } = useMutation({
+    mutationFn: (email: string) => AuthService.signIn({ email, password: '' }),
+    onError: error => {
+      toast.error(error.message || 'Failed to sign in');
+    },
+    onSuccess: () => {
+      onNext();
+    },
+  });
+
   const {
     register,
     getValues,
@@ -36,6 +48,7 @@ export const EnterEmailStepper: FC<IEmailStepperProps> = ({ onNext, note }) => {
     }
 
     try {
+      await signIn(getValues('email'));
       onNext();
     } catch (error) {
       toast.error('Failed to proceed');
@@ -53,7 +66,11 @@ export const EnterEmailStepper: FC<IEmailStepperProps> = ({ onNext, note }) => {
         />
       </div>
 
-      <ContinueButton note={note} onContinue={handleContinue} disabled={!isValid} />
+      <ContinueButton
+        note={note}
+        onContinue={handleContinue}
+        disabled={!isValid || isPending}
+      />
     </div>
   );
 };

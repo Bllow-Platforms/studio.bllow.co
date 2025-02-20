@@ -33,8 +33,20 @@ export class AuthService {
     }
   }
 
+  static async signInWithUsername() {
+    ApiClient.post(ENDPOINT_ENUM);
+  }
+
+  static async verifyEmailOtp(payload: any) {
+    return ApiClient.post(ENDPOINT_ENUM.EMAIL_VERIFICATION, payload);
+  }
+
   static async signup(credentials: any) {
     return ApiClient.post(ENDPOINT_ENUM.EMAIL_SIGN_UP, credentials);
+  }
+
+  static async signInEmailVerificationOtp(credentials: any) {
+    return ApiClient.post(ENDPOINT_ENUM.SIGN_IN_EMAIL_OTP, credentials);
   }
 
   static async me() {
