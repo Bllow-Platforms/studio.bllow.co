@@ -29,7 +29,6 @@ export const Header: FC<IHeaderProps> = ({ isAuthenticated = false }) => {
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-
         <div className="hidden md:flex items-center gap-4">
           <nav className="flex items-center gap-6">
             <Link
@@ -78,7 +77,6 @@ export const Header: FC<IHeaderProps> = ({ isAuthenticated = false }) => {
             )}
           </div>
         </div>
-
 
         {isMobileMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-background border-t border-white/10 p-4 md:hidden">

@@ -46,6 +46,7 @@ export const SelectAccountType: FC<ISelectAccountTypeProps> = ({
   authState,
   note,
 }) => {
+  const router = useRouter();
   const [selectedType, setSelectedType] = useState<ISelectProps | null>(
     authState.accountType
       ? ACCOUNT_TYPE.find(type => type.type === authState.accountType) || null
@@ -59,6 +60,9 @@ export const SelectAccountType: FC<ISelectAccountTypeProps> = ({
 
   const handleContinue = () => {
     if (selectedType) {
+      const queryParams = new URLSearchParams(window.location.search);
+      queryParams.set('type', selectedType.type);
+      router.push(`${window.location.pathname}?${queryParams.toString()}`);
       onNext();
     }
   };

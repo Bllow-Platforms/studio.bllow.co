@@ -29,7 +29,6 @@ const SignInPage = () => {
   const { mutate: signIn, isPending } = useMutation({
     mutationFn: (data: SignInSchema) => AuthService.signIn(data),
     onSuccess: response => {
-   
       toast.success('Signed in successfully');
       router.push('/auth/authorize-auths');
     },
@@ -51,7 +50,7 @@ const SignInPage = () => {
   };
 
   if (isPending) {
-    return <DefaultLoadingPage/>
+    return <DefaultLoadingPage />;
   }
 
   return (
@@ -76,8 +75,7 @@ const SignInPage = () => {
             error={errors.username?.message}
           />
 
-          <Button type="submit" className="w-full" 
-             disabled={isPending} >
+          <Button type="submit" className="w-full" disabled={isPending}>
             {isPending ? 'Signing in...' : 'Sign In'}
           </Button>
         </form>
@@ -91,8 +89,6 @@ const SignInPage = () => {
           </Link>
         </div>
       </div>
-
-     
     </DefaultAuthLayout>
   );
 };

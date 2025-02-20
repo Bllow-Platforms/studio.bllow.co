@@ -15,5 +15,11 @@ interface IBankResponse {
   updatedAt: string;
 }
 
+interface IFileUploadResponse {
+  url: string;
+  fullpath: string;
+  path: string;
+}
+
 type TUser = 'creator' | 'fan';
-export type { IBankResponse, TUser };
+export type { IBankResponse, TUser, IFileUploadResponse };

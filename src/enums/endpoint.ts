@@ -9,11 +9,12 @@ export enum ENDPOINT_ENUM {
   RESET_PASSWORD = '/reset-password',
   RESET_PASSWORD_TOKEN = '/reset-password/:token',
   CHECK_EMAIL = '/auth/check-email',
-  EMAIL_VERIFICATION = '/auth/sign-in/email-otp',
+  EMAIL_VERIFICATION = '/auth/email-otp/send-verification-otp',
+  SIGN_IN_EMAIL_OTP = '/auth/sign-in/email-otp',
+  SIGN_UP_USERNAME = ''
 
   // 📧
   VERIFY_EMAIL = '/verify-email',
-  SEND_VERIFICATION_EMAIL = '/send-verification-email',
 
   // User management
   CHANGE_EMAIL = '/change-email',
@@ -39,6 +40,7 @@ export enum ENDPOINT_ENUM {
   RESOLVE_BANK = '/bank/resolve-account',
 
   //MISC
+  UPLOAD = '/upload',
   OK = '/ok',
   ERROR = '/error',
 }
