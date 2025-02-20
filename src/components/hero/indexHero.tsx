@@ -22,7 +22,10 @@ export const IndexHero: FC<IndexHeroProps> = props => {
             </DefaultTypography>
 
             <div className="w-full lg:w-[450px] mx-auto lg:mx-0">
-              <DefaultTypography variant="p" className="text-lg md:text-xl text-white/90 mb-8">
+              <DefaultTypography
+                variant="p"
+                className="text-lg md:text-xl text-white/90 mb-8"
+              >
                 ...accept support. Start a membership. Setup a shop. It's easier
                 than you think.
               </DefaultTypography>

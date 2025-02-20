@@ -9,6 +9,7 @@ import { MoreUserDetailStepper } from '@/components/pages/auth/steps/more_detail
 import { FinancialSetupStepper } from '@/components/pages/auth/steps/financial_setup_stepper';
 import { PinSetupStepper } from '@/components/pages/auth/steps/pin_setup_stepper';
 import { toast } from 'sonner';
+import { useSearchParams } from 'next/navigation';
 interface BaseStep {
   title: string;
   description: string;
@@ -17,24 +18,21 @@ interface BaseStep {
 }
 
 const IndexAuth = () => {
+  const searchParams = useSearchParams();
+  const accountType = searchParams.get('type');
   const [currentStep, setCurrentStep] = useState(0);
+
   const [authState, setAuthState] = useState<AuthState>({
     accountType: '',
     username: '',
     email: '',
   });
 
-  const STEPS: BaseStep[] = [
+  const baseSteps: BaseStep[] = [
     {
       title: 'How would you like to create an account',
       description: 'Choose your account type to get started',
       component: SelectAccountType,
-    },
-    {
-      title: 'Choose a username',
-      description: 'Choose your account type to get started',
-      component: PickerUsernameStepper,
-      note: 'This is something you be uniquely addressed as, so you want to use something that stands out 🔥',
     },
     {
       title: "What's your email?",
@@ -73,6 +71,18 @@ const IndexAuth = () => {
       component: PinSetupStepper,
     },
   ];
+
+  const creatorUsernameStep: BaseStep = {
+    title: 'Choose a username',
+    description: 'Choose your account type to get started',
+    component: PickerUsernameStepper,
+    note: 'This is something you be uniquely addressed as, so you want to use something that stands out 🔥',
+  };
+
+  const STEPS: BaseStep[] =
+    accountType === 'fan'
+      ? baseSteps
+      : [...baseSteps.slice(0, 1), creatorUsernameStep, ...baseSteps.slice(1)];
 
   const handleNext = () => {
     if (currentStep < STEPS.length - 1) {
