@@ -51,12 +51,13 @@ export const Header: FC<IHeaderProps> = ({ isAuthenticated = false }) => {
                   </Button>
                 </Link>
 
-                <Button
+               <Link href={'/auth/signin'}>
+               <Button
                   variant="outline"
                   className="text-white hover:text-white/90 hover:bg-white/10"
                 >
                   Log In
-                </Button>
+                </Button></Link>
               </>
             ) : (
               <Button className="bg-white text-primary hover:bg-white/90">

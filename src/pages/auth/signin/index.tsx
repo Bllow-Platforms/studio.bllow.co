@@ -3,57 +3,50 @@ import { DefaultAuthLayout } from '@/components/layouts/default_auth_layout';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import { toast } from 'sonner';
-import { ENDPOINT_ENUM } from '@/enums/endpoint';
 import Link from 'next/link';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signInSchema } from '@/schema';
+import { AuthService } from '@/services/auth.service';
+import { useMutation } from '@tanstack/react-query';
+
+type SignInSchema = z.infer<typeof signInSchema>;
 
 const SignInPage = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    username: '',
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<SignInSchema>({
+    resolver: zodResolver(signInSchema),
   });
-  const [errors, setErrors] = useState({
-    email: '',
-    username: '',
-  });
 
-  const handleChange = (key: string, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [key]: value,
-    }));
-    setErrors(prev => ({
-      ...prev,
-      [key]: '',
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const response = await axios.post(API_ENDPOINTS.AUTH.LOGIN, {
-        email: formData.email,
-        username: formData.username,
-      });
-
-      if (response.data) {
-        toast.success('Signed in successfully');
-        router.push('/dashboard');
-      }
-    } catch (error: any) {
+  const { mutate: signIn, isLoading } = useMutation({
+    mutationFn: (data: SignInSchema) => AuthService.signIn(data),
+    onSuccess: response => {
+      localStorage.setItem('token', response.data.token);
+      toast.success('Signed in successfully');
+      router.push('/dashboard');
+    },
+    onError: (error: any) => {
       if (error.response?.data?.errors) {
-        setErrors(error.response.data.errors);
+        Object.entries(error.response.data.errors).forEach(([key, value]) => {
+          setError(key as keyof SignInSchema, {
+            message: value as string,
+          });
+        });
       } else {
         toast.error(error.response?.data?.message || 'Failed to sign in');
       }
-    } finally {
-      setIsLoading(false);
-    }
+    },
+  });
+
+  const onSubmit = (data: SignInSchema) => {
+    signIn(data);
   };
 
   return (
@@ -62,22 +55,20 @@ const SignInPage = () => {
       note={`We've missed you! Sign in to unlock your creators rights`}
     >
       <div className="w-full max-w-[400px] mx-auto space-y-6">
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <Input
             label="Email"
             type="email"
             placeholder="name@example.com"
-            value={formData.email}
-            onChange={e => handleChange('email', e.target.value)}
-            error={errors.email}
+            {...register('email')}
+            error={errors.email?.message}
           />
           <Input
             label="Username"
             type="text"
             placeholder="username"
-            value={formData.username}
-            onChange={e => handleChange('username', e.target.value)}
-            error={errors.username}
+            {...register('username')}
+            error={errors.username?.message}
           />
 
           <Button type="submit" className="w-full" disabled={isLoading}>
@@ -85,11 +76,11 @@ const SignInPage = () => {
           </Button>
         </form>
 
-        <div className=" text-sm">
+        <div className="text-sm">
           <span className="text-muted-foreground">
             Would you love to own an account?{' '}
           </span>
-          <Link href={'/auth'} className="text-primary  font-bold">
+          <Link href={'/auth'} className="text-primary font-bold">
             Sign up
           </Link>
         </div>

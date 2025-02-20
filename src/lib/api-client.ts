@@ -1,50 +1,88 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { AXIOS_CONFIG } from '@/config/axios';
 import { IApiError, IApiResponse } from '@/interface/api.interface';
+import { toast } from 'sonner';
+
+export class ApiError extends Error {
+  constructor(
+    public message: string,
+    public status: number,
+    public errors?: Record<string, string>,
+    public code?: string
+  ) {
+    super(message);
+    this.name = 'ApiError';
+  }
+}
 
 export class ApiClient {
-  static async get<T>(url: string, params?: object): Promise<IApiResponse<T>> {
+  private static async request<T>(
+    method: 'get' | 'post' | 'put' | 'patch' | 'delete',
+    url: string,
+    data?: any,
+    params?: object
+  ): Promise<IApiResponse<T>> {
     try {
-      const response: AxiosResponse = await AXIOS_CONFIG.get(url, { params });
+      const response: AxiosResponse = await AXIOS_CONFIG({
+        method,
+        url,
+        data,
+        params,
+      });
       return response.data;
     } catch (error) {
-      return this.handleError(error as AxiosError);
+      if (error instanceof AxiosError) {
+        const apiError = new ApiError(
+          error.response?.data?.message || 'An unexpected error occurred',
+          error.response?.status || 500,
+          error.response?.data?.errors,
+          error.response?.data?.code
+        );
+
+        switch (apiError.status) {
+          case 401:
+            toast.error('Session expired. Please sign in again.');
+            window.location.href = '/auth/signin';
+            break;
+          case 403:
+            toast.error('You do not have permission to perform this action');
+            break;
+          case 404:
+            toast.error('Resource not found');
+            break;
+          case 422:
+            toast.error(apiError.message || 'Validation failed');
+            if (apiError.errors) {
+              Object.values(apiError.errors).forEach(error => {
+                toast.error(error);
+              });
+            }
+            break;
+          default:
+            toast.error(apiError.message);
+            break;
+        }
+
+        throw apiError;
+      }
+      toast.error('An unexpected error occurred');
+      throw error;
     }
+  }
+
+  static async get<T>(url: string, params?: object): Promise<IApiResponse<T>> {
+    return this.request<T>('get', url, undefined, params);
   }
 
   static async post<T>(url: string, data?: any): Promise<IApiResponse<T>> {
-    try {
-      const response: AxiosResponse = await AXIOS_CONFIG.post(url, data);
-      return response.data;
-    } catch (error) {
-      return this.handleError(error as AxiosError);
-    }
+    return this.request<T>('post', url, data);
   }
 
   static async put<T>(url: string, data?: any): Promise<IApiResponse<T>> {
-    try {
-      const response: AxiosResponse = await AXIOS_CONFIG.put(url, data);
-      return response.data;
-    } catch (error) {
-      return this.handleError(error as AxiosError);
-    }
+    return this.request<T>('put', url, data);
   }
 
   static async delete<T>(url: string): Promise<IApiResponse<T>> {
-    try {
-      const response: AxiosResponse = await AXIOS_CONFIG.delete(url);
-      return response.data;
-    } catch (error) {
-      return this.handleError(error as AxiosError);
-    }
-  }
-
-  private static handleError(error: AxiosError): never {
-    const apiError: ApiError = {
-      message: error.response?.data?.message || 'An unexpected error occurred',
-      status: error.response?.status || 500,
-      errors: error.response?.data?.errors,
-    };
-    throw apiError;
+    return this.request<T>('delete', url);
   }
 }

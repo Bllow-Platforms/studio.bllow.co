@@ -18,7 +18,7 @@ interface LoginResponse {
 export class AuthService {
   private static readonly BASE_PATH = '/auth';
 
-  static async login(credentials: LoginCredentials) {
+  static async signIn(credentials: LoginCredentials) {
     return ApiClient.post<LoginResponse>(ENDPOINT_ENUM.EMAIL_SIGN_IN, credentials);
   }
 
