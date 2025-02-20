@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signInSchema } from '@/schema';
 import { AuthService } from '@/services/auth.service';
 import { useMutation } from '@tanstack/react-query';
+import DefaultLoadingPage from '@/components/loaders/default-loader';
 
 type SignInSchema = z.infer<typeof signInSchema>;
 
@@ -25,12 +26,12 @@ const SignInPage = () => {
     resolver: zodResolver(signInSchema),
   });
 
-  const { mutate: signIn, isLoading } = useMutation({
+  const { mutate: signIn, isPending } = useMutation({
     mutationFn: (data: SignInSchema) => AuthService.signIn(data),
     onSuccess: response => {
-      localStorage.setItem('token', response.data.token);
+   
       toast.success('Signed in successfully');
-      router.push('/dashboard');
+      router.push('/auth/authorize-auths');
     },
     onError: (error: any) => {
       if (error.response?.data?.errors) {
@@ -48,6 +49,10 @@ const SignInPage = () => {
   const onSubmit = (data: SignInSchema) => {
     signIn(data);
   };
+
+  if (isPending) {
+    return <DefaultLoadingPage/>
+  }
 
   return (
     <DefaultAuthLayout
@@ -71,8 +76,9 @@ const SignInPage = () => {
             error={errors.username?.message}
           />
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Signing in...' : 'Sign In'}
+          <Button type="submit" className="w-full" 
+             disabled={isPending} >
+            {isPending ? 'Signing in...' : 'Sign In'}
           </Button>
         </form>
 
@@ -85,6 +91,8 @@ const SignInPage = () => {
           </Link>
         </div>
       </div>
+
+     
     </DefaultAuthLayout>
   );
 };
