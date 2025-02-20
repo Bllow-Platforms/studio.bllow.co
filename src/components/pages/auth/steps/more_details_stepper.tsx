@@ -8,18 +8,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { SelectLabel } from '@radix-ui/react-select';
+import { ContinueButton } from '../components/continue-button';
 
 interface StepProps {
   onNext: () => void;
-  onBack: () => void;
-  isFirstStep: boolean;
-  isLastStep: boolean;
-  authState: any;
-  updateAuthState: (key: string, value: any) => void;
+  note?: string;
 }
 
-export const MoreUserDetailStepper: FC<StepProps> = ({ updateAuthState }) => {
+export const MoreUserDetailStepper: FC<StepProps> = ({ onNext, note }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -32,7 +28,12 @@ export const MoreUserDetailStepper: FC<StepProps> = ({ updateAuthState }) => {
       ...prev,
       [key]: value,
     }));
-    updateAuthState(key, value);
+  };
+
+  const handleContinue = () => {
+    if (formData.firstName && formData.lastName) {
+      onNext();
+    }
   };
 
   return (
@@ -79,6 +80,12 @@ export const MoreUserDetailStepper: FC<StepProps> = ({ updateAuthState }) => {
           </Select>
         </div>
       </div>
+
+      <ContinueButton
+        note={note}
+        onContinue={handleContinue}
+        disabled={!formData.firstName || !formData.lastName}
+      />
     </div>
   );
 };

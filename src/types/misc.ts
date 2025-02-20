@@ -15,4 +15,5 @@ interface IBankResponse {
   updatedAt: string;
 }
 
-export type { IBankResponse };
+type TUser = 'creator' | 'fan';
+export type { IBankResponse, TUser };

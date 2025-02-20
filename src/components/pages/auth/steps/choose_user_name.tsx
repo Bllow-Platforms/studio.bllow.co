@@ -1,32 +1,63 @@
 import { FC } from 'react';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { Input } from '@/components/ui/input';
-import { Label } from '@radix-ui/react-label';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ContinueButton } from '../components/continue-button';
+import { toast } from 'sonner';
 
-interface ISelectProps {
-  title: string;
-  description: string;
-  image: string;
-  path: string;
+const usernameSchema = z.object({
+  username: z
+    .string()
+    .min(3, 'Username must be at least 3 characters')
+    .max(30, 'Username must be less than 30 characters')
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      'Username can only contain letters, numbers, and underscores'
+    ),
+});
+
+type UsernameFormData = z.infer<typeof usernameSchema>;
+
+interface IPickerUsernameStepperProps {
+  onNext: () => void;
+  note?: string;
 }
 
-interface IPickerUsernameStepperProps {}
+export const PickerUsernameStepper: FC<IPickerUsernameStepperProps> = ({
+  onNext,
+  note,
+}) => {
+  const {
+    register,
+    formState: { errors, isValid },
+    trigger,
+  } = useForm<UsernameFormData>({
+    resolver: zodResolver(usernameSchema),
+    mode: 'onChange',
+  });
 
-export const PickerUsernameStepper: FC<IPickerUsernameStepperProps> = props => {
-  const [selectedType, setSelectedType] = useState<ISelectProps | {}>({});
-  const router = useRouter();
-
-  const handleAccountType = (item: ISelectProps) => {
-    setSelectedType(item);
+  const handleContinue = async () => {
+    const isValid = await trigger('username');
+    if (isValid) {
+      onNext();
+    } else {
+      toast.error('Please enter a valid username');
+    }
   };
 
-  const handleRoute = (path: string) => router.push(path);
   return (
-    <div className="w-full  flex justify-center flex-col items-center mx-auto">
+    <div className="w-full flex justify-center flex-col items-center mx-auto">
       <div className="w-full">
-        <Input placeholder="bllow.com/username" label="Username" />
+        <Input
+          placeholder="bllow.com/username"
+          label="Username"
+          {...register('username')}
+          error={errors.username?.message}
+        />
       </div>
+
+      <ContinueButton note={note} onContinue={handleContinue} disabled={!isValid} />
     </div>
   );
 };
