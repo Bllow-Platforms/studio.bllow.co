@@ -62,4 +62,8 @@ export class AuthService {
   static async me() {
     return ApiClient.get(`${this.BASE_PATH}/me`);
   }
+
+  static async createWithdrawalPin(payload: any) {
+    return ApiClient.post(ENDPOINT_ENUM.CREATE_WITHDRAWAL_PIN, payload);
+  }
 }

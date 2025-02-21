@@ -11,7 +11,7 @@ export enum ENDPOINT_ENUM {
   CHECK_USERNAME = '/auth/check-username',
   CHECK_EMAIL = '/auth/check-email',
   VERIFY_EMAIL_OTP = '/auth/sign-in/email-otp',
-
+  CREATE_WITHDRAWAL_PIN = '/account/withdrawal-pin',
   VERIFY_EMAIL = '/verify-email',
 
   CHANGE_EMAIL = '/change-email',

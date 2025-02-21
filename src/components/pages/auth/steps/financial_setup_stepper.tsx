@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/select';
 import { ContinueButton } from '../components/continue-button';
 import { useAuthStore } from '@/store/auth.store';
+import { Label } from '@/components/ui/label';
 
 interface BankAccount {
   bankName: string;
@@ -42,6 +43,8 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
     queryKey: ['banks'],
     queryFn: () => BankServices.fetchBankList(),
   });
+
+  console.log(bankList);
 
   const { mutateAsync: resolveBank, isPending: isResolving } = useMutation({
     mutationFn: async ({
@@ -115,32 +118,35 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
       <div className="space-y-6">
         <h3 className="text-white/90 text-lg font-medium">YOUR ACCOUNT NAME</h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
-          <Select
-            value={newAccount.bankName}
-            onValueChange={bank => {
-              const bankData = JSON.parse(bank);
-              setNewAccount(prev => ({
-                ...prev,
-                bankName: bankData.name,
-                bankCode: bankData.code,
-              }));
-            }}
-          >
-            <SelectTrigger className="h-[48px] rounded-full bg-white/5">
-              <SelectValue placeholder="Select Bank" />
-            </SelectTrigger>
-            <SelectContent>
-              {bankList?.data?.map((bank: any) => (
-                <SelectItem
-                  key={bank.code}
-                  value={JSON.stringify({ name: bank.name, code: bank.code })}
-                >
-                  {bank.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4  items-center">
+          <div>
+            <Label className="text-gray-400 mb-10">Bank Name</Label>
+            <Select
+              value={newAccount.bankName}
+              onValueChange={bank => {
+                const bankData = JSON.parse(bank);
+                setNewAccount(prev => ({
+                  ...prev,
+                  bankName: bankData.name,
+                  bankCode: bankData.code,
+                }));
+              }}
+            >
+              <SelectTrigger className="h-[48px] rounded-full bg-white/5">
+                <SelectValue placeholder="Select Bank" />
+              </SelectTrigger>
+              <SelectContent>
+                {bankList?.map((bank: any) => (
+                  <SelectItem
+                    key={bank.code}
+                    value={JSON.stringify({ name: bank.name, code: bank.code })}
+                  >
+                    {bank?.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
           <div className="flex gap-2">
             <Input
@@ -148,6 +154,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
               value={newAccount.accountNumber}
               onChange={handleAccountNumberChange}
               maxLength={10}
+              label="Account Number"
               className="bg-white/5"
             />
             <Button
@@ -161,18 +168,18 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
         </div>
 
         {isResolving && (
-          <p className="text-sm text-yellow-500">Verifying account...</p>
+          <p className="text-sm text-green-600">Verifying account...</p>
         )}
         {newAccount.accountHolder && (
-          <p className="text-sm text-green-500">
-            Account Name: {newAccount.accountHolder}
+          <p className="text-sm text-background font-semibold">
+            Account Name: {newAccount?.accountHolder?.toUpperCase()}
           </p>
         )}
       </div>
 
       <div className="space-y-4">
         <h3 className="text-white/90 font-medium">Bank Accounts</h3>
-        {accounts.map((account, index) => (
+        {accounts?.map((account, index) => (
           <div
             key={index}
             className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10"
@@ -180,9 +187,9 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
             <div className="flex items-center gap-3">
               <Building2 className="text-white/60" />
               <div>
-                <p className="text-white font-medium">{account.bankName}</p>
-                <p className="text-sm text-white/60">{account.accountNumber}</p>
-                <p className="text-xs text-white/40">{account.accountHolder}</p>
+                <p className="text-white font-medium">{account?.bankName}</p>
+                <p className="text-sm text-white/60">{account?.accountNumber}</p>
+                <p className="text-xs text-white/40">{account?.accountHolder}</p>
               </div>
             </div>
             <Button
