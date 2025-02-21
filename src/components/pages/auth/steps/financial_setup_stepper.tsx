@@ -16,6 +16,7 @@ import {
 import { ContinueButton } from '../components/continue-button';
 import { useAuthStore } from '@/store/auth.store';
 import { Label } from '@/components/ui/label';
+import { BankDetailsPreviewCard } from '@/components/misc/bank-details-preview-card';
 
 interface BankAccount {
   bankName: string;
@@ -116,7 +117,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
   return (
     <div className="w-full max-w-[600px] mx-auto space-y-8">
       <div className="space-y-6">
-        <h3 className="text-white/90 text-lg font-medium">YOUR ACCOUNT NAME</h3>
+        <h3 className="text-white/90 text-lg font-medium">ADD NEW BANK ACCOUNT</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4  items-center">
           <div>
@@ -177,32 +178,15 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
         )}
       </div>
 
-      <div className="space-y-4">
-        <h3 className="text-white/90 font-medium">Bank Accounts</h3>
-        {accounts?.map((account, index) => (
-          <div
-            key={index}
-            className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10"
-          >
-            <div className="flex items-center gap-3">
-              <Building2 className="text-white/60" />
-              <div>
-                <p className="text-white font-medium">{account?.bankName}</p>
-                <p className="text-sm text-white/60">{account?.accountNumber}</p>
-                <p className="text-xs text-white/40">{account?.accountHolder}</p>
-              </div>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => handleDeleteAccount(index)}
-              className="text-red-400 hover:text-red-500 hover:bg-red-500/10"
-            >
-              Delete
-            </Button>
-          </div>
-        ))}
-      </div>
+      {accounts?.map((account, index) => (
+        <BankDetailsPreviewCard
+          key={index}
+          bankName={account.bankName}
+          accountNumber={account.accountNumber}
+          accountName={account.accountHolder}
+          onDelete={() => handleDeleteAccount(index)}
+        />
+      ))}
 
       <ContinueButton
         note={note}

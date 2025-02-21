@@ -1,3 +1,3 @@
 import CameraIcon from './cameraIcon';
-
-export { CameraIcon };
+import { CardIcon, BankIcon } from './misc';
+export { CameraIcon, CardIcon, BankIcon };
