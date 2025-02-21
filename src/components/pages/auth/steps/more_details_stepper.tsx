@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -9,65 +8,101 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { ContinueButton } from '../components/continue-button';
+import { useAuthStore } from '@/store/auth.store';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
 import { AuthService } from '@/services/auth.service';
+import { toast } from 'sonner';
 
-interface StepProps {
-  onNext: () => void;
-  note?: string;
-}
+const detailsSchema = z.object({
+  firstName: z.string().min(2, 'First name is required'),
+  lastName: z.string().min(2, 'Last name is required'),
+  birthDate: z.string().min(1, 'Birth date is required'),
+  gender: z.string().min(1, 'Gender is required'),
+});
+
+type DetailsFormData = z.infer<typeof detailsSchema>;
 
 export const MoreUserDetailStepper: FC<StepProps> = ({ onNext, note }) => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    birthDate: '',
-    gender: '',
+  const updateProfile = useAuthStore(state => state.updateProfile);
+  const authState = useAuthStore(state => state);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm<DetailsFormData>({
+    resolver: zodResolver(detailsSchema),
+    mode: 'onChange',
   });
 
-  const handleChange = (key: string, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-
-  const handleContinue = () => {
-    if (formData.firstName && formData.lastName) {
+  const { mutateAsync: signupUser, isPending } = useMutation({
+    mutationFn: (data: DetailsFormData) =>
+      AuthService.signupUser({
+        ...authState,
+        ...data,
+        dob: data.birthDate,
+      }),
+    onSuccess: () => {
+      toast.success('Profile created successfully');
       onNext();
-    }
+    },
+    onError: error => {
+      toast.error(error.message || 'Failed to create profile');
+    },
+  });
+
+  const onSubmit = async (data: DetailsFormData) => {
+    updateProfile({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      dob: data.birthDate,
+      gender: data.gender,
+    });
+
+    try {
+      await signupUser(data);
+    } catch (error) {}
   };
 
   return (
-    <div className="w-full max-w-[600px] mx-auto">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full max-w-[600px] mx-auto"
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Input
           label="Firstname"
           placeholder="e.g johndo"
-          value={formData.firstName}
-          onChange={e => handleChange('firstName', e.target.value)}
+          {...register('firstName')}
+          error={errors.firstName?.message}
         />
 
         <Input
           label="Lastname"
           placeholder="e.g johndo"
-          value={formData.lastName}
-          onChange={e => handleChange('lastName', e.target.value)}
+          {...register('lastName')}
+          error={errors.lastName?.message}
         />
 
         <Input
           label="Birthdate"
           placeholder="DD/MM/YYYY"
           type="date"
-          value={formData.birthDate}
-          onChange={e => handleChange('birthDate', e.target.value)}
+          {...register('birthDate')}
+          error={errors.birthDate?.message}
           className="bg-white/5"
         />
 
         <div className="space-y-2">
           <label className="text-sm font-medium mb-2 text-gray-400">Gender</label>
           <Select
-            value={formData.gender}
-            onValueChange={value => handleChange('gender', value)}
+            onValueChange={value =>
+              setValue('gender', value, { shouldValidate: true })
+            }
           >
             <SelectTrigger className="h-[48px] rounded-full bg-white/5">
               <SelectValue placeholder="Select gender" />
@@ -79,14 +114,18 @@ export const MoreUserDetailStepper: FC<StepProps> = ({ onNext, note }) => {
               <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
             </SelectContent>
           </Select>
+          {errors.gender && (
+            <p className="text-sm text-red-500">{errors.gender.message}</p>
+          )}
         </div>
       </div>
 
       <ContinueButton
+        type="submit"
         note={note}
-        onContinue={handleContinue}
-        disabled={!formData.firstName || !formData.lastName}
+        onContinue={handleSubmit(onSubmit)}
+        disabled={!isValid || isPending}
       />
-    </div>
+    </form>
   );
 };

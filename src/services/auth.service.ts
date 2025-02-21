@@ -52,7 +52,7 @@ export class AuthService {
   }
 
   static async signupUser(credentials: any) {
-    return ApiClient.post(ENDPOINT_ENUM.UPDATE_PROFILE, credentials);
+    return ApiClient.put(ENDPOINT_ENUM.UPDATE_PROFILE, credentials);
   }
 
   static async signInEmailVerificationOtp(credentials: any) {

@@ -17,16 +17,17 @@ export const OTPVerificationStepper: FC<StepProps> = ({ onNext, note }) => {
   const email = useAuthStore(state => state.email);
 
   const { mutateAsync: resendOtp, isPending: isResending } = useMutation({
-    mutationFn: () => AuthService.sendVerificationEmailOtp({ 
-      email, 
-      type: 'sign-in' 
-    }),
+    mutationFn: () =>
+      AuthService.sendVerificationEmailOtp({
+        email,
+        type: 'sign-in',
+      }),
     onSuccess: () => {
       toast.success('Verification code resent to your email');
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(error.message || 'Failed to resend code');
-    }
+    },
   });
 
   const { mutateAsync: verifyOtp, isPending } = useMutation({
@@ -53,18 +54,14 @@ export const OTPVerificationStepper: FC<StepProps> = ({ onNext, note }) => {
     if (otp.length === 6) {
       try {
         await verifyOtp(otp);
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
   };
 
   const handleResend = async () => {
     try {
       await resendOtp();
-    } catch (error) {
-    
-    }
+    } catch (error) {}
   };
 
   return (
@@ -84,8 +81,8 @@ export const OTPVerificationStepper: FC<StepProps> = ({ onNext, note }) => {
       </div>
       <p className="text-gray-400 text-sm">
         Didn't receive code?{' '}
-        <button 
-          onClick={handleResend} 
+        <button
+          onClick={handleResend}
           disabled={isResending}
           className="text-primary hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
         >
