@@ -23,14 +23,33 @@ interface IEmailStepperProps {
 export const EnterEmailStepper: FC<IEmailStepperProps> = ({ onNext, note }) => {
   const updateProfile = useAuthStore(state => state.updateProfile);
 
-  const { mutateAsync: checkEmail, isPending } = useMutation({
+  const { mutateAsync: sendOtp, isPending: isSendingOtp } = useMutation({
+    mutationFn: (email: string) =>
+      AuthService.sendVerificationEmailOtp({
+        email,
+        type: 'sign-in',
+      }),
+    onSuccess: () => {
+      toast.success('Verification code sent to your email');
+      onNext();
+    },
+    onError: error => {
+      toast.error(error.message || 'Failed to send verification code');
+    },
+  });
+
+  const { mutateAsync: checkEmail, isPending: isCheckingEmail } = useMutation({
     mutationFn: (email: string) => AuthService.checkEmailAddress({ email }),
-    onSuccess: response => {
-      if (response.exists) {
+    onSuccess: async response => {
+      console.log(response);
+
+      if (response.exists === true) {
         toast.error('Email already exists');
       } else {
-        updateProfile({ email: getValues('email') });
-        onNext();
+        const email = getValues('email');
+
+        updateProfile({ email });
+        await sendOtp(email);
       }
     },
     onError: error => {
@@ -47,9 +66,7 @@ export const EnterEmailStepper: FC<IEmailStepperProps> = ({ onNext, note }) => {
 
     try {
       await checkEmail(getValues('email'));
-    } catch (error) {
-      // Error handled by mutation onError
-    }
+    } catch (error) {}
   };
 
   const {
@@ -76,7 +93,7 @@ export const EnterEmailStepper: FC<IEmailStepperProps> = ({ onNext, note }) => {
       <ContinueButton
         note={note}
         onContinue={handleContinue}
-        disabled={!isValid || isPending}
+        disabled={!isValid || isCheckingEmail || isSendingOtp}
       />
     </div>
   );

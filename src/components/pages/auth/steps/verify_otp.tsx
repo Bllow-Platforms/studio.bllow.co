@@ -23,8 +23,12 @@ export const OTPVerificationStepper: FC<StepProps> = ({ onNext, note }) => {
         email,
         otp,
       }),
-    onSuccess: () => {
+    onSuccess: (response: { token: string }) => {
       toast.success('Email verified successfully');
+      const { token } = response || {};
+      if (token) {
+        localStorage.setItem('token', token);
+      }
       onNext();
     },
     onError: error => {

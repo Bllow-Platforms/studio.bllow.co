@@ -10,6 +10,7 @@ import { FinancialSetupStepper } from '@/components/pages/auth/steps/financial_s
 import { PinSetupStepper } from '@/components/pages/auth/steps/pin_setup_stepper';
 import { toast } from 'sonner';
 import { useSearchParams } from 'next/navigation';
+
 interface BaseStep {
   title: string;
   description: string;

@@ -43,12 +43,16 @@ export class AuthService {
     return ApiClient.get(`${ENDPOINT_ENUM.CHECK_EMAIL}?email=${payload.email}`);
   }
 
-  static async verifyEmailOtp(payload: any) {
+  static async sendVerificationEmailOtp(payload: any) {
     return ApiClient.post(ENDPOINT_ENUM.SEND_EMAIL_VERIFICATION, payload);
   }
 
   static async signup(credentials: any) {
     return ApiClient.post(ENDPOINT_ENUM.EMAIL_SIGN_UP, credentials);
+  }
+
+  static async signupUser(credentials: any) {
+    return ApiClient.post(ENDPOINT_ENUM.UPDATE_PROFILE, credentials);
   }
 
   static async signInEmailVerificationOtp(credentials: any) {
