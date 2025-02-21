@@ -30,17 +30,25 @@ const SignInPage = () => {
     mutationFn: (data: SignInSchema) => AuthService.signIn(data),
     onSuccess: response => {
       toast.success('Signed in successfully');
-      router.push('/auth/authorize-auths');
+      router.push(
+        `/auth/authorize-auths?email=${encodeURIComponent(response.data.user.email)}`
+      );
     },
     onError: (error: any) => {
-      if (error.response?.data?.errors) {
-        Object.entries(error.response.data.errors).forEach(([key, value]) => {
-          setError(key as keyof SignInSchema, {
-            message: value as string,
+      try {
+        if (errorData.errors) {
+          Object.entries(errorData.errors).forEach(([key, value]) => {
+            setError(key as keyof SignInSchema, {
+              message: value as string,
+            });
           });
-        });
-      } else {
+        } else {
+          toast.error(errorData.message || 'Failed to sign in');
+          console.log(error);
+        }
+      } catch (parseError) {
         toast.error(error.response?.data?.message || 'Failed to sign in');
+        console.log(error);
       }
     },
   });

@@ -67,9 +67,8 @@ export const PinSetupStepper: FC<StepProps> = ({ onNext, updateAuthState }) => {
     setIsConfirming(false);
   };
 
-
   if (isPending) {
-    return <DefaultLoadingPage/>
+    return <DefaultLoadingPage />;
   }
 
   return (
