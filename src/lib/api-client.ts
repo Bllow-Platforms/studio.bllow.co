@@ -32,10 +32,36 @@ export class ApiClient {
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {
+        let errorMessage = 'An unexpected error occurred';
+        let errorDetails = {};
+
+        try {
+          const errorData =
+            typeof error.response?.data === 'string'
+              ? JSON.parse(error.response.data)
+              : error.response?.data;
+
+          errorMessage = errorData?.message || errorMessage;
+
+          if (errorData?.details) {
+            errorDetails = errorData.details.reduce(
+              (acc: Record<string, string>, detail: any) => {
+                if (detail.path) {
+                  acc[detail.path[0]] = detail.message;
+                }
+                return acc;
+              },
+              {}
+            );
+          }
+        } catch (parseError) {
+          console.error('Error parsing response:', parseError);
+        }
+
         const apiError = new ApiError(
-          error.response?.data?.message || 'An unexpected error occurred',
+          errorMessage,
           error.response?.status || 500,
-          error.response?.data?.errors,
+          errorDetails,
           error.response?.data?.code
         );
 
