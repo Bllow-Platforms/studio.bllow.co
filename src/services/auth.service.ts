@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   static async verifyEmailOtp(payload: any) {
-    return ApiClient.post(ENDPOINT_ENUM.EMAIL_VERIFICATION, payload);
+    return ApiClient.post(ENDPOINT_ENUM.SEND_EMAIL_VERIFICATION, payload);
   }
 
   static async signup(credentials: any) {
@@ -52,7 +52,7 @@ export class AuthService {
   }
 
   static async signInEmailVerificationOtp(credentials: any) {
-    return ApiClient.post(ENDPOINT_ENUM.SIGN_IN_EMAIL_OTP, credentials);
+    return ApiClient.post(ENDPOINT_ENUM.VERIFY_EMAIL_OTP, credentials);
   }
 
   static async me() {

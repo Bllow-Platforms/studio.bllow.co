@@ -3,6 +3,10 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { ContinueButton } from '../components/continue-button';
+import { AuthService } from '@/services/auth.service';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { useAuthStore } from '@/store/auth.store';
 
 interface StepProps {
   onNext: () => void;
@@ -11,10 +15,29 @@ interface StepProps {
 
 export const OTPVerificationStepper: FC<StepProps> = ({ onNext, note }) => {
   const [otp, setOtp] = useState('');
+  const email = useAuthStore(state => state.email);
 
-  const handleContinue = () => {
-    if (otp.length === 6) {
+  const { mutateAsync: verifyOtp, isPending } = useMutation({
+    mutationFn: (otp: string) =>
+      AuthService.signInEmailVerificationOtp({
+        email,
+        otp,
+      }),
+    onSuccess: () => {
+      toast.success('Email verified successfully');
       onNext();
+    },
+    onError: error => {
+      toast('Invalid OTP');
+      toast.error(error.message || 'Invalid OTP code');
+    },
+  });
+
+  const handleContinue = async () => {
+    if (otp.length === 6) {
+      try {
+        await verifyOtp(otp);
+      } catch (error) {}
     }
   };
 
@@ -41,7 +64,7 @@ export const OTPVerificationStepper: FC<StepProps> = ({ onNext, note }) => {
       <ContinueButton
         note={note}
         onContinue={handleContinue}
-        disabled={otp.length !== 6}
+        disabled={otp.length !== 6 || isPending}
       />
     </div>
   );
