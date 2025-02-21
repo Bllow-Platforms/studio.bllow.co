@@ -5,24 +5,31 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@radix-ui/react-label';
 import { ContinueButton } from '../components/continue-button';
 import { CameraIcon } from '@/assets/svgs';
+import { useAuthStore } from '@/store/auth.store';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-interface StepProps {
-  onNext: () => void;
-  onBack: () => void;
-  isFirstStep: boolean;
-  isLastStep: boolean;
-  authState: any;
-  updateAuthState: (key: string, value: any) => void;
-}
+const accountSchema = z.object({
+  displayName: z.string().min(3, 'Display name must be at least 3 characters'),
+  bio: z.string().optional(),
+  profileImage: z.any().optional(),
+});
 
-export const SetUpAccountStepper: FC<StepProps> = ({
-  onNext,
-  updateAuthState,
-  note,
-}) => {
+type AccountFormData = z.infer<typeof accountSchema>;
+
+export const SetUpAccountStepper: FC<StepProps> = ({ onNext, note }) => {
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  const [displayName, setDisplayName] = useState('');
-  const [bio, setBio] = useState('');
+  const updateProfile = useAuthStore(state => state.updateProfile);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<AccountFormData>({
+    resolver: zodResolver(accountSchema),
+  });
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -31,26 +38,47 @@ export const SetUpAccountStepper: FC<StepProps> = ({
       reader.onload = e => {
         const result = e.target?.result as string;
         setProfileImage(result);
-        updateAuthState('profileImage', file);
+        setValue('profileImage', file);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleContinue = () => {
-    if (displayName.trim()) {
-      onNext();
-    }
+  const onSubmit = (data: AccountFormData) => {
+    updateProfile({
+      displayName: data.displayName,
+      bio: data.bio || '',
+      profileImage: profileImage || '',
+    });
+    onNext();
   };
 
   return (
-    <div className="w-full max-w-[600px] mx-auto">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full max-w-[600px] mx-auto"
+    >
       <div className="flex items-center flex-col lg:flex-row gap-10 justify-center">
         <div className="flex flex-col gap-4">
-          <div className="flex items-center justify-center border-dotted border-[1px]  h-[150px] w-[150px] rounded-full border-gray-400">
-            <CameraIcon />
-          </div>
-
+          <label className="cursor-pointer">
+            <input
+              type="file"
+              className="hidden"
+              accept="image/*"
+              onChange={handleImageUpload}
+            />
+            <div className="flex items-center justify-center border-dotted border-[1px] h-[150px] w-[150px] rounded-full border-gray-400">
+              {profileImage ? (
+                <img
+                  src={profileImage}
+                  alt="Profile"
+                  className="w-full h-full rounded-full object-cover"
+                />
+              ) : (
+                <CameraIcon />
+              )}
+            </div>
+          </label>
           <div className="text-sm text-gray-400">Click to upload picture</div>
         </div>
 
@@ -58,22 +86,14 @@ export const SetUpAccountStepper: FC<StepProps> = ({
           <Input
             label="Display Name"
             placeholder="e.g johndo"
-            value={displayName}
-            onChange={e => {
-              setDisplayName(e.target.value);
-              updateAuthState('displayName', e.target.value);
-            }}
+            {...register('displayName')}
+            error={errors.displayName?.message}
           />
           <div>
-            <Label className="mb-[3em] text-gray-400 font-">Bio</Label>
+            <Label className="mb-[3em] text-gray-400">Bio</Label>
             <Textarea
-              label="Bio"
               placeholder="Tell us about yourself..."
-              value={bio}
-              onChange={e => {
-                setBio(e.target.value);
-                updateAuthState('bio', e.target.value);
-              }}
+              {...register('bio')}
               className="min-h-[120px] mt-2 rounded-2xl bg-white/5 border-gray-300"
             />
           </div>
@@ -81,10 +101,11 @@ export const SetUpAccountStepper: FC<StepProps> = ({
       </div>
 
       <ContinueButton
+        type="submit"
         note={note}
-        onContinue={handleContinue}
-        disabled={!displayName.trim()}
+        onContinue={handleSubmit(onSubmit)}
+        disabled={isSubmitting}
       />
-    </div>
+    </form>
   );
 };

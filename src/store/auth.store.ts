@@ -11,11 +11,14 @@ interface AuthState {
   displayName: string;
   username: string;
   email: string;
+  currentStep: number;
 }
 
 interface AuthActions {
   updateProfile: (data: Partial<AuthState>) => void;
   resetAuth: () => void;
+  setStep: (step: number) => void;
+  incrementStep: () => void;
 }
 
 const initialState: AuthState = {
@@ -28,6 +31,7 @@ const initialState: AuthState = {
   displayName: '',
   username: '',
   email: '',
+  currentStep: 0,
 };
 
 export const useAuthStore = create<AuthState & AuthActions>()(
@@ -49,6 +53,28 @@ export const useAuthStore = create<AuthState & AuthActions>()(
 
         resetAuth: () => {
           set(initialState, false, 'resetAuth');
+        },
+
+        setStep: (step: number) => {
+          set(
+            state => ({
+              ...state,
+              currentStep: step,
+            }),
+            false,
+            'setStep'
+          );
+        },
+
+        incrementStep: () => {
+          set(
+            state => ({
+              ...state,
+              currentStep: state.currentStep + 1,
+            }),
+            false,
+            'incrementStep'
+          );
         },
       }),
       {

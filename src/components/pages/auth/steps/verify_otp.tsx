@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { ContinueButton } from '../components/continue-button';
@@ -16,6 +15,20 @@ interface StepProps {
 export const OTPVerificationStepper: FC<StepProps> = ({ onNext, note }) => {
   const [otp, setOtp] = useState('');
   const email = useAuthStore(state => state.email);
+
+  const { mutateAsync: resendOtp, isPending: isResending } = useMutation({
+    mutationFn: () =>
+      AuthService.sendVerificationEmailOtp({
+        email,
+        type: 'sign-in',
+      }),
+    onSuccess: () => {
+      toast.success('Verification code resent to your email');
+    },
+    onError: error => {
+      toast.error(error.message || 'Failed to resend code');
+    },
+  });
 
   const { mutateAsync: verifyOtp, isPending } = useMutation({
     mutationFn: (otp: string) =>
@@ -45,6 +58,12 @@ export const OTPVerificationStepper: FC<StepProps> = ({ onNext, note }) => {
     }
   };
 
+  const handleResend = async () => {
+    try {
+      await resendOtp();
+    } catch (error) {}
+  };
+
   return (
     <div className="w-full flex justify-center flex-col items-center mx-auto space-y-6">
       <div className="w-full max-w-[400px] mx-auto">
@@ -62,7 +81,13 @@ export const OTPVerificationStepper: FC<StepProps> = ({ onNext, note }) => {
       </div>
       <p className="text-gray-400 text-sm">
         Didn't receive code?{' '}
-        <button className="text-primary hover:underline">Resend</button>
+        <button
+          onClick={handleResend}
+          disabled={isResending}
+          className="text-primary hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isResending ? 'Sending...' : 'Resend'}
+        </button>
       </p>
 
       <ContinueButton
