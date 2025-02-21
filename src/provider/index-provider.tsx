@@ -1,5 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { Toaster } from 'sonner';
 
 interface IPrimaryProviderProps {
   children: ReactNode;
@@ -7,5 +8,10 @@ interface IPrimaryProviderProps {
 
 export const PrimaryProvider: FC<IPrimaryProviderProps> = ({ children }) => {
   const query = new QueryClient();
-  return <QueryClientProvider client={query}>{children}</QueryClientProvider>;
+  return (
+    <QueryClientProvider client={query}>
+      <Toaster position="top-center" richColors={true} />
+      {children}
+    </QueryClientProvider>
+  );
 };

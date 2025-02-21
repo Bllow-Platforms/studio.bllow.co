@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { ContinueButton } from '../components/continue-button';
+import { AuthService } from '@/services/auth.service';
 
 interface StepProps {
   onNext: () => void;
