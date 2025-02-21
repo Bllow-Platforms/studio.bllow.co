@@ -54,12 +54,12 @@ const IndexAuth = () => {
     //   component: SetUpAccountStepper,
     //   note: 'This details is visitors to your profile would see first 👊🏽',
     // },
-    {
-      title: 'Just a few more details',
-      description: 'Youre almost there....',
-      component: MoreUserDetailStepper,
-      note: 'Just a few more details incase you Bllow 😌',
-    },
+    // {
+    //   title: 'Just a few more details',
+    //   description: 'Youre almost there....',
+    //   component: MoreUserDetailStepper,
+    //   note: 'Just a few more details incase you Bllow 😌',
+    // },
     {
       title: 'Where should your tips be paid',
       description: 'Tell us where youd like to receive your payments',

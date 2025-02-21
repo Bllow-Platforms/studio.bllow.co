@@ -15,4 +15,10 @@ export class BankServices {
   async addBank(data: IAddBankProps) {
     return ApiClient.post(ENDPOINT_ENUM.ADD_BANK, data);
   }
+
+  async resolveBank(accountNumber: string, bankCode: string) {
+    return ApiClient.get(
+      `${ENDPOINT_ENUM.RESOLVE_BANK}?account_number=${accountNumber}&bank_code=${bankCode}`
+    );
+  }
 }

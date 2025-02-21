@@ -1,8 +1,11 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Building2 } from 'lucide-react';
+import { BankServices } from '@/services/bank.service';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import {
   Select,
   SelectContent,
@@ -11,11 +14,13 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { ContinueButton } from '../components/continue-button';
+import { useAuthStore } from '@/store/auth.store';
 
 interface BankAccount {
   bankName: string;
   accountNumber: string;
   accountHolder: string;
+  bankCode?: string;
 }
 
 interface StepProps {
@@ -29,22 +34,74 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
     bankName: '',
     accountNumber: '',
     accountHolder: '',
+    bankCode: '',
+  });
+  const updateProfile = useAuthStore(state => state.updateProfile);
+
+  const { data: bankList, isLoading } = useQuery({
+    queryKey: ['banks'],
+    queryFn: () => BankServices.fetchBankList(),
   });
 
-  const banks = ['Zenith Bank', 'Kuda Microfinance Bank', 'GTBank', 'First Bank'];
+  const { mutateAsync: resolveBank, isPending: isResolving } = useMutation({
+    mutationFn: async ({
+      accountNumber,
+      bankCode,
+    }: {
+      accountNumber: string;
+      bankCode: string;
+    }) => {
+      const bankService = new BankServices();
+      return bankService.resolveBank(accountNumber, bankCode);
+    },
+    onSuccess: response => {
+      setNewAccount(prev => ({
+        ...prev,
+        accountHolder: response.data.account_name,
+      }));
+    },
+    onError: error => {
+      toast.error('Could not verify account number');
+    },
+  });
+
+  const handleAccountNumberChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const accountNumber = e.target.value;
+    setNewAccount(prev => ({ ...prev, accountNumber }));
+
+    if (accountNumber.length === 10 && newAccount.bankCode) {
+      try {
+        await resolveBank({
+          accountNumber,
+          bankCode: newAccount.bankCode,
+        });
+      } catch (error) {}
+    }
+  };
 
   const handleAddAccount = () => {
-    if (newAccount.bankName && newAccount.accountNumber) {
+    if (
+      newAccount.bankName &&
+      newAccount.accountNumber &&
+      newAccount.accountHolder
+    ) {
       setAccounts([...accounts, newAccount]);
-      setNewAccount({ bankName: '', accountNumber: '', accountHolder: '' });
-      updateAuthState('bankAccounts', [...accounts, newAccount]);
+      setNewAccount({
+        bankName: '',
+        accountNumber: '',
+        accountHolder: '',
+        bankCode: '',
+      });
+      updateProfile({ bankAccounts: [...accounts, newAccount] });
     }
   };
 
   const handleDeleteAccount = (index: number) => {
     const updatedAccounts = accounts.filter((_, i) => i !== index);
     setAccounts(updatedAccounts);
-    updateAuthState('bankAccounts', updatedAccounts);
+    updateProfile({ bankAccounts: updatedAccounts });
   };
 
   const handleContinue = () => {
@@ -61,17 +118,25 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
           <Select
             value={newAccount.bankName}
-            onValueChange={value =>
-              setNewAccount({ ...newAccount, bankName: value })
-            }
+            onValueChange={bank => {
+              const bankData = JSON.parse(bank);
+              setNewAccount(prev => ({
+                ...prev,
+                bankName: bankData.name,
+                bankCode: bankData.code,
+              }));
+            }}
           >
             <SelectTrigger className="h-[48px] rounded-full bg-white/5">
               <SelectValue placeholder="Select Bank" />
             </SelectTrigger>
             <SelectContent>
-              {banks.map(bank => (
-                <SelectItem key={bank} value={bank}>
-                  {bank}
+              {bankList?.data?.map((bank: any) => (
+                <SelectItem
+                  key={bank.code}
+                  value={JSON.stringify({ name: bank.name, code: bank.code })}
+                >
+                  {bank.name}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -81,20 +146,32 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
             <Input
               placeholder="Account Number"
               value={newAccount.accountNumber}
-              onChange={e =>
-                setNewAccount({ ...newAccount, accountNumber: e.target.value })
-              }
+              onChange={handleAccountNumberChange}
+              maxLength={10}
               className="bg-white/5"
             />
-            <Button onClick={handleAddAccount} className="rounded-full px-8">
+            <Button
+              onClick={handleAddAccount}
+              className="rounded-full px-8"
+              disabled={isResolving || !newAccount.accountHolder}
+            >
               Add
             </Button>
           </div>
         </div>
+
+        {isResolving && (
+          <p className="text-sm text-yellow-500">Verifying account...</p>
+        )}
+        {newAccount.accountHolder && (
+          <p className="text-sm text-green-500">
+            Account Name: {newAccount.accountHolder}
+          </p>
+        )}
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-white/90 font-medium">Card Details</h3>
+        <h3 className="text-white/90 font-medium">Bank Accounts</h3>
         {accounts.map((account, index) => (
           <div
             key={index}
@@ -105,6 +182,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
               <div>
                 <p className="text-white font-medium">{account.bankName}</p>
                 <p className="text-sm text-white/60">{account.accountNumber}</p>
+                <p className="text-xs text-white/40">{account.accountHolder}</p>
               </div>
             </div>
             <Button
@@ -118,6 +196,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
           </div>
         ))}
       </div>
+
       <ContinueButton
         note={note}
         onContinue={handleContinue}
