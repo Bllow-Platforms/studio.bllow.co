@@ -1,6 +1,10 @@
 import { FC, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { AuthService } from '@/services/auth.service';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import DefaultLoadingPage from '@/components/loaders/default-loader';
 
 interface StepProps {
   onNext: () => void;
@@ -11,10 +15,24 @@ interface StepProps {
   updateAuthState: (key: string, value: any) => void;
 }
 
-export const PinSetupStepper: FC<StepProps> = ({ updateAuthState }) => {
+export const PinSetupStepper: FC<StepProps> = ({ onNext, updateAuthState }) => {
   const [pin, setPin] = useState<string>('');
   const [confirmPin, setConfirmPin] = useState<string>('');
   const [isConfirming, setIsConfirming] = useState(false);
+
+  const { mutateAsync: createPin, isPending } = useMutation({
+    mutationFn: (data: { pin: string; confirmPin: string }) =>
+      AuthService.createWithdrawalPin(data),
+    onSuccess: () => {
+      toast.success('PIN set successfully');
+      updateAuthState('pin', pin);
+      onNext();
+    },
+    onError: error => {
+      toast.error(error.message || 'Failed to set PIN');
+      handleReset();
+    },
+  });
 
   const handleNumberClick = (number: number) => {
     if (!isConfirming && pin.length < 4) {
@@ -24,7 +42,14 @@ export const PinSetupStepper: FC<StepProps> = ({ updateAuthState }) => {
         setTimeout(() => setIsConfirming(true), 500);
       }
     } else if (isConfirming && confirmPin.length < 4) {
-      setConfirmPin(confirmPin + number);
+      const newConfirmPin = confirmPin + number;
+      setConfirmPin(newConfirmPin);
+
+      if (newConfirmPin.length === 4) {
+        if (pin === newConfirmPin) {
+          createPin({ pin, confirmPin: newConfirmPin });
+        }
+      }
     }
   };
 
@@ -41,6 +66,11 @@ export const PinSetupStepper: FC<StepProps> = ({ updateAuthState }) => {
     setConfirmPin('');
     setIsConfirming(false);
   };
+
+
+  if (isPending) {
+    return <DefaultLoadingPage/>
+  }
 
   return (
     <div className="w-full max-w-[400px] mx-auto space-y-8">

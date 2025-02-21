@@ -30,30 +30,30 @@ const IndexAuth = () => {
   });
 
   const baseSteps: BaseStep[] = [
-    // {
-    //   title: 'How would you like to create an account',
-    //   description: 'Choose your account type to get started',
-    //   component: SelectAccountType,
-    // },
-    // {
-    //   title: "What's your email?",
-    //   description: 'Tell us your email address',
-    //   component: EnterEmailStepper,
-    //   note: 'Has to be unique 👋🏽',
-    // },
-    // {
-    //   title: "You're almost there!, let's make it official! ✅ 🌟",
-    //   description:
-    //     'Verify your Bllow account to dive into a world of creators. It just takes a moment',
-    //   component: OTPVerificationStepper,
-    //   note: 'We sent you a temporary sign-in code to your mail. Please paste (or type) your 6-digit code 👀',
-    // },
-    // {
-    //   title: 'Complete your account',
-    //   description: 'Choose your account type to get started',
-    //   component: SetUpAccountStepper,
-    //   note: 'This details is visitors to your profile would see first 👊🏽',
-    // },
+    {
+      title: 'How would you like to create an account',
+      description: 'Choose your account type to get started',
+      component: SelectAccountType,
+    },
+    {
+      title: "What's your email?",
+      description: 'Tell us your email address',
+      component: EnterEmailStepper,
+      note: 'Has to be unique 👋🏽',
+    },
+    {
+      title: "You're almost there!, let's make it official! ✅ 🌟",
+      description:
+        'Verify your Bllow account to dive into a world of creators. It just takes a moment',
+      component: OTPVerificationStepper,
+      note: 'We sent you a temporary sign-in code to your mail. Please paste (or type) your 6-digit code 👀',
+    },
+    {
+      title: 'Complete your account',
+      description: 'Choose your account type to get started',
+      component: SetUpAccountStepper,
+      note: 'This details is visitors to your profile would see first 👊🏽',
+    },
     {
       title: 'Just a few more details',
       description: 'Youre almost there....',
