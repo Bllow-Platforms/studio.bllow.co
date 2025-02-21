@@ -5,6 +5,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ContinueButton } from '../components/continue-button';
 import { toast } from 'sonner';
+import { AuthService } from '@/services/auth.service';
+import { useMutation } from '@tanstack/react-query';
+import { useAuthStore } from '@/store/auth.store';
 
 const usernameSchema = z.object({
   username: z
@@ -28,8 +31,26 @@ export const PickerUsernameStepper: FC<IPickerUsernameStepperProps> = ({
   onNext,
   note,
 }) => {
+  const updateProfile = useAuthStore(state => state.updateProfile);
+
+  const { mutateAsync: checkUsername, isPending } = useMutation({
+    mutationFn: (username: string) => AuthService.checkUsername({ username }),
+    onSuccess: response => {
+      if (response.exists) {
+        toast.error('Username already exists');
+      } else {
+        updateProfile({ username: getValues('username') });
+        onNext();
+      }
+    },
+    onError: error => {
+      toast.error(error.message || 'Failed to verify username');
+    },
+  });
+
   const {
     register,
+    getValues,
     formState: { errors, isValid },
     trigger,
   } = useForm<UsernameFormData>({
@@ -39,10 +60,15 @@ export const PickerUsernameStepper: FC<IPickerUsernameStepperProps> = ({
 
   const handleContinue = async () => {
     const isValid = await trigger('username');
-    if (isValid) {
-      onNext();
-    } else {
+    if (!isValid) {
       toast.error('Please enter a valid username');
+      return;
+    }
+
+    try {
+      await checkUsername(getValues('username'));
+    } catch (error) {
+      // Error handled by mutation onError
     }
   };
 
@@ -57,7 +83,11 @@ export const PickerUsernameStepper: FC<IPickerUsernameStepperProps> = ({
         />
       </div>
 
-      <ContinueButton note={note} onContinue={handleContinue} disabled={!isValid} />
+      <ContinueButton
+        note={note}
+        onContinue={handleContinue}
+        disabled={!isValid || isPending}
+      />
     </div>
   );
 };

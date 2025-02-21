@@ -21,7 +21,7 @@ export class AuthService {
   static async signIn(credentials: LoginCredentials) {
     try {
       const response = await ApiClient.post<LoginResponse>(
-        ENDPOINT_ENUM.EMAIL_SIGN_IN,
+        `${this.BASE_PATH}/${ENDPOINT_ENUM.EMAIL_SIGN_IN}`,
         credentials
       );
       return response;
@@ -33,8 +33,14 @@ export class AuthService {
     }
   }
 
-  static async signInWithUsername() {
-    ApiClient.post(ENDPOINT_ENUM);
+  static async checkUsername(payload: { username: string }) {
+    return ApiClient.get(
+      `${ENDPOINT_ENUM.CHECK_USERNAME}?username=${payload.username}`
+    );
+  }
+
+  static async checkEmailAddress(payload: { email: string }) {
+    return ApiClient.get(`${ENDPOINT_ENUM.CHECK_EMAIL}?email=${payload.email}`);
   }
 
   static async verifyEmailOtp(payload: any) {

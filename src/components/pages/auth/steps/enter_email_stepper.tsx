@@ -7,6 +7,7 @@ import { ContinueButton } from '../components/continue-button';
 import { toast } from 'sonner';
 import { AuthService } from '@/services/auth.service';
 import { useMutation } from '@tanstack/react-query';
+import { useAuthStore } from '@/store/auth.store';
 
 const emailSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -20,24 +21,21 @@ interface IEmailStepperProps {
 }
 
 export const EnterEmailStepper: FC<IEmailStepperProps> = ({ onNext, note }) => {
-  const { mutateAsync: signIn, isPending } = useMutation({
-    mutationFn: (email: string) => AuthService.signIn({ email, password: '' }),
-    onError: error => {
-      toast.error(error.message || 'Failed to sign in');
-    },
-    onSuccess: () => {
-      onNext();
-    },
-  });
+  const updateProfile = useAuthStore(state => state.updateProfile);
 
-  const {
-    register,
-    getValues,
-    formState: { errors, isValid },
-    trigger,
-  } = useForm<EmailFormData>({
-    resolver: zodResolver(emailSchema),
-    mode: 'onChange',
+  const { mutateAsync: checkEmail, isPending } = useMutation({
+    mutationFn: (email: string) => AuthService.checkEmailAddress({ email }),
+    onSuccess: response => {
+      if (response.exists) {
+        toast.error('Email already exists');
+      } else {
+        updateProfile({ email: getValues('email') });
+        onNext();
+      }
+    },
+    onError: error => {
+      toast.error(error.message || 'Failed to verify email');
+    },
   });
 
   const handleContinue = async () => {
@@ -48,12 +46,21 @@ export const EnterEmailStepper: FC<IEmailStepperProps> = ({ onNext, note }) => {
     }
 
     try {
-      await signIn(getValues('email'));
-      onNext();
+      await checkEmail(getValues('email'));
     } catch (error) {
-      toast.error('Failed to proceed');
+      // Error handled by mutation onError
     }
   };
+
+  const {
+    register,
+    getValues,
+    formState: { errors, isValid },
+    trigger,
+  } = useForm<EmailFormData>({
+    resolver: zodResolver(emailSchema),
+    mode: 'onChange',
+  });
 
   return (
     <div className="w-full flex justify-center flex-col items-center mx-auto">
