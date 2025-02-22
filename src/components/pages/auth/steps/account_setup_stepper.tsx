@@ -9,6 +9,10 @@ import { useAuthStore } from '@/store/auth.store';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import { MiscServices } from '@/services/misc.service';
 
 const accountSchema = z.object({
   displayName: z.string().min(3, 'Display name must be at least 3 characters'),
@@ -19,8 +23,55 @@ const accountSchema = z.object({
 type AccountFormData = z.infer<typeof accountSchema>;
 
 export const SetUpAccountStepper: FC<StepProps> = ({ onNext, note }) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const updateProfile = useAuthStore(state => state.updateProfile);
+
+  const { mutateAsync: uploadImage, isPending: isUploading } = useMutation({
+    mutationFn: (file: File) => MiscServices.upload({ file }),
+    onSuccess: response => {
+      const { url } = response;
+      setProfileImage(url);
+      toast.success('Profile picture uploaded successfully');
+      return url;
+    },
+    onError: () => {
+      toast.error('Failed to upload profile picture');
+    },
+  });
+
+  const onSubmit = async (data: AccountFormData) => {
+    try {
+      let imageUrl = '';
+      console.log(imageUrl);
+      if (selectedFile) {
+        const response = await uploadImage(selectedFile);
+        imageUrl = response?.url;
+      }
+
+      updateProfile({
+        displayName: data.displayName,
+        bio: data.bio || '',
+        profileImage: imageUrl,
+      });
+      onNext();
+    } catch (error) {
+      toast.error('Failed to complete setup');
+    }
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      const reader = new FileReader();
+      reader.onload = e => {
+        const result = e.target?.result as string;
+        setProfileImage(result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const {
     register,
@@ -30,28 +81,6 @@ export const SetUpAccountStepper: FC<StepProps> = ({ onNext, note }) => {
   } = useForm<AccountFormData>({
     resolver: zodResolver(accountSchema),
   });
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = e => {
-        const result = e.target?.result as string;
-        setProfileImage(result);
-        setValue('profileImage', file);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const onSubmit = (data: AccountFormData) => {
-    updateProfile({
-      displayName: data.displayName,
-      bio: data.bio || '',
-      profileImage: profileImage || '',
-    });
-    onNext();
-  };
 
   return (
     <form
@@ -104,7 +133,7 @@ export const SetUpAccountStepper: FC<StepProps> = ({ onNext, note }) => {
         type="submit"
         note={note}
         onContinue={handleSubmit(onSubmit)}
-        disabled={isSubmitting}
+        disabled={isSubmitting || isUploading}
       />
     </form>
   );

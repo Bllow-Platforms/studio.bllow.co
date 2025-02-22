@@ -1,8 +1,7 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Building2 } from 'lucide-react';
 import { BankServices } from '@/services/bank.service';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -15,7 +14,6 @@ import {
 } from '@/components/ui/select';
 import { ContinueButton } from '../components/continue-button';
 import { useAuthStore } from '@/store/auth.store';
-import { Label } from '@/components/ui/label';
 import { BankDetailsPreviewCard } from '@/components/misc/bank-details-preview-card';
 
 interface BankAccount {
@@ -40,7 +38,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
   });
   const updateProfile = useAuthStore(state => state.updateProfile);
 
-  const { data: bankList, isLoading } = useQuery({
+  const { data: bankList, isPending } = useQuery({
     queryKey: ['banks'],
     queryFn: () => BankServices.fetchBankList(),
   });
@@ -108,9 +106,35 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
     updateProfile({ bankAccounts: updatedAccounts });
   };
 
-  const handleContinue = () => {
+  const { mutateAsync: addBank, isPending: isAddingBank } = useMutation({
+    mutationFn: async (data: IAddBankProps) => {
+      return BankServices.addBank(data);
+    },
+    onSuccess: () => {
+      toast.success('Bank accounts added successfully');
+      // onNext();
+    },
+    onError: error => {
+      toast.error('Failed to add bank accounts');
+    },
+  });
+
+  const handleContinue = async () => {
     if (accounts.length > 0) {
-      onNext();
+      try {
+        await Promise.all(
+          accounts.map(account =>
+            addBank({
+              bankName: account.bankName,
+              bankCode: account.bankCode || '',
+              accountName: account.accountHolder,
+              accountNumber: account.accountNumber,
+            })
+          )
+        );
+      } catch (error) {
+        toast.error('Failed to add bank accounts');
+      }
     }
   };
 
@@ -121,35 +145,39 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4  items-center">
           <div>
-            <Label className="text-gray-400 mb-10">Bank Name</Label>
-            <Select
-              value={newAccount.bankName}
-              onValueChange={bank => {
-                const bankData = JSON.parse(bank);
-                setNewAccount(prev => ({
-                  ...prev,
-                  bankName: bankData.name,
-                  bankCode: bankData.code,
-                }));
-              }}
-            >
-              <SelectTrigger className="h-[48px] rounded-full bg-white/5">
-                <SelectValue placeholder="Select Bank" />
-              </SelectTrigger>
-              <SelectContent>
-                {bankList?.map((bank: any) => (
-                  <SelectItem
-                    key={bank.code}
-                    value={JSON.stringify({ name: bank.name, code: bank.code })}
-                  >
-                    {bank?.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <label className="text-gray-400 text-sm font-500  mb-[20px]">
+              Bank Name
+            </label>
+            <div className="mt-2">
+              <Select
+                value={newAccount.bankName}
+                onValueChange={bank => {
+                  const bankData = JSON.parse(bank);
+                  setNewAccount(prev => ({
+                    ...prev,
+                    bankName: bankData.name,
+                    bankCode: bankData.code,
+                  }));
+                }}
+              >
+                <SelectTrigger className="h-[48px] rounded-full bg-white/5">
+                  <SelectValue placeholder="Select Bank" />
+                </SelectTrigger>
+                <SelectContent>
+                  {bankList?.map((bank: any) => (
+                    <SelectItem
+                      key={bank.code}
+                      value={JSON.stringify({ name: bank.name, code: bank.code })}
+                    >
+                      {bank?.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 lg:items-center">
             <Input
               placeholder="Account Number"
               value={newAccount.accountNumber}
@@ -160,7 +188,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
             />
             <Button
               onClick={handleAddAccount}
-              className="rounded-full px-8"
+              className="rounded-full px-8 lg:mt-6"
               disabled={isResolving || !newAccount.accountHolder}
             >
               Add
@@ -178,20 +206,27 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
         )}
       </div>
 
-      {accounts?.map((account, index) => (
-        <BankDetailsPreviewCard
-          key={index}
-          bankName={account.bankName}
-          accountNumber={account.accountNumber}
-          accountName={account.accountHolder}
-          onDelete={() => handleDeleteAccount(index)}
-        />
-      ))}
+      <div>
+        {accounts.length >= 1 && (
+          <h3 className="text-gray-400 text-sm mb-2 font-semibold">Accounts</h3>
+        )}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {accounts?.map((account, index) => (
+            <BankDetailsPreviewCard
+              key={index}
+              bankName={account.bankName}
+              accountNumber={account.accountNumber}
+              accountName={account.accountHolder}
+              onDelete={() => handleDeleteAccount(index)}
+            />
+          ))}
+        </div>
+      </div>
 
       <ContinueButton
         note={note}
         onContinue={handleContinue}
-        disabled={accounts.length === 0}
+        disabled={accounts.length === 0 || isAddingBank}
       />
     </div>
   );
