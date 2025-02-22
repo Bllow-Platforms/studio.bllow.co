@@ -122,6 +122,7 @@ export const MoreUserDetailStepper: FC<StepProps> = ({ onNext, note }) => {
 
       <ContinueButton
         type="submit"
+        label={isPending ? 'Please wait... ✋🏽' : 'Continue'}
         note={note}
         onContinue={handleSubmit(onSubmit)}
         disabled={!isValid || isPending}

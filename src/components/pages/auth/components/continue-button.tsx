@@ -1,16 +1,21 @@
 import { FC } from 'react';
 import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
 
 interface IContinueButtonProps {
   note?: string;
   onContinue: () => void;
   disabled?: boolean;
+  label?: string;
+  loading?: boolean;
 }
 
 export const ContinueButton: FC<IContinueButtonProps> = ({
   note,
   onContinue,
   disabled,
+  label = 'Continue',
+  loading = false
 }) => {
   return (
     <>
@@ -21,8 +26,13 @@ export const ContinueButton: FC<IContinueButtonProps> = ({
       )}
 
       <div className="flex items-center justify-center gap-4 mt-8">
-        <Button onClick={onContinue} className="px-[55px]" disabled={disabled}>
-          Continue
+        <Button 
+          onClick={onContinue} 
+          className="px-[55px]" 
+          disabled={disabled || loading}
+        >
+          {loading && <Loader2 className="animate-spin mr-2 h-4 w-4" />}
+          {label}
         </Button>
       </div>
     </>

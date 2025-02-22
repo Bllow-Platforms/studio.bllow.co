@@ -38,7 +38,7 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
             )}
             <Progress value={progress} className="transition-all duration-700" />
           </div>
-          <div className="lg:w-[70%] mx-auto my-[2em]">
+          <div className="lg:w-[50%] mx-auto my-[2em]">
             <DefaultTypography
               variant="h2"
               className={`text-center mt-4 text-2xl lg:text-[37px] leading-10 ${plusJakartaSans.className} font-semibold`}
@@ -50,7 +50,7 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
         </div>
 
         <div className="flex flex-col gap-[2em] h-screen">
-          <div className="w-full lg:w-[950px]  mx-auto">{children}</div>
+          <div className="w-full lg:w-[600px] mx-auto">{children}</div>
         </div>
       </div>
 

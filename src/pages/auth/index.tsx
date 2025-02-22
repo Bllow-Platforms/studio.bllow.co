@@ -30,42 +30,42 @@ const IndexAuth = () => {
   });
 
   const baseSteps: BaseStep[] = [
-    // {
-    //   title: 'How would you like to create an account',
-    //   description: 'Choose your account type to get started',
-    //   component: SelectAccountType,
-    // },
-    // {
-    //   title: "What's your email?",
-    //   description: 'Tell us your email address',
-    //   component: EnterEmailStepper,
-    //   note: 'Has to be unique 👋🏽',
-    // },
-    // {
-    //   title: "You're almost there!, let's make it official! ✅ 🌟",
-    //   description:
-    //     'Verify your Bllow account to dive into a world of creators. It just takes a moment',
-    //   component: OTPVerificationStepper,
-    //   note: 'We sent you a temporary sign-in code to your mail. Please paste (or type) your 6-digit code 👀',
-    // },
-    // {
-    //   title: 'Complete your account',
-    //   description: 'Choose your account type to get started',
-    //   component: SetUpAccountStepper,
-    //   note: 'This details is visitors to your profile would see first 👊🏽',
-    // },
-    // {
-    //   title: 'Just a few more details',
-    //   description: 'Youre almost there....',
-    //   component: MoreUserDetailStepper,
-    //   note: 'Just a few more details incase you Bllow 😌',
-    // },
-    // {
-    //   title: 'Where should your tips be paid',
-    //   description: 'Tell us where youd like to receive your payments',
-    //   component: FinancialSetupStepper,
-    //   note: 'We really dont need to tell you what to do, do we? 💰',
-    // },
+    {
+      title: 'How would you like to create an account',
+      description: 'Choose your account type to get started',
+      component: SelectAccountType,
+    },
+    {
+      title: "What's your email?",
+      description: 'Tell us your email address',
+      component: EnterEmailStepper,
+      note: 'Has to be unique 👋🏽',
+    },
+    {
+      title: "You're almost there!, let's make it official! ✅ 🌟",
+      description:
+        'Verify your Bllow account to dive into a world of creators. It just takes a moment',
+      component: OTPVerificationStepper,
+      note: 'We sent you a temporary sign-in code to your mail. Please paste (or type) your 6-digit code 👀',
+    },
+    {
+      title: 'Complete your account',
+      description: 'Choose your account type to get started',
+      component: SetUpAccountStepper,
+      note: 'This details is visitors to your profile would see first 👊🏽',
+    },
+    {
+      title: 'Just a few more details',
+      description: 'Youre almost there....',
+      component: MoreUserDetailStepper,
+      note: 'Just a few more details incase you Bllow 😌',
+    },
+    {
+      title: 'Where should your tips be paid',
+      description: 'Tell us where youd like to receive your payments',
+      component: FinancialSetupStepper,
+      note: 'We really dont need to tell you what to do, do we? 💰',
+    },
     {
       title: 'Lastly, Setup withdrawal pin',
       description: 'Youd use this to authorize your withdrawals',

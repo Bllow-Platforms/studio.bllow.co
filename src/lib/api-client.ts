@@ -20,7 +20,8 @@ export class ApiClient {
     method: 'get' | 'post' | 'put' | 'patch' | 'delete',
     url: string,
     data?: any,
-    params?: object
+    params?: object,
+    headers?: Record<string, string>
   ): Promise<IApiResponse<T>> {
     try {
       const response: AxiosResponse = await AXIOS_CONFIG({
@@ -28,40 +29,18 @@ export class ApiClient {
         url,
         data,
         params,
+        headers: {
+          ...AXIOS_CONFIG.defaults.headers,
+          ...headers,
+        },
       });
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {
-        let errorMessage = 'An unexpected error occurred';
-        let errorDetails = {};
-
-        try {
-          const errorData =
-            typeof error.response?.data === 'string'
-              ? JSON.parse(error.response.data)
-              : error.response?.data;
-
-          errorMessage = errorData?.message || errorMessage;
-
-          if (errorData?.details) {
-            errorDetails = errorData.details.reduce(
-              (acc: Record<string, string>, detail: any) => {
-                if (detail.path) {
-                  acc[detail.path[0]] = detail.message;
-                }
-                return acc;
-              },
-              {}
-            );
-          }
-        } catch (parseError) {
-          console.error('Error parsing response:', parseError);
-        }
-
         const apiError = new ApiError(
-          errorMessage,
+          error.response?.data?.message || 'An unexpected error occurred',
           error.response?.status || 500,
-          errorDetails,
+          error.response?.data?.errors,
           error.response?.data?.code
         );
 
@@ -96,19 +75,34 @@ export class ApiClient {
     }
   }
 
-  static async get<T>(url: string, params?: object): Promise<IApiResponse<T>> {
-    return this.request<T>('get', url, undefined, params);
+  static async get<T>(
+    url: string,
+    params?: object,
+    headers?: Record<string, string>
+  ): Promise<IApiResponse<T>> {
+    return this.request<T>('get', url, undefined, params, headers);
   }
 
-  static async post<T>(url: string, data?: any): Promise<IApiResponse<T>> {
-    return this.request<T>('post', url, data);
+  static async post<T>(
+    url: string,
+    data?: any,
+    headers?: Record<string, string>
+  ): Promise<IApiResponse<T>> {
+    return this.request<T>('post', url, data, undefined, headers);
   }
 
-  static async put<T>(url: string, data?: any): Promise<IApiResponse<T>> {
-    return this.request<T>('put', url, data);
+  static async put<T>(
+    url: string,
+    data?: any,
+    headers?: Record<string, string>
+  ): Promise<IApiResponse<T>> {
+    return this.request<T>('put', url, data, undefined, headers);
   }
 
-  static async delete<T>(url: string): Promise<IApiResponse<T>> {
-    return this.request<T>('delete', url);
+  static async delete<T>(
+    url: string,
+    headers?: Record<string, string>
+  ): Promise<IApiResponse<T>> {
+    return this.request<T>('delete', url, undefined, undefined, headers);
   }
 }
