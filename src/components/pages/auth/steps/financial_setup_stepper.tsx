@@ -138,6 +138,12 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
     }
   };
 
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredBanks = bankList?.filter((bank: any) =>
+    bank.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="w-full max-w-[600px] mx-auto space-y-8">
       <div className="space-y-6">
@@ -164,7 +170,15 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
                   <SelectValue placeholder="Select Bank" />
                 </SelectTrigger>
                 <SelectContent>
-                  {bankList?.map((bank: any) => (
+                  <div className="px-3 py-2">
+                    <Input
+                      placeholder="Search banks..."
+                      value={searchQuery}
+                      onChange={e => setSearchQuery(e.target.value)}
+                      className="bg-white/5 mb-2"
+                    />
+                  </div>
+                  {filteredBanks?.map((bank: any) => (
                     <SelectItem
                       key={bank.code}
                       value={JSON.stringify({ name: bank.name, code: bank.code })}

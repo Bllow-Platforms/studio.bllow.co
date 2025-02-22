@@ -70,12 +70,18 @@ export const PickerUsernameStepper: FC<IPickerUsernameStepperProps> = ({
     } catch (error) {}
   };
 
+  const origin = typeof window !== undefined && window.location.host;
+
   return (
     <div className="w-full flex justify-center flex-col items-center mx-auto">
       <div className="w-full space-y-2">
         <div className="w-full flex items-center  border border-input rounded-full pl-4">
-          <p className="text-sm">bllow.com/</p>
-          <Input className="border-none " placeholder='username' {...register('username')} />
+          <p className="text-sm">{origin}/</p>
+          <Input
+            className="border-none "
+            placeholder="username"
+            {...register('username')}
+          />
         </div>
         {errors.username?.message && (
           <p className="text-sm text-destructive px-2">{errors.username.message}</p>
