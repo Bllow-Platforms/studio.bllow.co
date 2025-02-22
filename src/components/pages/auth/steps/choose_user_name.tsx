@@ -67,25 +67,25 @@ export const PickerUsernameStepper: FC<IPickerUsernameStepperProps> = ({
 
     try {
       await checkUsername(getValues('username'));
-    } catch (error) {
-      // Error handled by mutation onError
-    }
+    } catch (error) {}
   };
 
   return (
     <div className="w-full flex justify-center flex-col items-center mx-auto">
-      <div className="w-full">
-        <Input
-          placeholder="bllow.com/username"
-          label="Username"
-          {...register('username')}
-          error={errors.username?.message}
-        />
+      <div className="w-full space-y-2">
+        <div className="w-full flex items-center  border border-input rounded-full pl-4">
+          <p className="text-sm">bllow.com/</p>
+          <Input className="border-none " placeholder='username' {...register('username')} />
+        </div>
+        {errors.username?.message && (
+          <p className="text-sm text-destructive px-2">{errors.username.message}</p>
+        )}
       </div>
 
       <ContinueButton
         note={note}
         onContinue={handleContinue}
+        loading={isPending}
         disabled={!isValid || isPending}
       />
     </div>

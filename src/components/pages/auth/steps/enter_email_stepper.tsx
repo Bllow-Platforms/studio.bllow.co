@@ -92,7 +92,6 @@ export const EnterEmailStepper: FC<IEmailStepperProps> = ({ onNext, note }) => {
 
       <ContinueButton
         note={note}
-        
         onContinue={handleContinue}
         disabled={!isValid || isCheckingEmail || isSendingOtp}
       />

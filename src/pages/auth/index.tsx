@@ -16,6 +16,7 @@ interface BaseStep {
   description: string;
   component: React.ComponentType<StepProps>;
   note?: string;
+  allowSkip?: true;
 }
 
 const IndexAuth = () => {
@@ -65,6 +66,7 @@ const IndexAuth = () => {
       description: 'Tell us where youd like to receive your payments',
       component: FinancialSetupStepper,
       note: 'We really dont need to tell you what to do, do we? 💰',
+      allowSkip: true,
     },
     {
       title: 'Lastly, Setup withdrawal pin',
@@ -114,6 +116,8 @@ const IndexAuth = () => {
       progress={progress}
       showBackButton={currentStep > 0}
       onBackClick={handleBack}
+      handleNext={handleNext}
+      allowSkip={STEPS[currentStep].allowSkip}
     >
       <CurrentStepComponent
         onNext={handleNext}
