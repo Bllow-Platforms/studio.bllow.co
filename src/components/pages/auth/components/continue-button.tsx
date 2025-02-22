@@ -15,7 +15,7 @@ export const ContinueButton: FC<IContinueButtonProps> = ({
   onContinue,
   disabled,
   label = 'Continue',
-  loading = false
+  loading = false,
 }) => {
   return (
     <>
@@ -26,10 +26,11 @@ export const ContinueButton: FC<IContinueButtonProps> = ({
       )}
 
       <div className="flex items-center justify-center gap-4 mt-8">
-        <Button 
-          onClick={onContinue} 
-          className="px-[55px]" 
+        <Button
+          onClick={onContinue}
+          className="px-[55px]"
           disabled={disabled || loading}
+          loading={loading}
         >
           {loading && <Loader2 className="animate-spin mr-2 h-4 w-4" />}
           {label}

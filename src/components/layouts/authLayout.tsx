@@ -3,6 +3,7 @@ import { DefaultTypography } from '../typography';
 import { AuthFooter } from '../footer/authFooter';
 import { Progress } from '../ui/progress';
 import { Plus_Jakarta_Sans } from 'next/font/google';
+import { ArrowRight } from 'lucide-react';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -16,6 +17,8 @@ interface IAuthLayoutProps {
   progress: number;
   showBackButton?: boolean;
   onBackClick?: () => void;
+  allowSkip?: boolean;
+  handleNext?: () => void;
 }
 
 export const AuthLayout: FC<IAuthLayoutProps> = ({
@@ -25,11 +28,13 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
   progress,
   showBackButton,
   onBackClick,
+  allowSkip = false,
+  handleNext,
 }) => {
   return (
     <>
       <div className="container h-100 my-4">
-        <div className="w-full lg:w-[900px] mx-auto">
+        <div className="w-full lg:w-[900px] mx-auto gap-2">
           <div className="w-full my-[3em] flex items-center gap-2">
             {showBackButton && (
               <h3 onClick={onBackClick} className="cursor-pointer">
@@ -37,6 +42,16 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
               </h3>
             )}
             <Progress value={progress} className="transition-all duration-700" />
+
+            {allowSkip && (
+              <div
+                className="text-primary flex items-center  cursor-pointer"
+                onClick={handleNext}
+              >
+                <p className="text-sm">Skip</p>
+                <ArrowRight />
+              </div>
+            )}
           </div>
           <div className="lg:w-[50%] mx-auto my-[2em]">
             <DefaultTypography

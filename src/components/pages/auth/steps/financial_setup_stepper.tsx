@@ -112,7 +112,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
     },
     onSuccess: () => {
       toast.success('Bank accounts added successfully');
-      // onNext();
+      onNext();
     },
     onError: error => {
       toast.error('Failed to add bank accounts');
