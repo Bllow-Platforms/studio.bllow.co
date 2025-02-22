@@ -44,7 +44,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : 'button';
     return (
       <Comp
-        className={`py-[26.5px] px-[25px] ${cn(buttonVariants({ variant, size, className }))}`}
+        className={`py-[21.5px] px-[25px] ${cn(buttonVariants({ variant, size, className }))}`}
         ref={ref}
         {...props}
       />

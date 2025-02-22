@@ -5,6 +5,7 @@ import { AuthService } from '@/services/auth.service';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import DefaultLoadingPage from '@/components/loaders/default-loader';
+import { Delete } from 'lucide-react';
 
 interface StepProps {
   onNext: () => void;
@@ -80,7 +81,7 @@ export const PinSetupStepper: FC<StepProps> = ({ onNext, updateAuthState }) => {
             <div
               key={i}
               className={cn(
-                'w-3 h-3 rounded-full transition-all duration-300',
+                'w-4 h-4 rounded-full transition-all duration-300',
                 (!isConfirming && i < pin.length) ||
                   (isConfirming && i < confirmPin.length)
                   ? 'bg-primary scale-110'
@@ -94,37 +95,37 @@ export const PinSetupStepper: FC<StepProps> = ({ onNext, updateAuthState }) => {
         {isConfirming ? 'Confirm your PIN' : 'Enter your PIN'}
       </p>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 lg:px-[3em] gap-4">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(number => (
           <Button
             key={number}
             variant="outline"
             onClick={() => handleNumberClick(number)}
-            className="h-16 text-xl w-[80px] rounded-2xl font-medium bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100"
+            className="h-[64px] text-xl w-[64px] rounded-2xl font-medium bg-transparent border-gray-200 text-gray-700 hover:bg-gray-100"
           >
-            {number}
+            {number}.
           </Button>
         ))}
         <Button
           variant="outline"
           onClick={handleReset}
-          className="h-16 text-xs w-[80px] rounded-lg font-medium bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100"
+          className="h-[64px]  text-xs invisible w-[64px] rounded-2xl font-medium bg-transparent border-gray-200 text-gray-700 hover:bg-gray-100"
         >
           Reset
         </Button>
         <Button
           variant="outline"
           onClick={() => handleNumberClick(0)}
-          className="h-16 text-xl w-[80px] rounded-lg font-medium bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100"
+          className="h-[64px] text-xl w-[64px] rounded-2xl font-medium bg-transparent border-gray-200 text-gray-700 hover:bg-gray-100"
         >
           0
         </Button>
         <Button
           variant="outline"
           onClick={handleDelete}
-          className="h-16 text-xs w-[80px] rounded-lg font-medium bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100"
+          className="h-[64px] text-xl w-[64px] rounded-2xl font-medium bg-transparent border-gray-200 text-gray-700 hover:bg-gray-100"
         >
-          Delete
+          <Delete />
         </Button>
       </div>
 

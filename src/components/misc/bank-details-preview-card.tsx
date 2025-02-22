@@ -16,27 +16,28 @@ export const BankDetailsPreviewCard: FC<IBankDetailsPreviewCardProps> = ({
   onDelete,
 }) => {
   return (
-    <div className="border-[1px] w-full lg:w-[400px] p-6 border-gray-200 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
+    <div className="border-[1px] w-full  px-4  py-3 border-gray-200 rounded-2xl bg-white/5 hover:bg-white/10 transition-all">
+      <div className="flex  items-center justify-between">
+        <div className="flex items-center gap-2">
           <BankIcon />
           <div className="space-y-1">
-            <p className="text-sm font-medium text-gray-700">{accountName}</p>
+            <p className="text-sm font-medium text-gray-700">{bankName}</p>
             <div className="flex flex-col gap-1 text-sm text-gray-500">
-              <span>{bankName}</span>
-              <span>{accountNumber}</span>
+              <span className="text-[11px]">
+                {accountNumber} - {accountName}
+              </span>
             </div>
           </div>
         </div>
 
-        <Button
-          variant="outline"
-          size="icon"
+        <button
           onClick={onDelete}
-          className="bg-transparent w-[80px] border-gray-500 border-[1px] text-gray-600"
+          className="bg-transparent rounded-full 
+           shadow-lg
+           py-[10px] text-xs w-[80px] border-[#C0C0C0] border-[1px] text-gray-500"
         >
           Delete
-        </Button>
+        </button>
       </div>
     </div>
   );
