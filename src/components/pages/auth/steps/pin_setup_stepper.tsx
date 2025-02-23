@@ -6,6 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import DefaultLoadingPage from '@/components/loaders/default-loader';
 import { Delete } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface StepProps {
   onNext: () => void;
@@ -20,6 +21,7 @@ export const PinSetupStepper: FC<StepProps> = ({ onNext, updateAuthState }) => {
   const [pin, setPin] = useState<string>('');
   const [confirmPin, setConfirmPin] = useState<string>('');
   const [isConfirming, setIsConfirming] = useState(false);
+  const route = useRouter();
 
   const { mutateAsync: createPin, isPending } = useMutation({
     mutationFn: (data: { pin: string; confirmPin: string }) =>
@@ -27,6 +29,7 @@ export const PinSetupStepper: FC<StepProps> = ({ onNext, updateAuthState }) => {
     onSuccess: () => {
       toast.success('PIN set successfully');
       updateAuthState('pin', pin);
+      route.push('/dashboard');
       onNext();
     },
     onError: error => {

@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { BankServices } from '@/services/bank.service';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import {
@@ -15,6 +14,7 @@ import {
 import { ContinueButton } from '../components/continue-button';
 import { useAuthStore } from '@/store/auth.store';
 import { BankDetailsPreviewCard } from '@/components/misc/bank-details-preview-card';
+import { BankServices } from '@/services/bank.service';
 
 interface BankAccount {
   bankName: string;
@@ -42,8 +42,6 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
     queryKey: ['banks'],
     queryFn: () => BankServices.fetchBankList(),
   });
-
-  console.log(bankList);
 
   const { mutateAsync: resolveBank, isPending: isResolving } = useMutation({
     mutationFn: async ({
@@ -73,11 +71,11 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
     const accountNumber = e.target.value;
     setNewAccount(prev => ({ ...prev, accountNumber }));
 
-    if (accountNumber.length === 10 && newAccount.bankCode) {
+    if (accountNumber.length === 10 && newAccount?.bankCode) {
       try {
         await resolveBank({
           accountNumber,
-          bankCode: newAccount.bankCode,
+          bankCode: newAccount?.bankCode,
         });
       } catch (error) {}
     }
@@ -85,9 +83,9 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
 
   const handleAddAccount = () => {
     if (
-      newAccount.bankName &&
-      newAccount.accountNumber &&
-      newAccount.accountHolder
+      newAccount?.bankName &&
+      newAccount?.accountNumber &&
+      newAccount?.accountHolder
     ) {
       setAccounts([...accounts, newAccount]);
       setNewAccount({
@@ -120,28 +118,29 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
   });
 
   const handleContinue = async () => {
-    if (accounts.length > 0) {
-      try {
-        await Promise.all(
-          accounts.map(account =>
-            addBank({
-              bankName: account.bankName,
-              bankCode: account.bankCode || '',
-              accountName: account.accountHolder,
-              accountNumber: account.accountNumber,
-            })
-          )
-        );
-      } catch (error) {
-        toast.error('Failed to add bank accounts');
-      }
+    if (accounts.length === 0) {
+      toast.error('Please add a bank account');
+      return;
+    }
+
+    try {
+      const account = accounts[0];
+      await addBank({
+        bankName: account?.bankName,
+        bankCode: account?.bankCode || '',
+        accountName: account?.accountHolder,
+        accountNumber: account?.accountNumber,
+      });
+    } catch (error) {
+      console.error('Error adding bank:', error);
+      toast.error('Failed to add bank account');
     }
   };
 
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredBanks = bankList?.filter((bank: any) =>
-    bank.name.toLowerCase().includes(searchQuery.toLowerCase())
+    bank.name.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   return (
@@ -156,7 +155,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
             </label>
             <div className="mt-2">
               <Select
-                value={newAccount.bankName}
+                value={newAccount?.bankName}
                 onValueChange={bank => {
                   const bankData = JSON.parse(bank);
                   setNewAccount(prev => ({
@@ -194,7 +193,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
           <div className="flex gap-2 lg:items-center">
             <Input
               placeholder="Account Number"
-              value={newAccount.accountNumber}
+              value={newAccount?.accountNumber}
               onChange={handleAccountNumberChange}
               maxLength={10}
               label="Account Number"
@@ -203,7 +202,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
             <Button
               onClick={handleAddAccount}
               className="rounded-full px-8 lg:mt-6"
-              disabled={isResolving || !newAccount.accountHolder}
+              disabled={isResolving || !newAccount?.accountHolder}
             >
               Add
             </Button>
@@ -211,9 +210,9 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
         </div>
 
         {isResolving && (
-          <p className="text-sm text-green-600">Verifying account...</p>
+          <p className="text-sm text-green-600">Verifying account?...</p>
         )}
-        {newAccount.accountHolder && (
+        {newAccount?.accountHolder && (
           <p className="text-sm text-background font-semibold">
             Account Name: {newAccount?.accountHolder?.toUpperCase()}
           </p>
@@ -228,9 +227,9 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
           {accounts?.map((account, index) => (
             <BankDetailsPreviewCard
               key={index}
-              bankName={account.bankName}
-              accountNumber={account.accountNumber}
-              accountName={account.accountHolder}
+              bankName={account?.bankName}
+              accountNumber={account?.accountNumber}
+              accountName={account?.accountHolder}
               onDelete={() => handleDeleteAccount(index)}
             />
           ))}
@@ -240,6 +239,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
       <ContinueButton
         note={note}
         onContinue={handleContinue}
+        loading={isAddingBank}
         disabled={accounts.length === 0 || isAddingBank}
       />
     </div>

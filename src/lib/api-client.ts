@@ -47,7 +47,7 @@ export class ApiClient {
         switch (apiError.status) {
           case 401:
             toast.error('Session expired. Please sign in again.');
-            window.location.href = '/auth/signin';
+            // window.location.href = '/auth/signin';
             break;
           case 403:
             toast.error('You do not have permission to perform this action');

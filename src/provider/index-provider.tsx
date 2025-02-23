@@ -8,10 +8,5 @@ interface IPrimaryProviderProps {
 
 export const PrimaryProvider: FC<IPrimaryProviderProps> = ({ children }) => {
   const query = new QueryClient();
-  return (
-    <QueryClientProvider client={query}>
-      <Toaster position="top-center" richColors={true} />
-      {children}
-    </QueryClientProvider>
-  );
+  return <QueryClientProvider client={query}>{children}</QueryClientProvider>;
 };

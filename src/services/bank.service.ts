@@ -12,7 +12,7 @@ export class BankServices {
     }
   }
 
-  async addBank(data: IAddBankProps) {
+  static async addBank(data: IAddBankProps) {
     return ApiClient.post(ENDPOINT_ENUM.ADD_BANK, data);
   }
 
