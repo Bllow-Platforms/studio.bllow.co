@@ -13,14 +13,10 @@ export const DashboardHeader: FC<IDashboardHeaderProps> = props => {
         <SecondaryLogo />
       </div>
 
-      {/* <div className='flex items-center gap-10'>
-         {
-            DASHBOARDNAVDATA.map (( data , index) => {
-                return <div>
-                    {data.icon}
-                </div>
-            })
-         }
+      {/* <div className="flex items-center gap-10">
+        {DASHBOARDNAVDATA.map((data, index) => {
+          return <div>{data.icon}</div>;
+        })}
       </div> */}
 
       <div className=" flex items-center gap-2">
