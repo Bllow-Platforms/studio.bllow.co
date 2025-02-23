@@ -4,8 +4,8 @@ import { SVGProps } from 'react';
 const DashboardDollarIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={14}
-    height={13}
+    width={30}
+    height={30}
     fill="none"
     {...props}
   >

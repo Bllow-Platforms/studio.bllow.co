@@ -6,6 +6,7 @@ import {
   DashboardStoreIcon,
   DashboardDollarIcon,
 } from './dashboardIcons';
+import { MembershipVector, StoreVector, SupportersVector } from './vectors';
 
 export {
   CameraIcon,
@@ -16,4 +17,7 @@ export {
   DashboardNotificationIcon,
   DashboardSettingsIcon,
   DashboardStoreIcon,
+  MembershipVector,
+  StoreVector,
+  SupportersVector,
 };
