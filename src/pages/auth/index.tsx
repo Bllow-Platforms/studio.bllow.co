@@ -31,36 +31,36 @@ const IndexAuth = () => {
   });
 
   const baseSteps: BaseStep[] = [
-    // {
-    //   title: 'How would you like to create an account',
-    //   description: 'Choose your account type to get started',
-    //   component: SelectAccountType,
-    // },
-    // {
-    //   title: "What's your email?",
-    //   description: 'Tell us your email address',
-    //   component: EnterEmailStepper,
-    //   note: 'Has to be unique 👋🏽',
-    // },
-    // {
-    //   title: "You're almost there!, let's make it official! ✅ 🌟",
-    //   description:
-    //     'Verify your Bllow account to dive into a world of creators. It just takes a moment',
-    //   component: OTPVerificationStepper,
-    //   note: 'We sent you a temporary sign-in code to your mail. Please paste (or type) your 6-digit code 👀',
-    // },
-    // {
-    //   title: 'Complete your account',
-    //   description: 'Choose your account type to get started',
-    //   component: SetUpAccountStepper,
-    //   note: 'This details is visitors to your profile would see first 👊🏽',
-    // },
-    // {
-    //   title: 'Just a few more details',
-    //   description: 'Youre almost there....',
-    //   component: MoreUserDetailStepper,
-    //   note: 'Just a few more details incase you Bllow 😌',
-    // },
+    {
+      title: 'How would you like to create an account',
+      description: 'Choose your account type to get started',
+      component: SelectAccountType,
+    },
+    {
+      title: "What's your email?",
+      description: 'Tell us your email address',
+      component: EnterEmailStepper,
+      note: 'Has to be unique 👋🏽',
+    },
+    {
+      title: "You're almost there!, let's make it official! ✅ 🌟",
+      description:
+        'Verify your Bllow account to dive into a world of creators. It just takes a moment',
+      component: OTPVerificationStepper,
+      note: 'We sent you a temporary sign-in code to your mail. Please paste (or type) your 6-digit code 👀',
+    },
+    {
+      title: 'Complete your account',
+      description: 'Choose your account type to get started',
+      component: SetUpAccountStepper,
+      note: 'This details is visitors to your profile would see first 👊🏽',
+    },
+    {
+      title: 'Just a few more details',
+      description: 'Youre almost there....',
+      component: MoreUserDetailStepper,
+      note: 'Just a few more details incase you Bllow 😌',
+    },
     {
       title: 'Where should your tips be paid',
       description: 'Tell us where youd like to receive your payments',
@@ -106,24 +106,24 @@ const IndexAuth = () => {
     }));
   };
 
-  const CurrentStepComponent = STEPS[currentStep].component;
+  const CurrentStepComponent = STEPS[currentStep]?.component;
   const progress = ((currentStep + 1) / STEPS.length) * 100;
 
   return (
     <AuthLayout
-      title={STEPS[currentStep].title}
-      description={STEPS[currentStep].description}
+      title={STEPS[currentStep]?.title}
+      description={STEPS[currentStep]?.description}
       progress={progress}
       showBackButton={currentStep > 0}
       onBackClick={handleBack}
       handleNext={handleNext}
-      allowSkip={STEPS[currentStep].allowSkip}
+      allowSkip={STEPS[currentStep]?.allowSkip}
     >
       <CurrentStepComponent
         onNext={handleNext}
         onBack={handleBack}
         isFirstStep={currentStep === 0}
-        isLastStep={currentStep === STEPS.length - 1}
+        isLastStep={currentStep === STEPS?.length - 1}
         authState={authState}
         updateAuthState={updateAuthState}
         note={STEPS[currentStep].note}

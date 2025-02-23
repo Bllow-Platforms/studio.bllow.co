@@ -18,7 +18,9 @@ const LoadingSpinner = () => (
 const DefaultLoadingPage = () => {
   return (
     <div className="h-screen w-full bg-white flex items-center justify-center  fixed bottom-0 top-0 right-0 left-0">
-      <LoadingSpinner />
+      <div className="animate animate-spin">
+        <LoadingSpinner />
+      </div>
     </div>
   );
 };

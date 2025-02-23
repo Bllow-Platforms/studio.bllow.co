@@ -3,7 +3,7 @@ import { DefaultTypography } from '../typography';
 import { AuthFooter } from '../footer/authFooter';
 import { Progress } from '../ui/progress';
 import { Plus_Jakarta_Sans } from 'next/font/google';
-import { ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -38,7 +38,7 @@ export const AuthLayout: FC<IAuthLayoutProps> = ({
           <div className="w-full my-[3em] flex items-center gap-2">
             {showBackButton && (
               <h3 onClick={onBackClick} className="cursor-pointer">
-                x
+                <ArrowLeft size={18} className="" />
               </h3>
             )}
             <Progress value={progress} className="transition-all duration-700" />

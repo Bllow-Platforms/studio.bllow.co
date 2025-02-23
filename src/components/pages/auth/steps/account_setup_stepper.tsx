@@ -134,6 +134,7 @@ export const SetUpAccountStepper: FC<StepProps> = ({ onNext, note }) => {
         note={note}
         onContinue={handleSubmit(onSubmit)}
         disabled={isSubmitting || isUploading}
+        loading={isSubmitting || isUploading}
       />
     </form>
   );

@@ -94,6 +94,7 @@ export const OTPVerificationStepper: FC<StepProps> = ({ onNext, note }) => {
         note={note}
         onContinue={handleContinue}
         disabled={otp.length !== 6 || isPending}
+        loading={isPending}
       />
     </div>
   );
