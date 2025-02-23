@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { Button } from '@/components/ui/button';
 import { BankIcon } from '@/assets/svgs';
 
 interface IBankDetailsPreviewCardProps {

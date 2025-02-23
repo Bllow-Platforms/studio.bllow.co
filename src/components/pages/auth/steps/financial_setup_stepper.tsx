@@ -148,20 +148,27 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
       <div className="space-y-6">
         <h3 className="text-white/90 text-lg font-medium">ADD NEW BANK ACCOUNT</h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4  items-center">
-          <div>
+        <div className=" flex gap-4  items-center">
+          <div className="w-full">
             <label className="text-gray-400 text-sm font-500  mb-[20px]">
               Bank Name
             </label>
             <div className="mt-2">
               <Select
-                value={newAccount?.bankName}
+                value={
+                  newAccount?.bankName
+                    ? JSON.stringify({
+                        name: newAccount.bankName,
+                        code: newAccount.bankCode,
+                      })
+                    : ''
+                }
                 onValueChange={bank => {
                   const bankData = JSON.parse(bank);
                   setNewAccount(prev => ({
                     ...prev,
-                    bankName: bankData.name,
-                    bankCode: bankData.code,
+                    bankName: bankData?.name,
+                    bankCode: bankData?.code,
                   }));
                 }}
               >
@@ -179,7 +186,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
                   </div>
                   {filteredBanks?.map((bank: any) => (
                     <SelectItem
-                      key={bank.code}
+                      key={bank?.code}
                       value={JSON.stringify({ name: bank.name, code: bank.code })}
                     >
                       {bank?.name}
@@ -190,7 +197,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
             </div>
           </div>
 
-          <div className="flex gap-2 lg:items-center">
+          <div className="w-full">
             <Input
               placeholder="Account Number"
               value={newAccount?.accountNumber}
@@ -199,6 +206,9 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
               label="Account Number"
               className="bg-white/5"
             />
+          </div>
+
+          <div className="hidden lg:block">
             <Button
               onClick={handleAddAccount}
               className="rounded-full px-8 lg:mt-6"
@@ -207,6 +217,16 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
               Add
             </Button>
           </div>
+        </div>
+
+        <div className="block lg:hidden">
+          <Button
+            onClick={handleAddAccount}
+            className="rounded-full px-8 lg:mt-6"
+            disabled={isResolving || !newAccount?.accountHolder}
+          >
+            Add
+          </Button>
         </div>
 
         {isResolving && (
