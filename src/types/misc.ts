@@ -21,5 +21,11 @@ interface IFileUploadResponse {
   path: string;
 }
 
+interface IDashboardNavData {
+  title: string;
+  icon: string;
+  path: string;
+}
+
 type TUser = 'creator' | 'fan';
-export type { IBankResponse, TUser, IFileUploadResponse };
+export type { IBankResponse, TUser, IFileUploadResponse, IDashboardNavData };
