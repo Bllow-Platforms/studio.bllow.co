@@ -7,6 +7,7 @@ import { MembershipVector, StoreVector, SupportersVector } from '@/assets/svgs';
 import { StatPanel } from './statPanel';
 import { DonationPanel } from './donationPanel';
 import { StatAndGraphPanel } from './statAndGraphPanel';
+import AudienceAndGrowthSection from '../section/audienceAndGrowth';
 
 interface DonationItem {
   avatar: string;
@@ -75,7 +76,7 @@ export const CreatorOverview = () => {
   ];
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full p-4 flex flex-col gap-5">
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
         <div className="lg:col-span-2 flex flex-col gap-4 justify-between">
           {STAT.map((items, index) => {
@@ -113,6 +114,8 @@ export const CreatorOverview = () => {
           </Card>
         </div>
       </div>
+
+      <AudienceAndGrowthSection/>
     </div>
   );
 };

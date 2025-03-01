@@ -63,4 +63,62 @@ const DashboardStoreIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export { DashboardDollarIcon, DashboardBoltIcon, DashboardStoreIcon };
+
+const DashboardGravityIcon = (props: SVGProps<SVGSVGElement>) => {
+  <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={26}
+  height={27}
+  fill="none"
+  {...props}
+>
+  <path
+    fill="#6355FF"
+    fillRule="evenodd"
+    d="M18.688 4.887H7.313a2.437 2.437 0 0 0-2.438 2.437V18.7a2.437 2.437 0 0 0 2.438 2.437h11.375a2.437 2.437 0 0 0 2.437-2.438V7.325a2.438 2.438 0 0 0-2.438-2.437ZM7.313 2.449a4.875 4.875 0 0 0-4.875 4.875V18.7a4.875 4.875 0 0 0 4.874 4.875h11.375a4.875 4.875 0 0 0 4.875-4.875V7.324a4.875 4.875 0 0 0-4.875-4.875H7.313Zm9.75 9.75h-8.24A1.625 1.625 0 0 0 7.2 13.825v3.25A1.625 1.625 0 0 0 8.824 18.7h8.239a1.625 1.625 0 0 0 1.625-1.625v-3.25a1.625 1.625 0 0 0-1.625-1.625ZM8.418 7.325h5.8a1.219 1.219 0 1 1 0 2.438h-5.8a1.219 1.219 0 1 1 0-2.438Z"
+    clipRule="evenodd"
+  />
+</svg>
+}
+
+const DashboardSolarLockIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={26}
+    height={26}
+    fill="none"
+    {...props}
+  >
+    <path
+      stroke="#6355FF"
+      strokeLinecap="round"
+      strokeWidth={1.5}
+      d="M6.5 10.833V8.667c0-.37.03-.73.09-1.084m12.91 3.25V8.667a6.5 6.5 0 0 0-11.375-4.3m3.792 19.466h-3.25c-3.064 0-4.597 0-5.548-.952-.952-.951-.952-2.484-.952-5.548 0-3.063 0-4.596.952-5.547.951-.953 2.484-.953 5.548-.953h8.666c3.064 0 4.597 0 5.548.953.952.95.952 2.484.952 5.547 0 3.064 0 4.597-.952 5.548-.951.952-2.484.952-5.548.952H16.25"
+    />
+  </svg>
+)
+
+const DashboardSolarShopIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={26}
+    height={27}
+    fill="none"
+    {...props}
+  >
+    <path
+      stroke="#6355FF"
+      strokeLinecap="round"
+      strokeWidth={1.5}
+      d="M3.792 12.218v3.25c0 4.085 0 6.128 1.27 7.397 1.269 1.269 3.311 1.27 7.396 1.27h1.084c4.085 0 6.128 0 7.397-1.27m1.27-10.647v3.25c0 1.267 0 2.338-.039 3.25"
+    />
+    <path
+      stroke="#6355FF"
+      strokeLinecap="round"
+      strokeWidth={1.5}
+      d="M10.292 2.468h5.416m-5.416 0-.707 7.06a3.431 3.431 0 1 0 6.83 0l-.707-7.06m-5.416 0H8.036c-.984 0-1.475 0-1.898.116A3.25 3.25 0 0 0 4.093 4.26m6.199-1.793-.786 7.849a3.315 3.315 0 1 1-6.546-.98l.073-.369m12.675-6.5h2.256c.984 0 1.475 0 1.898.116a3.25 3.25 0 0 1 2.045 1.677c.196.39.293.873.485 1.837l.648 3.24a3.316 3.316 0 1 1-6.546.979l-.786-7.849Zm-5.416 21.125v-3.25c0-1.013 0-1.519.217-1.896.143-.247.348-.452.595-.595.377-.217.883-.217 1.896-.217s1.519 0 1.896.217c.247.143.452.348.595.595.217.377.217.883.217 1.896v3.25"
+    />
+  </svg>
+)
+
+export { DashboardDollarIcon, DashboardBoltIcon, DashboardStoreIcon , DashboardGravityIcon, DashboardSolarLockIcon, DashboardSolarShopIcon };

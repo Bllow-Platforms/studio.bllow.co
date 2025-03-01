@@ -18,6 +18,9 @@ export default {
         supernovaBlitz: "hsl(var(--supernova-blitz))",
         spiritVerdant: "hsl(var(--spirit-verdant))",
 
+        //dark hues
+        dark100: '#454545',
+
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
