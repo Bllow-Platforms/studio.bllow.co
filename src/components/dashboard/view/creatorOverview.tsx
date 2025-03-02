@@ -8,6 +8,7 @@ import { StatPanel } from './statPanel';
 import { DonationPanel } from './donationPanel';
 import { StatAndGraphPanel } from './statAndGraphPanel';
 import AudienceAndGrowthSection from '../section/audienceAndGrowth';
+import TopSupportersAndMembership from '../section/topSupportersAndMembership';
 
 interface DonationItem {
   avatar: string;
@@ -62,16 +63,19 @@ export const CreatorOverview = () => {
       title: 'Supporters',
       number: 35,
       icon: <SupportersVector />,
+      inflatedby: 20,
     },
     {
       title: 'Membership',
       number: 35,
       icon: <MembershipVector />,
+      inflatedby: 10,
     },
     {
       title: 'Shops',
       number: 35,
       icon: <StoreVector />,
+      inflatedby: 50,
     },
   ];
 
@@ -86,6 +90,7 @@ export const CreatorOverview = () => {
                 title={items.title}
                 number={items.number}
                 icon={items.icon}
+                inflatedBy={items.inflatedby}
               />
             );
           })}
@@ -100,7 +105,7 @@ export const CreatorOverview = () => {
             <div className="flex items-center justify-between mb-6">
               <h3 className="font-semibold">Recent Donations</h3>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-4 ">
               {recentDonations.map((donation, index) => (
                 <DonationPanel
                   key={index}
@@ -115,7 +120,9 @@ export const CreatorOverview = () => {
         </div>
       </div>
 
-      <AudienceAndGrowthSection/>
+      <AudienceAndGrowthSection />
+
+      <TopSupportersAndMembership />
     </div>
   );
 };

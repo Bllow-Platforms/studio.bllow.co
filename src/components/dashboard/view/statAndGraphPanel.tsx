@@ -30,9 +30,10 @@ export const StatAndGraphPanel: FC<IStatAndGraphPanelProps> = props => {
 
       <div className="space-y-6">
         <div>
-        <p className="text-back mb-3 lg:text-lg"> Earnings</p>
-          <h3 className="text-3xl lg:text-[2.9rem] font-semibold text-dark100">₦192,983,087</h3>
-        
+          <p className="text-back mb-3 lg:text-lg"> Earnings</p>
+          <h3 className="text-3xl lg:text-[2.9rem] font-semibold text-dark100">
+            ₦192,983,087
+          </h3>
         </div>
 
         <Tabs defaultValue="3months" className="w-full">

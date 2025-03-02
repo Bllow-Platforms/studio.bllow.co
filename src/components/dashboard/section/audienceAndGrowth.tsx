@@ -1,10 +1,14 @@
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowUpRight, Store, Users, FileText } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ArrowUpRight, Store, Users, FileText } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
-import { DashboardEarnRouteIcon } from "@/assets/svgs/misc";
-import { DashboardGravityIcon, DashboardSolarLockIcon, DashboardSolarShopIcon } from "@/assets/svgs/dashboardIcons";
+import { DashboardEarnRouteIcon } from '@/assets/svgs/misc';
+import {
+  DashboardGravityIcon,
+  DashboardSolarLockIcon,
+  DashboardSolarShopIcon,
+} from '@/assets/svgs/dashboardIcons';
 
 const data = [
   { month: 'Jan', followers: 3200, supporters: 2500 },
@@ -15,19 +19,19 @@ const data = [
 
 const earningMethods = [
   {
-    title: "Membership",
-    description: "Monthly membership for your loyal fans and supporters",
-    icon: <DashboardSolarLockIcon/>
+    title: 'Membership',
+    description: 'Monthly membership for your loyal fans and supporters',
+    icon: <DashboardSolarLockIcon />,
   },
   {
-    title: "Shop",
-    description: "Introducing Shop, the creative way to sell",
-    icon: <DashboardSolarShopIcon/>,
+    title: 'Shop',
+    description: 'Introducing Shop, the creative way to sell',
+    icon: <DashboardSolarShopIcon />,
   },
   {
-    title: "Exclusive Posts",
-    description: "Publish best content exclusively for your supporters and members",
-    icon: <DashboardGravityIcon/>,
+    title: 'Exclusive Posts',
+    description: 'Publish best content exclusively for your supporters and members',
+    icon: <DashboardGravityIcon />,
   },
 ];
 
@@ -74,18 +78,17 @@ const AudienceAndGrowthSection = () => {
           <Card key={index} className="p-4 rounded-3xl">
             <div className="flex items-center justify-between">
               <div className="flex flex-col  gap-4">
-                <div className="flex items-center gap-2">
-                 {method.icon}
-                 <h3 className="font-medium text-primary">{method.title}</h3>
+                <div className="flex items-center  gap-2">
+                  {method.icon}
+                  <h3 className="font-medium text-primary">{method.title}</h3>
                 </div>
                 <div>
-                 
                   <p className="text-xs text-muted-foreground">
                     {method.description}
                   </p>
                 </div>
               </div>
-              <DashboardEarnRouteIcon/>
+              <DashboardEarnRouteIcon />
             </div>
           </Card>
         ))}
