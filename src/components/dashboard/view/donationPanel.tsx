@@ -13,8 +13,9 @@ import { MoreHorizontal } from 'lucide-react';
 interface IDonationPanelProps {
   name: string;
   donationLink: string;
-  amount: number;
-  time: string;
+  amount?: number;
+  time?: string;
+  commodity?: string;
 }
 
 export const DonationPanel: FC<IDonationPanelProps> = ({
@@ -22,6 +23,7 @@ export const DonationPanel: FC<IDonationPanelProps> = ({
   time,
   donationLink,
   amount,
+  commodity,
 }) => {
   return (
     <div className="flex items-center justify-between">
@@ -35,6 +37,7 @@ export const DonationPanel: FC<IDonationPanelProps> = ({
         </div>
       </div>
       <p className="font-semibold text-primary text-sm">{amount}</p>
+      <p className="font-regular text-muted-foreground text-sm">{commodity}</p>
       <p className=" text-muted-foreground text-xs">{time}</p>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

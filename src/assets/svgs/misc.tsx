@@ -143,4 +143,50 @@ const DashboardNotificationIcon = () => {
   );
 };
 
-export { CardIcon, BankIcon, DashboardSettingsIcon, DashboardNotificationIcon };
+const DashboardEarnRouteIcon = () => {
+  return (
+    <svg
+      width="69"
+      height="69"
+      viewBox="0 0 69 69"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="cursor-pointer"
+    >
+      <rect
+        x="1.38174"
+        y="25.183"
+        width="49"
+        height="49"
+        rx="24.5"
+        transform="rotate(-30 1.38174 25.183)"
+        stroke="#B3B3B3"
+      />
+      <rect
+        x="13.4929"
+        y="29.1603"
+        width="30"
+        height="30"
+        rx="15"
+        transform="rotate(-30 13.4929 29.1603)"
+        fill="#EDEDED"
+      />
+      <path
+        d="M36.1776 33.9612L28.3833 38.4612C28.1408 38.6012 27.8403 38.5207 27.7003 38.2782C27.5603 38.0357 27.6408 37.7352 27.8833 37.5952L35.6776 33.0952C35.92 32.9552 36.2206 33.0357 36.3606 33.2782C36.5006 33.5207 36.42 33.8212 36.1776 33.9612Z"
+        fill="black"
+      />
+      <path
+        d="M38.7986 36.5009C38.7422 36.5344 38.6794 36.5557 38.6143 36.5634C38.5492 36.5712 38.4832 36.5653 38.4205 36.546C38.1473 36.4728 37.9923 36.2043 38.0655 35.9311L39.2185 31.6281L34.9155 30.4751C34.6423 30.4019 34.4873 30.1335 34.5605 29.8603C34.6337 29.5871 34.9022 29.4321 35.1754 29.5053L39.9565 30.7864C40.2297 30.8596 40.3847 31.128 40.3115 31.4012L39.0304 36.1823C38.9938 36.3189 38.9062 36.4272 38.8023 36.4872L38.7986 36.5009Z"
+        fill="black"
+      />
+    </svg>
+  );
+};
+
+export {
+  CardIcon,
+  BankIcon,
+  DashboardSettingsIcon,
+  DashboardNotificationIcon,
+  DashboardEarnRouteIcon,
+};
