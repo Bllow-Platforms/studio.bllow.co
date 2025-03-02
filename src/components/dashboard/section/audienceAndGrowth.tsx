@@ -9,6 +9,7 @@ import {
   DashboardSolarLockIcon,
   DashboardSolarShopIcon,
 } from '@/assets/svgs/dashboardIcons';
+import { CustomTab } from '@/components/ui/custom-tab';
 
 const data = [
   { month: 'Jan', followers: 3200, supporters: 2500 },
@@ -35,41 +36,23 @@ const earningMethods = [
   },
 ];
 
+const tabItems = [
+  { value: '3months', label: '3 months' },
+  { value: '30days', label: '30 days' },
+  { value: '7days', label: '7 days' },
+  { value: '24hours', label: '24 Hours' },
+];
+
 const AudienceAndGrowthSection = () => {
   return (
     <div className="flex flex-col lg:flex-row  gap-6">
       <Card className="p-6 rounded-3xl w-full lg:w-[70rem]">
         <h2 className="text-lg font-semibold mb-4">Audience Growth</h2>
-        <Tabs defaultValue="3months" className="w-full">
-          <TabsList>
-            <TabsTrigger value="3months">3 months</TabsTrigger>
-            <TabsTrigger value="30days">30 days</TabsTrigger>
-            <TabsTrigger value="7days">7 days</TabsTrigger>
-            <TabsTrigger value="24hours">24 Hours</TabsTrigger>
-          </TabsList>
-          <TabsContent value="3months">
-            <div className="h-[300px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data}>
-                  <XAxis dataKey="month" stroke="#888888" />
-                  <YAxis stroke="#888888" />
-                  <Line
-                    type="monotone"
-                    dataKey="followers"
-                    stroke="#8884d8"
-                    strokeWidth={2}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="supporters"
-                    stroke="#000000"
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </TabsContent>
-        </Tabs>
+        <CustomTab
+          items={tabItems}
+          defaultValue="7days"
+          onChange={value => console.log(value)}
+        />
       </Card>
 
       <div className="space-y-4 w-full lg:w-[34.6rem]">

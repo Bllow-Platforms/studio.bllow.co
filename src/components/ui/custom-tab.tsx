@@ -28,7 +28,7 @@ export const CustomTab: FC<CustomTabProps> = ({
       onValueChange={onChange}
     >
       <TabsList className="bg-white/5 p-1 rounded-full">
-        {items.map((item) => (
+        {items.map(item => (
           <TabsTrigger
             key={item.value}
             value={item.value}
