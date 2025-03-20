@@ -1,4 +1,7 @@
 import { FC } from 'react';
+import { EarningsChart } from '@/components/charts/earningsChart';
+
+
 interface IStatAndGraphPanelProps {}
 import Avatar from 'boring-avatars';
 import { Card } from '@/components/ui/card';
@@ -6,16 +9,52 @@ import { Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CustomTab } from '@/components/ui/custom-tab';
 
+
+const data = [
+  { month: 'Jul', value: 0 },
+  { month: 'Aug', value: 20000 },
+  { month: 'Sep', value: 30000 },
+  { month: 'Oct', value: 15000 },
+  { month: 'Nov', value: 10000 },
+  { month: 'Dec', value: 35000 },
+];
+
 export const StatAndGraphPanel: FC<IStatAndGraphPanelProps> = props => {
   const tabItems = [
-    { value: '3months', label: '3 months' },
-    { value: '30days', label: '30 days' },
-    { value: '7days', label: '7 days' },
-    { value: '24hours', label: '24 Hours' },
+    {
+      value: '3months',
+      label: '3 months',
+      content: <EarningsChart data={data} />,
+    },
+    {
+      value: '30days',
+      label: '30 days',
+      content: <EarningsChart data={data} />,
+    },
+    {
+      value: '7days',
+      label: '7 days',
+      content: <EarningsChart data={data} />,
+    },
+    {
+      value: '24hours',
+      label: '24 hours',
+      content: <div>Hello World</div>,
+    },
+    {
+      value: 'pageviews',
+      label: 'Page Views',
+      content: <div>Hello World</div>,
+    },
+    {
+      value: 'donations',
+      label: 'Donations',
+      content: <div>Hello World</div>,
+    },
   ];
 
   return (
-    <Card className="p-6 rounded-3xl h-full">
+    <Card className="p-6 rounded-3xl h-[508px]">
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-8 gap-4">
         <div className="flex items-center gap-4">
           <Avatar name="Obi" className="w-[60px] h-[60px] rounded-xl" square />
@@ -53,3 +92,5 @@ export const StatAndGraphPanel: FC<IStatAndGraphPanelProps> = props => {
     </Card>
   );
 };
+
+
