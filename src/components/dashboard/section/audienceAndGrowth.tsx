@@ -1,21 +1,49 @@
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowUpRight, Store, Users, FileText } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { CustomTab } from '@/components/ui/custom-tab';
 import { DashboardEarnRouteIcon } from '@/assets/svgs/misc';
 import {
   DashboardGravityIcon,
   DashboardSolarLockIcon,
   DashboardSolarShopIcon,
 } from '@/assets/svgs/dashboardIcons';
-import { CustomTab } from '@/components/ui/custom-tab';
+import { AudienceGrowthChart } from '@/components/charts/audienceGrowthChart';
 
 const data = [
-  { month: 'Jan', followers: 3200, supporters: 2500 },
-  { month: 'Feb', followers: 3300, supporters: 2600 },
-  // ... add more months
-  { month: 'Dec', followers: 5000, supporters: 3500 },
+  { month: 'Jan', followers: 3100, supporters: 2600 },
+  { month: 'Feb', followers: 3300, supporters: 2700 },
+  { month: 'Mar', followers: 3400, supporters: 2600 },
+  { month: 'Apr', followers: 3800, supporters: 3000 },
+  { month: 'May', followers: 4200, supporters: 3100 },
+  { month: 'Jun', followers: 4300, supporters: 3200 },
+  { month: 'Jul', followers: 4800, supporters: 3300 },
+  { month: 'Aug', followers: 4600, supporters: 3200 },
+  { month: 'Sep', followers: 4500, supporters: 3300 },
+  { month: 'Oct', followers: 4900, supporters: 3400 },
+  { month: 'Nov', followers: 5100, supporters: 3300 },
+  { month: 'Dec', followers: 5500, supporters: 3600 },
+];
+
+const tabItems = [
+  { 
+    value: '3months', 
+    label: '3 months',
+    content: <AudienceGrowthChart data={data.slice(-3)} />
+  },
+  { 
+    value: '30days', 
+    label: '30 days',
+    content: <AudienceGrowthChart data={data.slice(-1)} />
+  },
+  { 
+    value: '7days', 
+    label: '7 days',
+    content: <AudienceGrowthChart data={data.slice(-1)} />
+  },
+  { 
+    value: '24hours', 
+    label: '24 hours',
+    content: <AudienceGrowthChart data={data.slice(-1)} />
+  },
 ];
 
 const earningMethods = [
@@ -36,16 +64,9 @@ const earningMethods = [
   },
 ];
 
-const tabItems = [
-  { value: '3months', label: '3 months' },
-  { value: '30days', label: '30 days' },
-  { value: '7days', label: '7 days' },
-  { value: '24hours', label: '24 Hours' },
-];
-
 const AudienceAndGrowthSection = () => {
   return (
-    <div className="flex flex-col lg:flex-row  gap-6">
+    <div className="flex flex-col lg:flex-row gap-6">
       <Card className="p-6 rounded-3xl w-full lg:w-[70rem]">
         <h2 className="text-lg font-semibold mb-4">Audience Growth</h2>
         <CustomTab

@@ -1,21 +1,22 @@
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid } from 'recharts';
 
-interface EarningsChartProps {
+interface AudienceGrowthChartProps {
   data: {
     month: string;
-    value: number;
+    followers: number;
+    supporters: number;
   }[];
 }
 
-export const EarningsChart = ({ data }: EarningsChartProps) => {
+export const AudienceGrowthChart = ({ data }: AudienceGrowthChartProps) => {
   return (
     <div className="h-[300px] w-full mt-6">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data}>
           <defs>
-            <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#6366F1" stopOpacity={0.8}/>
-              <stop offset="100%" stopColor="#6366F1" stopOpacity={0.08}/>
+            <linearGradient id="followersGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#6366F1" stopOpacity={0.2}/>
+              <stop offset="95%" stopColor="#6366F1" stopOpacity={0.01}/>
             </linearGradient>
           </defs>
           <CartesianGrid 
@@ -35,16 +36,26 @@ export const EarningsChart = ({ data }: EarningsChartProps) => {
             axisLine={false}
             tickLine={false}
             tick={{ fill: '#6B7280', fontSize: 12 }}
-            tickFormatter={(value) => `$${value/1000}k`}
             dx={-10}
           />
           <Line
             type="monotone"
-            dataKey="value"
+            dataKey="followers"
             stroke="#6366F1"
             strokeWidth={2}
-            dot={false}
-            fill="url(#colorGradient)"
+            dot={{ fill: '#6366F1', r: 2 }}
+            activeDot={{ r: 4 }}
+            fillOpacity={0.8}
+            isAnimationActive={false}
+          />
+          <Line
+            type="monotone"
+            dataKey="supporters"
+            stroke="#000000"
+            strokeWidth={2}
+            dot={{ fill: '#000000', r: 2 }}
+            activeDot={{ r: 4 }}
+            isAnimationActive={false}
           />
         </LineChart>
       </ResponsiveContainer>

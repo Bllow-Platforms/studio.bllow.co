@@ -80,32 +80,42 @@ export const CreatorOverview = () => {
   ];
 
   return (
-    <div className="w-full p-4 flex flex-col gap-5">
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-        <div className="lg:col-span-2 flex flex-col gap-4 justify-between">
-          {STAT.map((items, index) => {
-            return (
-              <StatPanel
-                key={index}
-                title={items.title}
-                number={items.number}
-                icon={items.icon}
-                inflatedBy={items.inflatedby}
-              />
-            );
-          })}
+    <div className="w-full min-h-screen bg-[#F8F7FF]/2 p-6">
+      <div className="flex flex-col lg:flex-row gap-6">
+      
+        <div className="flex flex-col gap-4 w-full lg:w-[174px]">
+          <StatPanel
+            title={STAT[0].title}
+            number={78}
+            icon={STAT[0].icon}
+            inflatedBy={25}
+          />
+          <StatPanel
+            title={STAT[1].title}
+            number={80}
+            icon={STAT[1].icon}
+            inflatedBy={25}
+          />
+          <StatPanel
+            title={STAT[2].title}
+            number={3000}
+            icon={STAT[2].icon}
+            inflatedBy={25}
+          />
         </div>
-
-        <div className="lg:col-span-6">
-          <StatAndGraphPanel />
+    
+    
+        <div className="w-full lg:w-[607px]">
+          <Card className=" rounded-[30px] border-[0.5px] h-[510px]">
+            <StatAndGraphPanel />
+          </Card>
         </div>
-
-        <div className="lg:col-span-4">
-          <Card className="p-6 rounded-3xl h-full border-none bg-transparent">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="font-semibold">Recent Donations</h3>
-            </div>
-            <div className="space-y-4 ">
+    
+      
+        <div className="w-full ">
+          <Card className=" rounded-[30px] bg-transparent border-0 p-6 shadow-none">
+            <h3 className="font-semibold mb-6">Recent Donations</h3>
+            <div className="space-y-4 overflow-y-auto max-h-[450px]">
               {recentDonations.map((donation, index) => (
                 <DonationPanel
                   key={index}
@@ -119,10 +129,11 @@ export const CreatorOverview = () => {
           </Card>
         </div>
       </div>
-
-      <AudienceAndGrowthSection />
-
-      <TopSupportersAndMembership />
+    
+      <div className="mt-6">
+        <AudienceAndGrowthSection />
+        <TopSupportersAndMembership />
+      </div>
     </div>
   );
 };
