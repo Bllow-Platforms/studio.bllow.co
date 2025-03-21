@@ -7,11 +7,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Copy, QrCode, Share2, Twitter, Facebook } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface IStatAndGraphPanelProps {}
 import Avatar from 'boring-avatars';
 import { Card } from '@/components/ui/card';
-import { Share2 } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { CustomTab } from '@/components/ui/custom-tab';
 import { DefaultTypography } from '@/components/typography';
@@ -25,8 +32,23 @@ const data = [
   { month: 'Dec', value: 35000 },
 ];
 
+const shareOptions = [
+  { icon: Copy, label: 'Copy', onClick: (handleCopy: () => void) => handleCopy() },
+  {
+    icon: QrCode,
+    label: 'Get my QR code',
+    onClick: (_, setIsShareOpen: (open: boolean) => void) => setIsShareOpen(true),
+  },
+  { icon: Twitter, label: 'Tweet' },
+  { icon: Facebook, label: 'Share' },
+];
+
 export const StatAndGraphPanel: FC<IStatAndGraphPanelProps> = props => {
   const [isShareOpen, setIsShareOpen] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText('blow.create/obiabo');
+  };
 
   const tabItems = [
     {
@@ -69,18 +91,30 @@ export const StatAndGraphPanel: FC<IStatAndGraphPanelProps> = props => {
             <div className="flex items-center gap-4">
               <Avatar name="Obi" className="w-[60px] h-[60px] rounded-xl" square />
               <div>
-                <h2 className="text-lg font-semibold">
-                  Hi, Creator Fullstack Mechanic
-                </h2>
-                <p className="text-muted-foreground text-sm">
-                  blow.create/fullstackmechanic
-                </p>
+                <h2 className="text-lg font-semibold">Hi, Obiabo</h2>
+                <p className="text-muted-foreground text-sm">blow.create/obiabo</p>
               </div>
             </div>
-            <Button className="gap-2" onClick={() => setIsShareOpen(true)}>
-              <Share2 className="h-4 w-4" />
-              Share page
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button className="gap-2">
+                  <Share2 className="h-4 w-4" />
+                  Share page
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {shareOptions.map(option => (
+                  <DropdownMenuItem
+                    className="curosr-pointer"
+                    key={option.label}
+                    onClick={() => option.onClick?.(handleCopy, setIsShareOpen)}
+                  >
+                    <option.icon className="h-4 w-4 mr-2" />
+                    {option.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           <div className="mb-6">

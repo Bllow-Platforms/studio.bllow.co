@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { SecondaryLogo } from '../../../public/svgs/logo';
 import Avatar from 'boring-avatars';
-import { DashboardSettingsIcon } from '@/assets/svgs';
+import { DashboardNotificationIcon, DashboardSettingsIcon } from '@/assets/svgs';
 import { Menu } from 'lucide-react';
 import { DashboardNav } from '@/components/dashboard/nav/dashboardNav';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -34,7 +34,8 @@ export const DashboardHeader: FC<IDashboardHeaderProps> = props => {
         <DashboardNav className="mx-auto" />
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-4">
+        <DashboardNotificationIcon />
         <DashboardSettingsIcon />
         <Avatar name="Alice Paul" width={40} cursor={'pointer'} />
       </div>
