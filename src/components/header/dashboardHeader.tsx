@@ -12,7 +12,7 @@ export const DashboardHeader: FC<IDashboardHeaderProps> = props => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex items-center justify-between py-4 px-4">
+    <div className=" container mx-auto flex items-center justify-between py-4 px-4">
       <div className="flex items-center gap-4 ">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
@@ -35,8 +35,14 @@ export const DashboardHeader: FC<IDashboardHeaderProps> = props => {
       </div>
 
       <div className="flex items-center gap-4">
-        <DashboardNotificationIcon />
-        <DashboardSettingsIcon />
+        <div className="flex items-center  gap-[10px]">
+          <div className="bg-white w-[34px] h-[34px] rounded-[50px] p-[10px] flex items-center justify-center">
+            <DashboardNotificationIcon />
+          </div>
+          <div className="bg-white w-[34px] h-[34px] rounded-[50px] p-[10px] flex items-center justify-center">
+            <DashboardSettingsIcon />
+          </div>
+        </div>
         <Avatar name="Alice Paul" width={40} cursor={'pointer'} />
       </div>
     </div>

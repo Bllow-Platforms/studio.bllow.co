@@ -80,7 +80,7 @@ export const CreatorOverview = () => {
   ];
 
   return (
-    <div className="w-full min-h-screen bg-[#F8F7FF]/2 p-6">
+    <div className=" container w-full min-h-screen bg-[#F8F7FF]/2 p-6">
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex flex-col gap-4 w-full lg:w-[174px]">
           <StatPanel

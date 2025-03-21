@@ -8,7 +8,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 const timeOptions = [
   { value: '7days', label: 'Last 7 days' },
@@ -27,8 +27,8 @@ const TopSupportersAndMembership = () => {
             <SelectTrigger className="w-[140px] text-gray-400 ring-0 rounded-full">
               <SelectValue placeholder="Select period" />
             </SelectTrigger>
-            <SelectContent className=''>
-              {timeOptions.map((option) => (
+            <SelectContent className="">
+              {timeOptions.map(option => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
@@ -57,7 +57,7 @@ const TopSupportersAndMembership = () => {
               <SelectValue placeholder="Select period" />
             </SelectTrigger>
             <SelectContent>
-              {timeOptions.map((option) => (
+              {timeOptions.map(option => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>

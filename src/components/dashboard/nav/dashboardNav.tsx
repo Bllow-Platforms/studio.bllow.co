@@ -35,7 +35,7 @@ export const DashboardNav: FC<IDashboardNavProps> = ({ className, isMobile }) =>
   return (
     <nav
       className={cn(
-        'flex items-center gap-4 p-4 rounded-full bg-white ',
+        'flex items-center gap-4 py-1.5 px-1 rounded-full bg-white ',
         className
       )}
     >
