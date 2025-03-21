@@ -24,25 +24,25 @@ const data = [
 ];
 
 const tabItems = [
-  { 
-    value: '3months', 
+  {
+    value: '3months',
     label: '3 months',
-    content: <AudienceGrowthChart data={data.slice(-3)} />
+    content: <AudienceGrowthChart data={data.slice(-3)} />,
   },
-  { 
-    value: '30days', 
+  {
+    value: '30days',
     label: '30 days',
-    content: <AudienceGrowthChart data={data.slice(-1)} />
+    content: <AudienceGrowthChart data={data.slice(-1)} />,
   },
-  { 
-    value: '7days', 
+  {
+    value: '7days',
     label: '7 days',
-    content: <AudienceGrowthChart data={data.slice(-1)} />
+    content: <AudienceGrowthChart data={data.slice(-1)} />,
   },
-  { 
-    value: '24hours', 
+  {
+    value: '24hours',
     label: '24 hours',
-    content: <AudienceGrowthChart data={data.slice(-1)} />
+    content: <AudienceGrowthChart data={data.slice(-1)} />,
   },
 ];
 

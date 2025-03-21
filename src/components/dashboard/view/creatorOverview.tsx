@@ -82,7 +82,6 @@ export const CreatorOverview = () => {
   return (
     <div className="w-full min-h-screen bg-[#F8F7FF]/2 p-6">
       <div className="flex flex-col lg:flex-row gap-6">
-      
         <div className="flex flex-col gap-4 w-full lg:w-[174px]">
           <StatPanel
             title={STAT[0].title}
@@ -103,15 +102,13 @@ export const CreatorOverview = () => {
             inflatedBy={25}
           />
         </div>
-    
-    
+
         <div className="w-full lg:w-[607px]">
           <Card className=" rounded-[30px] border-[0.5px] h-[510px]">
             <StatAndGraphPanel />
           </Card>
         </div>
-    
-      
+
         <div className="w-full ">
           <Card className=" rounded-[30px] bg-transparent border-0 p-6 shadow-none">
             <h3 className="font-semibold mb-6">Recent Donations</h3>
@@ -129,7 +126,7 @@ export const CreatorOverview = () => {
           </Card>
         </div>
       </div>
-    
+
       <div className="mt-6">
         <AudienceAndGrowthSection />
         <TopSupportersAndMembership />

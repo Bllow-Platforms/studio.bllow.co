@@ -12,7 +12,7 @@ export default {
     extend: {
       colors: {
         background: "#6355FF",
-        default: '',
+        default: 'white',
         foreground: "hsl(var(--foreground))",
         abyTitan: "hsl(var(--abyss-titan))",
         supernovaBlitz: "hsl(var(--supernova-blitz))",

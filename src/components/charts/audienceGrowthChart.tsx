@@ -1,4 +1,11 @@
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  CartesianGrid,
+} from 'recharts';
 
 interface AudienceGrowthChartProps {
   data: {
@@ -15,24 +22,24 @@ export const AudienceGrowthChart = ({ data }: AudienceGrowthChartProps) => {
         <LineChart data={data}>
           <defs>
             <linearGradient id="followersGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#6366F1" stopOpacity={0.2}/>
-              <stop offset="95%" stopColor="#6366F1" stopOpacity={0.01}/>
+              <stop offset="5%" stopColor="#6366F1" stopOpacity={0.2} />
+              <stop offset="95%" stopColor="#6366F1" stopOpacity={0.01} />
             </linearGradient>
           </defs>
-          <CartesianGrid 
-            strokeDasharray="3 3" 
-            vertical={false} 
-            stroke="#E5E7EB" 
+          <CartesianGrid
+            strokeDasharray="3 3"
+            vertical={false}
+            stroke="#E5E7EB"
             opacity={0.4}
           />
-          <XAxis 
-            dataKey="month" 
+          <XAxis
+            dataKey="month"
             axisLine={false}
             tickLine={false}
             tick={{ fill: '#6B7280', fontSize: 12 }}
             dy={10}
           />
-          <YAxis 
+          <YAxis
             axisLine={false}
             tickLine={false}
             tick={{ fill: '#6B7280', fontSize: 12 }}

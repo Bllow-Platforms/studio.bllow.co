@@ -1,13 +1,12 @@
 import { FC } from 'react';
 import { EarningsChart } from '@/components/charts/earningsChart';
-  import { useState } from 'react';
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-
+} from '@/components/ui/dialog';
 
 interface IStatAndGraphPanelProps {}
 import Avatar from 'boring-avatars';
@@ -16,7 +15,6 @@ import { Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CustomTab } from '@/components/ui/custom-tab';
 import { DefaultTypography } from '@/components/typography';
-
 
 const data = [
   { month: 'Jul', value: 0 },
@@ -29,7 +27,7 @@ const data = [
 
 export const StatAndGraphPanel: FC<IStatAndGraphPanelProps> = props => {
   const [isShareOpen, setIsShareOpen] = useState(false);
-  
+
   const tabItems = [
     {
       value: '3months',
@@ -69,11 +67,7 @@ export const StatAndGraphPanel: FC<IStatAndGraphPanelProps> = props => {
         <div className="flex flex-col h-full overflow-auto">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-4">
-              <Avatar 
-                name="Obi" 
-                className="w-[60px] h-[60px] rounded-xl" 
-                square 
-              />
+              <Avatar name="Obi" className="w-[60px] h-[60px] rounded-xl" square />
               <div>
                 <h2 className="text-lg font-semibold">
                   Hi, Creator Fullstack Mechanic
@@ -91,9 +85,7 @@ export const StatAndGraphPanel: FC<IStatAndGraphPanelProps> = props => {
 
           <div className="mb-6">
             <p className="text-gray-600 mb-2">Earnings</p>
-            <h3 className="text-[1.9rem] font-semibold">
-              ₦192,983,087
-            </h3>
+            <h3 className="text-[1.9rem] font-semibold">₦192,983,087</h3>
           </div>
 
           <div className="flex-1">
@@ -111,23 +103,22 @@ export const StatAndGraphPanel: FC<IStatAndGraphPanelProps> = props => {
           {/* <DialogHeader>
             <DialogTitle>Share your page</DialogTitle>
           </DialogHeader> */}
-         <div className='flex items-center flex-col gap-4'>
-            <DefaultTypography className='font-semibold'>Download QR Code</DefaultTypography>
-
-            <DefaultTypography className='text-sm'>
-            Generate a custom QR code for your page and give your supporters a quick and touch free checkout option
+          <div className="flex items-center flex-col gap-4">
+            <DefaultTypography className="font-semibold">
+              Download QR Code
             </DefaultTypography>
 
-            <div>
+            <DefaultTypography className="text-sm">
+              Generate a custom QR code for your page and give your supporters a
+              quick and touch free checkout option
+            </DefaultTypography>
 
-            </div>
+            <div></div>
 
             <Button variant={'outline'}>Download</Button>
-         </div>
+          </div>
         </DialogContent>
       </Dialog>
     </>
   );
 };
-
-
