@@ -127,7 +127,7 @@ export const CreatorOverview = () => {
         </div>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-">
         <AudienceAndGrowthSection />
         <TopSupportersAndMembership />
       </div>

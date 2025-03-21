@@ -77,7 +77,7 @@ const AudienceAndGrowthSection = () => {
       </Card>
 
       <div className="space-y-4 w-full lg:w-[34.6rem]">
-        <h2 className="text-lg font-semibold">More Ways to Earn</h2>
+        <h2 className="text-lg font-semibold"> </h2>
         {earningMethods.map((method, index) => (
           <Card key={index} className="p-4 rounded-3xl">
             <div className="flex items-center justify-between">
