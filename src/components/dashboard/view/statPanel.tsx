@@ -18,22 +18,21 @@ export const StatPanel: FC<IStatPanelProps> = ({
   inflatedBy,
 }) => {
   return (
-    <Card className="h-[183px] rounded-3xl p-4">
-      <div className="space-y-2">
-        <div className="border-[1px] w-fit h-fit rounded-xl p-2">{icon}</div>
+    <Card className="lg:w-[180px] h-[163px] rounded-[30px] p-5 border-[0.5px]">
+      <div className="flex flex-col gap-2.5">
+        <div className="w-[35px] h-[33px] rounded-[10px] p-2.5 border-[1px] flex items-center justify-center">
+          {icon}
+        </div>
         <DefaultTypography className="text-gray-500 text-sm">
           {title}
         </DefaultTypography>
       </div>
-      <div className="flex items-center justify-between mt-4">
-        <h2 className="font-semibold text-3xl">{number}</h2>
+      <div className="flex items-center justify-between mt-2.5">
+        <h2 className="font-semibold text-2xl lg:text-3xl">{number}</h2>
 
-        <span
-          className="rounded-3xl bg-green-100 px-2  h-[27px] flex items-center
-          border-[1px] border-green-500 text-green-500"
-        >
-          <TiArrowUp />
-          <h4 className=" font-semibold text-sm flex"> % {inflatedBy}</h4>
+        <span className="w-[50px] h-[27px] rounded-[100px] p-[5px] border-[0.5px] flex items-center gap-[1px] bg-green-100 border-green-500 text-green-500">
+          <TiArrowUp className="h-4 w-4" />
+          <h4 className="font-semibold text-sm">%{inflatedBy}</h4>
         </span>
       </div>
     </Card>

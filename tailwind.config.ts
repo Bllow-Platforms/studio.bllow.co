@@ -12,13 +12,13 @@ export default {
     extend: {
       colors: {
         background: "#6355FF",
-        default: '',
+        default: 'white',
         foreground: "hsl(var(--foreground))",
         abyTitan: "hsl(var(--abyss-titan))",
         supernovaBlitz: "hsl(var(--supernova-blitz))",
         spiritVerdant: "hsl(var(--spirit-verdant))",
 
-        //dark hues
+     
         dark100: '#454545',
 
         card: {
@@ -40,6 +40,7 @@ export default {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "#989898",
+          primary: "#B5B5B5"
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",
