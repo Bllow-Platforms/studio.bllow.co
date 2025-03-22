@@ -3,11 +3,13 @@ import { DashboardLayout } from '@/components/layouts/dashboardLayout';
 import ExploreIndex from './components';
 
 const DashboardPage = () => {
-  return <div className='bg-[#FBFBFB]'>
-     <DashboardLayout noBackground>
-     <ExploreIndex/>
-  </DashboardLayout>
-  </div>;
+  return (
+    <div className="bg-[#FBFBFB]">
+      <DashboardLayout noBackground>
+        <ExploreIndex />
+      </DashboardLayout>
+    </div>
+  );
 };
 
 export default DashboardPage;
