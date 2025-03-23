@@ -1,4 +1,4 @@
-import { UserProfilePanel } from './profilePanel';
+import  UserProfilePanel from './profilePanel';
 
 const IndexViewPage = () => {
   return (

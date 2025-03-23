@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input';
 
 import { Search } from 'lucide-react';
-import { CreatorCard } from '../components/CreatorCard';
+import CreatorCard from '../components/CreatorCard';
 import { faker } from '@faker-js/faker';
 
 interface Creator {
@@ -34,7 +34,7 @@ const ExploreView = () => {
       <div className="space-y-6">
         <h2 className="text-lg font-semibold">Trending creators this week</h2>
 
-        <div className="bg-white rounded-3xl py-4 px-6">
+        <div className="bg-white rounded-[30px] py-4 lg:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {creators.map(creator => (
               <CreatorCard key={creator.id} {...creator} />

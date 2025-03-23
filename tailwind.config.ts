@@ -40,7 +40,8 @@ export default {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "#989898",
-          primary: "#B5B5B5"
+          primary: "#B5B5B5",
+          gray100: "#5C5C5C"
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",
