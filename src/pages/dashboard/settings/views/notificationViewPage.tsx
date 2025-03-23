@@ -1,8 +1,9 @@
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from '@/components/ui/checkbox';
 import { useState } from 'react';
+import { DEFAULT_CARD_RESTYLE } from '@/constants';
 
 const LIMIT_OPTIONS = [
   { value: 'unlimited', label: 'Unlimited' },
@@ -11,18 +12,28 @@ const LIMIT_OPTIONS = [
 ];
 
 const NOTIFICATION_OPTIONS = [
-  { id: "new-supporter", label: "When I get a new supporter", defaultChecked: true },
-  { id: "comment", label: "When a supporter comments on my page", defaultChecked: false },
+  {
+    id: 'new-supporter',
+    label: 'When I get a new supporter',
+    defaultChecked: true,
+  },
+  {
+    id: 'comment',
+    label: 'When a supporter comments on my page',
+    defaultChecked: false,
+  },
 ];
 
 const NotificationView = () => {
-  const [selectedLimit, setSelectedLimit] = useState<string>("unlimited");
+  const [selectedLimit, setSelectedLimit] = useState<string>('unlimited');
 
   return (
-    <Card className="space-y-8 px-10 py-12 mt-8 bg-white border-0 rounded-[30px] shadow-none">
+    <Card className={DEFAULT_CARD_RESTYLE}>
       <div className="space-y-4 flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h2 className="font-semibold text-sm text-muted-gray100">GENERAL NOTIFICATIONS</h2>
+          <h2 className="font-semibold text-sm text-muted-gray100">
+            GENERAL NOTIFICATIONS
+          </h2>
           <div className="flex items-center gap-2">
             <h6 className="text-sm text-muted-gray100">Enable All</h6>
             <Switch />
@@ -30,15 +41,15 @@ const NotificationView = () => {
         </div>
 
         <div className="space-y-3">
-          {NOTIFICATION_OPTIONS.map((option) => (
+          {NOTIFICATION_OPTIONS.map(option => (
             <div key={option.id} className="flex items-center gap-2">
-              <Checkbox 
+              <Checkbox
                 id={option.id}
                 defaultChecked={option.defaultChecked}
                 className="border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
-              <label 
-                htmlFor={option.id} 
+              <label
+                htmlFor={option.id}
                 className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 {option.label}
@@ -50,7 +61,6 @@ const NotificationView = () => {
         <hr />
       </div>
 
-   
       <div className="space-y-4 flex gap-2 flex-col">
         <h3 className="font-semibold text-sm text-muted-gray100">
           LIMIT EMAIL NOTIFICATION

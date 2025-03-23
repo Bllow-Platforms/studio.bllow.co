@@ -16,12 +16,12 @@ const ViewSettingsPage = () => {
     },
   ];
   return (
-    <div className="lg:w-[900px] mx-auto">
+    <div className="lg:w-[750px]  mx-auto px-6">
       <DashboardPageTitle
         title="Trending creators this week"
         showTabs
         tabs={TABS}
-        defaultTab="Settings"
+    
       />
     </div>
   );
