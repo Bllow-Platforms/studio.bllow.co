@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input';
 
 import { Search } from 'lucide-react';
-import { CreatorCard } from '../components/CreatorCard';
+import CreatorCard from '../components/CreatorCard';
 import { faker } from '@faker-js/faker';
 
 interface Creator {

@@ -11,6 +11,15 @@ import {
 } from '@/components/ui/select';
 import { DEFAULT_CARD_RESTYLE } from '@/constants';
 import { Switch } from '@/components/ui/switch';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const SettingsView = () => {
   return (
@@ -130,7 +139,8 @@ const SettingsView = () => {
           </div>
         </div>
 
-        <Button className="w-full bg-primary text-white rounded-full py-6 mt-6">
+        <Button className="w-full bg-primary text-white rounded-full py-6 mt-6"
+          disabled>
           Save Changes
         </Button>
       </Card>
@@ -151,11 +161,11 @@ const SettingsView = () => {
             <Label>Description</Label>
             <Input placeholder="Enter your page description" />
           </div>
-          <Button className="w-full bg-primary text-white">Save Changes</Button>
+          <Button className="w-full bg-primary text-white" disabled>Save Changes</Button>
         </div>
       </Card>
 
-      {/* Delete Account Card */}
+
       <Card
         className={`${DEFAULT_CARD_RESTYLE} border-[1px] border-red-400 bg-red-100/40`}
       >
@@ -167,12 +177,39 @@ const SettingsView = () => {
             re-activated when you login again.
           </p>
         </div>
-        <Button
-          variant="destructive"
-          className="bg-red-500 w-full hover:bg-red-600"
-        >
-          Delete
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              variant="destructive"
+              className="bg-red-500 w-full hover:bg-red-600"
+            >
+              Delete
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Delete Account</DialogTitle>
+              <DialogDescription>
+                Are you sure you want to delete your account? This action cannot be undone.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="flex gap-2 mt-4">
+              <Button variant="outline" className="flex-1">
+                Cancel
+              </Button>
+              <Button 
+                variant="destructive" 
+                className="flex-1 bg-red-500 hover:bg-red-600"
+                onClick={() => {
+                  // Handle delete account logic here
+                  console.log('Account deleted');
+                }}
+              >
+                Yes, Delete Account
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </Card>
     </div>
   );

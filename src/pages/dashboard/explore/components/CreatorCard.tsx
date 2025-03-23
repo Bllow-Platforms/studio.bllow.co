@@ -10,7 +10,7 @@ interface CreatorCardProps {
   supporters: string;
 }
 
-export const CreatorCard = ({
+const CreatorCard = ({
   id,
   name,
   username,
@@ -56,3 +56,6 @@ export const CreatorCard = ({
     </motion.div>
   );
 };
+
+
+export default CreatorCard;
