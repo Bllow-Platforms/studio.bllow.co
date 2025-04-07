@@ -11,7 +11,7 @@ import 'swiper/css';
 
 import React from 'react';
 
-const AllTabs = () => {
+const AllTab = () => {
   return (
     <div className="container mx-auto px-4">
       <SearchBar placeholder="Search in all post" />
@@ -154,4 +154,4 @@ const AllTabs = () => {
   );
 };
 
-export default AllTabs;
+export default AllTab;

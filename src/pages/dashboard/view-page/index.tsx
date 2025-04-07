@@ -1,16 +1,20 @@
 import { DashboardLayout } from '@/components/layouts/dashboardLayout';
 import IndexViewPage from './component';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import AllTabs from '@/modules/tabs/creator-pages-tabs/all-tabs';
+import AllTab from '@/modules/tabs/creator-pages-tabs/all-tab';
 import { useRef, useEffect } from 'react';
+import PostsTab from '@/modules/tabs/creator-pages-tabs/posts-tab';
+import MusicTab from '@/modules/tabs/creator-pages-tabs/music-tab';
+import VideosTab from '@/modules/tabs/creator-pages-tabs/videos-tab';
+import ArticleTab from '@/modules/tabs/creator-pages-tabs/articles-tabs';
 
 const tabs = [
-  { label: 'All', component: <AllTabs /> },
-  { label: 'Post', component: null },
-  { label: 'Gallery', component: null },
-  { label: 'Music', component: null },
-  { label: 'Video', component: null },
-  { label: 'Article', component: null },
+  { label: 'All', component: <AllTab /> },
+  { label: 'Post', component: <PostsTab /> },
+  { label: 'Gallery', component: <VideosTab /> },
+  { label: 'Music', component: <MusicTab /> },
+  { label: 'Video', component: <VideosTab /> },
+  { label: 'Article', component: <ArticleTab /> },
   { label: 'Shops', component: null },
 ];
 
