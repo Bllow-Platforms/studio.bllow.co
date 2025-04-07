@@ -25,7 +25,7 @@ export const DashboardLayout: FC<IDashboardLayoutProps> = ({
 
   return (
     <div
-      className={`h-screen overflow-auto ${!isThickGradient ? backgroundStyle.className : ''}`}
+      className={`min-h-screen overflow-auto ${!isThickGradient ? backgroundStyle.className : ''}`}
       style={isThickGradient ? backgroundStyle : {}}
     >
       <div className="">

@@ -11,7 +11,7 @@ export const IndexHero: FC<IndexHeroProps> = props => {
   return (
     <div>
       <Header isAuthenticated={false} />
-      <HeroContainer className="relative overflow-hidden">
+      <HeroContainer>
         <div className="flex flex-col lg:flex-row items-center gap-4 min-h-screen pt-20 lg:pt-0">
           <div className="w-full space-y-6 text-center lg:text-left z-10">
             <DefaultTypography

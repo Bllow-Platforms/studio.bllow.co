@@ -1,11 +1,74 @@
 import { DashboardLayout } from '@/components/layouts/dashboardLayout';
 import IndexViewPage from './component';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import AllTabs from '@/modules/tabs/creator-pages-tabs/all-tabs';
+import { useRef, useEffect } from 'react';
+
+const tabs = [
+  { label: 'All', component: <AllTabs /> },
+  { label: 'Post', component: null },
+  { label: 'Gallery', component: null },
+  { label: 'Music', component: null },
+  { label: 'Video', component: null },
+  { label: 'Article', component: null },
+  { label: 'Shops', component: null },
+];
 
 const DashboardPage = () => {
+  const tabsListRef = useRef(null);
+
+  useEffect(() => {
+    const tabsList = tabsListRef.current;
+    if (!tabsList) return;
+
+    // const handleWheel = (e) => {
+    //   if (e.deltaY !== 0) {
+    //     e.preventDefault();
+    //     tabsList.scrollLeft += e.deltaY;
+    //   }
+    // };
+
+    // tabsList.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      // tabsList.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
   return (
     <DashboardLayout isThickGradient>
-      <div className="bg-white h-screen mt-[8em] px-4">
+      <div className="bg-[#FBFBFB] min-h-screen mt-[8em] px-4 md:px-6">
         <IndexViewPage />
+
+        <Tabs defaultValue={tabs[0].label} className="mx-auto w-full">
+          <div className="relative border-b overflow-hidden">
+            <TabsList
+              ref={tabsListRef}
+              className="bg-transparent w-full flex overflow-x-auto md:gap-10 scrollbar-hide py-1"
+            >
+              {tabs.map((tab, index) => (
+                <TabsTrigger
+                  key={index}
+                  className="!bg-transparent pb-3 border-0 rounded-none flex-shrink-0 whitespace-nowrap
+                    data-[state=active]:border-blue-500 data-[state=active]:text-background data-[state=active]:border-b
+                    focus:outline-none focus:ring-0 focus-visible:ring-0"
+                  value={tab.label}
+                >
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
+            <div className="hidden sm:block absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-[#FBFBFB] to-transparent pointer-events-none"></div>
+            <div className="hidden sm:block absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-[#FBFBFB] to-transparent pointer-events-none"></div>
+          </div>
+
+          {tabs.map((tab, index) => (
+            <TabsContent key={index} value={tab.label} className="mt-6">
+              {tab.component}
+            </TabsContent>
+          ))}
+        </Tabs>
       </div>
     </DashboardLayout>
   );

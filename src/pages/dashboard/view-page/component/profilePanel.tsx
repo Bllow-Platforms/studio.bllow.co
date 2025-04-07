@@ -14,7 +14,7 @@ interface IUserProfilePanelProps {}
         Hacker
       </p>
 
-      <div className="flex items-center gap-6 text-muted-primary text-sm mb-4 ">
+      <div className="flex flex-wrap items-center justify-center gap-6 text-muted-primary text-sm mb-4 ">
         <div className="flex items-center gap-1">
           <MapPin className="w-4 h-4" />
           <span>Lagos, Nigeria</span>
