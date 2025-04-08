@@ -1,13 +1,13 @@
 import { AuthLayout } from '@/components/modules/layouts/auth-layout';
-import { SelectAccountType } from '@/components/auth/steps/select_account_type';
-import { EnterEmailStepper } from '@/components/auth/steps/enter_email_stepper';
-import { PickerUsernameStepper } from '@/components/auth/steps/choose_user_name';
+import { SelectAccountType } from '@/components/auth/steps/select-account-type';
+import { EnterEmailStepper } from '@/components/auth/steps/enter-email-stepper';
+import { PickerUsernameStepper } from '@/components/auth/steps/choose-username';
 import { FC, useState } from 'react';
-import { OTPVerificationStepper } from '@/components/auth/steps/verify_otp';
-import { SetUpAccountStepper } from '@/components/auth/steps/account_setup_stepper';
-import { MoreUserDetailStepper } from '@/components/auth/steps/more_details_stepper';
-import { FinancialSetupStepper } from '@/components/auth/steps/financial_setup_stepper';
-import { PinSetupStepper } from '@/components/auth/steps/pin_setup_stepper';
+import { OTPVerificationStepper } from '@/components/auth/steps/verify-otp';
+import { SetUpAccountStepper } from '@/components/auth/steps/account-setup-stepper';
+import { MoreUserDetailStepper } from '@/components/auth/steps/more-details-stepper';
+import { FinancialSetupStepper } from '@/components/auth/steps/financial-setup-stepper';
+import { PinSetupStepper } from '@/components/auth/steps/pin-setup-stepper';
 import { useSearchParams } from 'next/navigation';
 import { AuthState, StepProps } from '@/types/auth-types';
 

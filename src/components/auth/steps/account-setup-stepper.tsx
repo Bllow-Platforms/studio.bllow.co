@@ -43,7 +43,6 @@ export const SetUpAccountStepper: FC<StepProps> = ({ onNext, note }) => {
   const onSubmit = async (data: AccountFormData) => {
     try {
       let imageUrl = '';
-      console.log(imageUrl);
       if (selectedFile) {
         const response = await uploadImage(selectedFile);
         imageUrl = response?.url;

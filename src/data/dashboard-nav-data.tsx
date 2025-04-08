@@ -3,27 +3,27 @@ import { DashboardBoltIcon, DashboardDollarIcon } from '@/assets/svgs';
 const DASHBOARDNAVDATA = [
   {
     title: 'dashboard',
-    path: '/dashboard',
+    path: '/',
     icon: <DashboardBoltIcon />,
   },
   {
     title: 'dashboard',
-    path: '/dashboard',
+    path: '/',
     icon: <DashboardBoltIcon />,
   },
   {
     title: 'dashboard',
-    path: '/dashboard',
+    path: '/',
     icon: <DashboardBoltIcon />,
   },
   {
     title: 'dashboard',
-    path: '/dashboard',
+    path: '/',
     icon: <DashboardBoltIcon />,
   },
   {
     title: 'dashboard',
-    path: '/dashboard',
+    path: '/',
     icon: <DashboardDollarIcon />,
   },
 ];

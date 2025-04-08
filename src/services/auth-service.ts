@@ -1,5 +1,6 @@
 import { ENDPOINT_ENUM } from '@/constants/endpoint';
 import { ApiClient } from '@/lib/api-client';
+import { ICheckEmailAddressResponse } from '@/types/response-types';
 
 interface LoginCredentials {
   email: string;
@@ -40,7 +41,9 @@ export class AuthService {
   }
 
   static async checkEmailAddress(payload: { email: string }) {
-    return ApiClient.get(`${ENDPOINT_ENUM.CHECK_EMAIL}?email=${payload.email}`);
+    return ApiClient.get<ICheckEmailAddressResponse>(
+      `${ENDPOINT_ENUM.CHECK_EMAIL}?email=${payload.email}`
+    );
   }
 
   static async sendVerificationEmailOtp(payload: any) {

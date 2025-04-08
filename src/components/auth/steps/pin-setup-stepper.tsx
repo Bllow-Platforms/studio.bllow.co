@@ -29,7 +29,7 @@ export const PinSetupStepper: FC<StepProps> = ({ onNext, updateAuthState }) => {
     onSuccess: () => {
       toast.success('PIN set successfully');
       updateAuthState('pin', pin);
-      route.push('/dashboard');
+      route.push('/');
       onNext();
     },
     onError: error => {

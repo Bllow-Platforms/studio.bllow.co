@@ -73,7 +73,7 @@ export const DashboardHeader: FC<IDashboardHeaderProps> = props => {
               </Link>
             </DropdownMenuItem> */}
             <DropdownMenuItem asChild>
-              <Link href="/dashboard/refer" className="flex items-center gap-2">
+              <Link href="/refer" className="flex items-center gap-2">
                 <UserPlus className="w-4 h-4" /> Refer a creator
               </Link>
             </DropdownMenuItem>

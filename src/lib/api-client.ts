@@ -22,13 +22,13 @@ export class ApiClient {
     data?: any,
     params?: object,
     headers?: Record<string, string>
-  ): Promise<IApiResponse<T>> {
+  ): Promise<T> {
     const headersLists = {
       ...(AXIOS_CONFIG.defaults.headers as Record<string, string>),
       ...headers,
     };
     try {
-      const response: AxiosResponse = await AXIOS_CONFIG({
+      const response = await AXIOS_CONFIG({
         method,
         url,
         data,
@@ -80,7 +80,7 @@ export class ApiClient {
     url: string,
     params?: object,
     headers?: Record<string, string>
-  ): Promise<IApiResponse<T>> {
+  ): Promise<T> {
     return this.request<T>('get', url, undefined, params, headers);
   }
 
@@ -88,7 +88,7 @@ export class ApiClient {
     url: string,
     data?: any,
     headers?: Record<string, string>
-  ): Promise<IApiResponse<T>> {
+  ): Promise<T> {
     return this.request<T>('post', url, data, undefined, headers);
   }
 
@@ -96,14 +96,14 @@ export class ApiClient {
     url: string,
     data?: any,
     headers?: Record<string, string>
-  ): Promise<IApiResponse<T>> {
+  ): Promise<T> {
     return this.request<T>('put', url, data, undefined, headers);
   }
 
   static async delete<T>(
     url: string,
     headers?: Record<string, string>
-  ): Promise<IApiResponse<T>> {
+  ): Promise<T> {
     return this.request<T>('delete', url, undefined, undefined, headers);
   }
 }

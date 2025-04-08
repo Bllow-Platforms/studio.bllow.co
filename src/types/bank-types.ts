@@ -5,6 +5,12 @@ interface IAddBankProps {
   bankCode: string;
 }
 
+export interface IResolveBank {
+  bank_id: number;
+  account_name: string;
+  account_number: string;
+}
+
 interface IBankResponse {
   id: number;
   name: string;

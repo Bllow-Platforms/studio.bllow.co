@@ -15,6 +15,7 @@ import { ContinueButton } from '../continue-button';
 import { useAuthStore } from '@/store/auth-store';
 import { BankDetailsPreviewCard } from '@/components/modules/cards/bank-details-preview-card';
 import { BankServices } from '@/services/bank-service';
+import { IAddBankProps } from '@/types/bank-types';
 
 interface BankAccount {
   bankName: string;
@@ -57,7 +58,7 @@ export const FinancialSetupStepper: FC<StepProps> = ({ onNext, note }) => {
     onSuccess: response => {
       setNewAccount(prev => ({
         ...prev,
-        accountHolder: response.data.account_name,
+        accountHolder: response.account_name,
       }));
     },
     onError: error => {

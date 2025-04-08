@@ -12,6 +12,7 @@ interface AuthState {
   username: string;
   email: string;
   currentStep: number;
+  bankAccounts: any[];
 }
 
 interface AuthActions {
@@ -32,6 +33,7 @@ const initialState: AuthState = {
   username: '',
   email: '',
   currentStep: 0,
+  bankAccounts: [],
 };
 
 export const useAuthStore = create<AuthState & AuthActions>()(

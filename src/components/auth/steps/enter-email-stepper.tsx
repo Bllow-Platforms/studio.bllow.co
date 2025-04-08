@@ -90,11 +90,12 @@ export const EnterEmailStepper: FC<IEmailStepperProps> = ({ onNext, note }) => {
         />
       </div>
 
+
       <ContinueButton
         note={note}
         onContinue={handleContinue}
         disabled={!isValid || isCheckingEmail || isSendingOtp}
-        loading={isSendingOtp}
+        loading={isSendingOtp || isCheckingEmail}
       />
     </div>
   );
