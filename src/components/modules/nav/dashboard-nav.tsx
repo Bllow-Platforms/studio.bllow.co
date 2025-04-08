@@ -12,8 +12,11 @@ import {
   Zap,
   DollarSign,
   Settings,
+  Layout,
+  CloudLightningIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Flash } from 'iconsax-react';
 
 interface IDashboardNavProps {
   className?: string;
@@ -22,8 +25,9 @@ interface IDashboardNavProps {
 
 const navItems = [
   { icon: Home, label: 'Home', path: '/' },
-  { icon: LayoutGrid, label: 'Dashboard', path: '/view-page' },
-  // { icon: Heart, label: 'Favorites', path: '/dashboard/favorites' },
+  { icon: Layout, label: 'Dashboard', path: '/view-page' },
+  { icon: LayoutGrid, label: 'Explore', path: '/explore' },
+  { icon: CloudLightningIcon, label: 'Integrations', path: '/integrations' },
   // { icon: Wallet, label: 'Wallet', path: '/dashboard/wallet' },
   // { icon: Store, label: 'Store', path: '/dashboard/store' },
   // { icon: Leaf, label: 'Products', path: '/dashboard/products' },

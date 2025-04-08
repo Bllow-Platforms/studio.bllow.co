@@ -15,6 +15,7 @@ interface IDashboardPageTitleProps {
   onTabChange?: (value: string) => void;
   children?: ReactNode;
   className?: string;
+  info?: string;
 }
 
 export const DashboardPageTitle: FC<IDashboardPageTitleProps> = ({
@@ -25,10 +26,14 @@ export const DashboardPageTitle: FC<IDashboardPageTitleProps> = ({
   onTabChange,
   children,
   className,
+  info,
 }) => {
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold">{title}</h2>
+      <div className="">
+        <h2 className="text-lg font-semibold">{title}</h2>
+        {info && <p className="">{info}</p>}
+      </div>
       {showTabs && (
         <CustomTab
           items={tabs}
