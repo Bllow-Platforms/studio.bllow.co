@@ -28,6 +28,7 @@ const navItems = [
   { icon: Layout, label: 'Dashboard', path: '/view-page' },
   { icon: LayoutGrid, label: 'Explore', path: '/explore' },
   { icon: CloudLightningIcon, label: 'Integrations', path: '/integrations' },
+  { icon: Heart, label: 'Supporters', path: '/supporters' },
   // { icon: Wallet, label: 'Wallet', path: '/dashboard/wallet' },
   // { icon: Store, label: 'Store', path: '/dashboard/store' },
   // { icon: Leaf, label: 'Products', path: '/dashboard/products' },
