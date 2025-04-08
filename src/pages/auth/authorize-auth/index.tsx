@@ -1,11 +1,6 @@
-import { useState } from 'react';
-import { DefaultAuthLayout } from '@/components/layouts/default_auth_layout';
-import { Input } from '@/components/ui/input';
+import { DefaultAuthLayout } from '@/components/modules/layouts/default-auth-layout';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
-import { toast } from 'sonner';
-import { ENDPOINT_ENUM } from '@/enums/endpoint';
 
 const SignInPage = () => {
   const router = useRouter();

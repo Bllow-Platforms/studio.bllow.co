@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { AXIOS_CONFIG } from '@/config/axios';
-import { IApiError, IApiResponse } from '@/interface/api.interface';
+import { IApiResponse } from '@/types/api-types';
 import { toast } from 'sonner';
 
 export class ApiError extends Error {
@@ -23,16 +23,17 @@ export class ApiClient {
     params?: object,
     headers?: Record<string, string>
   ): Promise<IApiResponse<T>> {
+    const headersLists = {
+      ...(AXIOS_CONFIG.defaults.headers as Record<string, string>),
+      ...headers,
+    };
     try {
       const response: AxiosResponse = await AXIOS_CONFIG({
         method,
         url,
         data,
         params,
-        headers: {
-          ...AXIOS_CONFIG.defaults.headers,
-          ...headers,
-        },
+        headers: headersLists,
       });
       return response.data;
     } catch (error) {

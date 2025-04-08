@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DefaultAuthLayout } from '@/components/layouts/default_auth_layout';
+import { DefaultAuthLayout } from '@/components/modules/layouts/default-auth-layout';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
@@ -9,9 +9,9 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signInSchema } from '@/schema';
-import { AuthService } from '@/services/auth.service';
+import { AuthService } from '@/services/auth-service';
 import { useMutation } from '@tanstack/react-query';
-import DefaultLoadingPage from '@/components/loaders/default-loader';
+import DefaultLoadingPage from '@/components/modules/loaders/default-loader';
 
 type SignInSchema = z.infer<typeof signInSchema>;
 
