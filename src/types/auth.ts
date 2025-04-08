@@ -1,4 +1,4 @@
-import { ReactComponent } from 'react';
+
 
 export interface BaseStep {
   title: string;
