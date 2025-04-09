@@ -19,7 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 
 const SettingsView = () => {
   return (
@@ -63,7 +63,6 @@ const SettingsView = () => {
 
         <hr className="my-6 border-gray-200" />
 
-
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-semibold text-black">Cover credit card fee</h3>
@@ -77,7 +76,6 @@ const SettingsView = () => {
 
         <hr className="my-6 border-gray-200" />
 
-        
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-semibold text-black">
@@ -110,7 +108,6 @@ const SettingsView = () => {
 
         <hr className="my-6 border-gray-200" />
 
-       
         <div className="space-y-2">
           <h3 className="font-semibold text-black">My Page Link</h3>
           <div className="relative">
@@ -139,13 +136,14 @@ const SettingsView = () => {
           </div>
         </div>
 
-        <Button className="w-full bg-primary text-white rounded-full py-6 mt-6"
-          disabled>
+        <Button
+          className="w-full bg-primary text-white rounded-full py-6 mt-6"
+          disabled
+        >
           Save Changes
         </Button>
       </Card>
 
-     
       <Card className={DEFAULT_CARD_RESTYLE}>
         <h3 className="font-semibold">My Page Info</h3>
         <div className="space-y-4">
@@ -161,10 +159,11 @@ const SettingsView = () => {
             <Label>Description</Label>
             <Input placeholder="Enter your page description" />
           </div>
-          <Button className="w-full bg-primary text-white" disabled>Save Changes</Button>
+          <Button className="w-full bg-primary text-white" disabled>
+            Save Changes
+          </Button>
         </div>
       </Card>
-
 
       <Card
         className={`${DEFAULT_CARD_RESTYLE} border-[1px] border-red-400 bg-red-100/40`}
@@ -190,15 +189,16 @@ const SettingsView = () => {
             <DialogHeader>
               <DialogTitle>Delete Account</DialogTitle>
               <DialogDescription>
-                Are you sure you want to delete your account? This action cannot be undone.
+                Are you sure you want to delete your account? This action cannot be
+                undone.
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="flex gap-2 mt-4">
               <Button variant="outline" className="flex-1">
                 Cancel
               </Button>
-              <Button 
-                variant="destructive" 
+              <Button
+                variant="destructive"
                 className="flex-1 bg-red-500 hover:bg-red-600"
                 onClick={() => {
                   // Handle delete account logic here

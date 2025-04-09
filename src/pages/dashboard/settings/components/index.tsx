@@ -21,7 +21,6 @@ const ViewSettingsPage = () => {
         title="Trending creators this week"
         showTabs
         tabs={TABS}
-    
       />
     </div>
   );

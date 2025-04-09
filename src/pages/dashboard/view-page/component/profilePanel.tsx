@@ -3,7 +3,7 @@ import { MapPin } from 'lucide-react';
 
 interface IUserProfilePanelProps {}
 
- const UserProfilePanel: FC<IUserProfilePanelProps> = props => {
+const UserProfilePanel: FC<IUserProfilePanelProps> = props => {
   return (
     <div className="flex flex-col items-center max-w-[550px]  mx-auto text-center relative -top-11">
       <div className="w-[130px] h-[120px] rounded-[40px] bg-gray-200 mb-4 ring-8 ring-white/70" />
@@ -111,4 +111,4 @@ interface IUserProfilePanelProps {}
   );
 };
 
-export  default UserProfilePanel;
+export default UserProfilePanel;

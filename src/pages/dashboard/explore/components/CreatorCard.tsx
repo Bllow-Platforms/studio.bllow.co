@@ -57,5 +57,4 @@ const CreatorCard = ({
   );
 };
 
-
 export default CreatorCard;

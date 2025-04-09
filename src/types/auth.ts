@@ -1,5 +1,3 @@
-
-
 export interface BaseStep {
   title: string;
   description: string;
