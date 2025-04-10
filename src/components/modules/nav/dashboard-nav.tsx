@@ -14,6 +14,7 @@ import {
   Settings,
   Layout,
   CloudLightningIcon,
+  Lock,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Flash } from 'iconsax-react';
@@ -29,7 +30,7 @@ const navItems = [
   { icon: LayoutGrid, label: 'Explore', path: '/explore' },
   { icon: CloudLightningIcon, label: 'Integrations', path: '/integrations' },
   { icon: Heart, label: 'Supporters', path: '/supporters' },
-  // { icon: Wallet, label: 'Wallet', path: '/dashboard/wallet' },
+  { icon: Lock, label: 'Memberships', path: '/memberships' },
   // { icon: Store, label: 'Store', path: '/dashboard/store' },
   // { icon: Leaf, label: 'Products', path: '/dashboard/products' },
   // { icon: LinkIcon, label: 'Links', path: '/dashboard/links' },
