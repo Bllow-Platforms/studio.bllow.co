@@ -1,20 +1,20 @@
-import { AuthLayout } from '@/components/layouts/authLayout';
-import { SelectAccountType } from '@/components/pages/auth/steps/select_account_type';
-import { EnterEmailStepper } from '@/components/pages/auth/steps/enter_email_stepper';
-import { PickerUsernameStepper } from '@/components/pages/auth/steps/choose_user_name';
-import { useState } from 'react';
-import { OTPVerificationStepper } from '@/components/pages/auth/steps/verify_otp';
-import { SetUpAccountStepper } from '@/components/pages/auth/steps/account_setup_stepper';
-import { MoreUserDetailStepper } from '@/components/pages/auth/steps/more_details_stepper';
-import { FinancialSetupStepper } from '@/components/pages/auth/steps/financial_setup_stepper';
-import { PinSetupStepper } from '@/components/pages/auth/steps/pin_setup_stepper';
-import { toast } from 'sonner';
+import { AuthLayout } from '@/components/modules/layouts/auth-layout';
+import { SelectAccountType } from '@/components/auth/steps/select-account-type';
+import { EnterEmailStepper } from '@/components/auth/steps/enter-email-stepper';
+import { PickerUsernameStepper } from '@/components/auth/steps/choose-username';
+import { FC, useState } from 'react';
+import { OTPVerificationStepper } from '@/components/auth/steps/verify-otp';
+import { SetUpAccountStepper } from '@/components/auth/steps/account-setup-stepper';
+import { MoreUserDetailStepper } from '@/components/auth/steps/more-details-stepper';
+import { FinancialSetupStepper } from '@/components/auth/steps/financial-setup-stepper';
+import { PinSetupStepper } from '@/components/auth/steps/pin-setup-stepper';
 import { useSearchParams } from 'next/navigation';
+import { AuthState } from '@/types/auth-types';
 
 interface BaseStep {
   title: string;
   description: string;
-  component: React.ComponentType<StepProps>;
+  component: FC<any>;
   note?: string;
   allowSkip?: true;
 }

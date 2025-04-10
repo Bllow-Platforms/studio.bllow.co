@@ -1,3 +1,3 @@
-import { signInSchema } from './auth-validation-schema';
+import { signInSchema } from './auth-schema';
 
 export { signInSchema };
