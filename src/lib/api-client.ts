@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { AXIOS_CONFIG } from '@/config/axios';
-import { IApiError, IApiResponse } from '@/interface/api.interface';
+import { IApiResponse } from '@/types/api-types';
 import { toast } from 'sonner';
 
 export class ApiError extends Error {
@@ -22,17 +22,18 @@ export class ApiClient {
     data?: any,
     params?: object,
     headers?: Record<string, string>
-  ): Promise<IApiResponse<T>> {
+  ): Promise<T> {
+    const headersLists = {
+      ...(AXIOS_CONFIG.defaults.headers as Record<string, string>),
+      ...headers,
+    };
     try {
-      const response: AxiosResponse = await AXIOS_CONFIG({
+      const response = await AXIOS_CONFIG({
         method,
         url,
         data,
         params,
-        headers: {
-          ...AXIOS_CONFIG.defaults.headers,
-          ...headers,
-        },
+        headers: headersLists,
       });
       return response.data;
     } catch (error) {
@@ -79,7 +80,7 @@ export class ApiClient {
     url: string,
     params?: object,
     headers?: Record<string, string>
-  ): Promise<IApiResponse<T>> {
+  ): Promise<T> {
     return this.request<T>('get', url, undefined, params, headers);
   }
 
@@ -87,7 +88,7 @@ export class ApiClient {
     url: string,
     data?: any,
     headers?: Record<string, string>
-  ): Promise<IApiResponse<T>> {
+  ): Promise<T> {
     return this.request<T>('post', url, data, undefined, headers);
   }
 
@@ -95,14 +96,14 @@ export class ApiClient {
     url: string,
     data?: any,
     headers?: Record<string, string>
-  ): Promise<IApiResponse<T>> {
+  ): Promise<T> {
     return this.request<T>('put', url, data, undefined, headers);
   }
 
   static async delete<T>(
     url: string,
     headers?: Record<string, string>
-  ): Promise<IApiResponse<T>> {
+  ): Promise<T> {
     return this.request<T>('delete', url, undefined, undefined, headers);
   }
 }

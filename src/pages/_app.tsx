@@ -1,11 +1,12 @@
-import { PrimaryProvider } from '@/provider/index-provider';
 import '@/styles/globals.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
 import { Toaster } from 'sonner';
 
 export default function App({ Component, pageProps }: AppProps) {
+  const query = new QueryClient();
   return (
-    <PrimaryProvider>
+    <QueryClientProvider client={query}>
       <Toaster
         position="top-center"
         richColors={true}
@@ -13,6 +14,6 @@ export default function App({ Component, pageProps }: AppProps) {
         swipeDirections={['left', 'right']}
       />
       <Component {...pageProps} />
-    </PrimaryProvider>
+    </QueryClientProvider>
   );
 }
