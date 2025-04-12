@@ -37,4 +37,5 @@ export enum ENDPOINT_ENUM {
   UPLOAD = '/upload',
   OK = '/ok',
   ERROR = '/error',
+
 }
