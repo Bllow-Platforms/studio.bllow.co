@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { DefaultAuthLayout } from '@/components/modules/layouts/default-auth-layout';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -75,13 +74,22 @@ const SignInPage = () => {
             {...register('email')}
             error={errors.email?.message}
           />
-          <Input
-            label="Username"
-            type="text"
-            placeholder="username"
-            {...register('username')}
-            error={errors.username?.message}
-          />
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Username
+            </label>
+            <div className="w-full flex items-center border border-input rounded-full pl-4">
+              <p className="text-sm">bllow.co/</p>
+              <Input
+                className="border-none"
+                placeholder="username"
+                {...register('username')}
+              />
+            </div>
+            {errors.username?.message && (
+              <p className="text-sm text-destructive">{errors.username.message}</p>
+            )}
+          </div>
 
           <Button type="submit" className="w-full" disabled={isPending}>
             {isPending ? 'Signing in...' : 'Sign In'}
